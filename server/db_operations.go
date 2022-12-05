@@ -72,75 +72,77 @@ func getRealPasswordManager(id string) (bool, string) {
 Returns the student struct with its session hash, usually called after a successful login
 Also saves the student to the ACTIVE_USERS map
 */
-func getStudent(id string) (bool, string, *student) {
+func getStudent(id string) (bool, *student) {
 	var student student
 	if err := DB.QueryRow("SELECT Student_Id,Name,Surname,Year,Department_Id,Mail,GPA,Photo_Path from mdebis.student where Student_Id=?", id).Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath); err != nil {
 		if err == sql.ErrNoRows {
 			fmt.Println("error occurred when finding the student")
 			if err != nil {
-				return false, "", nil
+				return false, nil
 			}
-			return false, "", nil
+			return false, nil
 		}
 		fmt.Println("error occurred when finding the student")
 		if err != nil {
 			fmt.Println(err.Error())
-			return false, "", nil
+			return false, nil
 		}
 		fmt.Println(err.Error())
-		return false, "", nil
-		//return false, nil, student
+		return false, nil
 	}
 	sessionKey := generateRandomSession()
 	//create new user record
 	var newUser = new(user)
+	student.SessionToken = sessionKey
 	newUser.Student = &student
 	ACTIVE_USERS[sessionKey] = *newUser
-	return true, sessionKey, &student
+	return true, &student
 }
 
 /*
 Returns the lecturer struct with its session hash, usually called after a successful login
 Also saves the lecturer to the ACTIVE_USERS map
 */
-func getLecturer(id string) (bool, string, *student) {
+func getLecturer(id string) (bool, *student) {
 	var lecturer lecturer
 	if err := DB.QueryRow("SELECT Lecturer_Id,Name,Surname,Mail,Department_Id,Title,Photo_Path from mdebis.lecturer where Lecturer_Id=?", id).Scan(&lecturer.Id, &lecturer.Name, &lecturer.Surname, &lecturer.EMail, &lecturer.DepId, &lecturer.Title, &lecturer.PhotoPath); err != nil {
 		if err == sql.ErrNoRows {
 			fmt.Println("error occurred when finding the lecturer")
 			if err != nil {
-				return false, "", nil
+				return false, nil
 			}
-			return false, "", nil
+			return false, nil
 		}
 		fmt.Println("error occurred when finding the lecturer")
 		if err != nil {
-			return false, "", nil
+			return false, nil
 		}
 		fmt.Println(err.Error())
-		return false, "", nil
+		return false, nil
 	}
 	SessionKey := generateRandomSession()
 	//create new user record
 	var newUser = new(user)
+	lecturer.SessionToken = SessionKey
 	newUser.Lecturer = &lecturer
 	ACTIVE_USERS[SessionKey] = *newUser
-	return true, SessionKey, newUser.Student
+	return true, newUser.Student
 }
 
-func getManager(id string) (bool, string, *manager) {
+func getManager(id string) (bool, *manager) {
 	var manager manager
 	if err := DB.QueryRow("SELECT Manager_Id,Name,Surname,Photo_Path from mdebis.manager where Manager_Id=?", id).Scan(&manager.Id, &manager.Name, &manager.Surname, &manager.Photo_Path); err != nil {
 		fmt.Println("error occurred when finding the lecturer")
 		fmt.Println(err.Error())
-		return false, "", nil
+		return false, nil
 	}
 	SessionKey := generateRandomSession()
 	//create new user record
 	var newUser = new(user)
+	manager.SessionToken = SessionKey
 	newUser.Manager = &manager
 	ACTIVE_USERS[SessionKey] = *newUser
-	return true, SessionKey, newUser.Manager
+	return true, newUser.Manager
 }
 
 /*
@@ -201,7 +203,7 @@ func getCourses(student *student) {
 	//GETTING COURSES WITH THE GIVEN IDS
 	params := make([]interface{}, 0)
 	query := []string{"SELECT * FROM mdebis.course where"}
-	if len(courseIds) > 1 {
+	if len(courseIds) > 0 {
 		query = append(query,
 			fmt.Sprintf(
 				"Course_Id IN (%s)",

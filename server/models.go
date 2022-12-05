@@ -19,17 +19,19 @@ type student struct {
 	Courses          []course
 	CreatedTimeTable bool
 	TimeTable        [40]time_table_entry
+	SessionToken     string
 }
 
 type lecturer struct {
-	Id        string
-	Name      string
-	Surname   string
-	EMail     string
-	DepId     int
-	Courses   []course
-	Title     string
-	PhotoPath sql.NullString
+	Id           string
+	Name         string
+	Surname      string
+	EMail        string
+	DepId        int
+	Courses      []course
+	Title        string
+	PhotoPath    sql.NullString
+	SessionToken string
 }
 type general_announcement struct {
 	AnnouncementId int
@@ -61,11 +63,11 @@ type department struct {
 }
 
 type manager struct {
-	Id         int
-	Name       string
-	Surname    string
-	Photo_Path sql.NullString
-	SessionKey string
+	Id           int
+	Name         string
+	Surname      string
+	Photo_Path   sql.NullString
+	SessionToken string
 }
 type time_table_entry struct {
 	Department       string

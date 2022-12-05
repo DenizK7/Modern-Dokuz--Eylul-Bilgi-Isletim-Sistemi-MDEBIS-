@@ -58,7 +58,7 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//create student struct and return its information
-	isAchieved, _, student := getStudent(id)
+	isAchieved, student := getStudent(id)
 	if isAchieved == false {
 		fmt.Println("error occured when logging")
 		encoder.Encode(false)
@@ -66,12 +66,7 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	}
 	getCourses(student)
 	encoder.Encode(student)
-	// encoder.Encode(sessionHash)
-	/*! ! ! IMPORTANT PART ! ! !
-	BECAUSE the response is encoded, now the back-end side can prepare itself for POSSIBLE future requests
-	SUCH AS REQUESTING TIME TABLE?
-	*/
-	getCoursesTimeTable(student)
+	return
 }
 
 /*
@@ -142,12 +137,11 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode("false")
 	}
 	//create student struct and return its information
-	isFoundLecturer, sessionKey, lecturer := getLecturer(id)
+	isFoundLecturer, lecturer := getLecturer(id)
 	if isFoundLecturer == false {
 		encoder.Encode(false)
 		return
 	}
-	encoder.Encode(sessionKey)
 	encoder.Encode(lecturer)
 }
 
@@ -172,13 +166,12 @@ func responseManagerLogIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//create student struct and return its information
-	isCreatedManager, sessionHashed, manager := getManager(id)
+	isCreatedManager, manager := getManager(id)
 	if isCreatedManager == false {
 		encoder.Encode(false)
 		fmt.Println("problem with finding the manager in the DB")
 		return
 	}
-	encoder.Encode(sessionHashed)
 	encoder.Encode(manager)
 }
 
