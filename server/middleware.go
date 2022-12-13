@@ -15,30 +15,9 @@ This function encodes all the GENERAL ANNOUNCEMENTS as a response
 */
 func responseGetGeneralAnnouncements(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	rows, err := DB.Query("SELECT * FROM mdebis.general_announcement")
-	if err != nil {
-		fmt.Println("error occurred when getting general announcements")
-	}
-
-	var announcements []general_announcement
-
-	// Loop through rows, using Scan to assign column data to struct fields.
-	for rows.Next() {
-		var announcement general_announcement
-		if err := rows.Scan(&announcement.AnnouncementId, &announcement.Title, &announcement.Content, &announcement.Link); err != nil {
-			fmt.Println("error occurred when getting general announcements")
-		}
-		announcements = append(announcements, announcement)
-	}
-	err = json.NewEncoder(w).Encode(announcements)
-	if err != nil {
-		return
-	}
+	announcements := getGeneralAnnouncements()
+	json.NewEncoder(w).Encode(announcements)
 }
-
-/*
-This function encodes the logging student if there is a match in the DB with the given id-password pair
-*/
 
 func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -47,7 +26,7 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	typedPassword := params["password"]
 	encoder := json.NewEncoder(w)
 	err, realPassword := getRealPasswordStudent(id)
-	if err == true {
+	if err == false {
 		encoder.Encode(false)
 		return
 	}
@@ -57,15 +36,12 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode("false")
 		return
 	}
-	//create student struct and return its information
-	isAchieved, student := getStudent(id)
-	if isAchieved == false {
-		fmt.Println("error occured when logging")
-		encoder.Encode(false)
-		return
-	}
-	getCourses(student)
-	encoder.Encode(student)
+	//create a session for the new user, type of student
+	sessionHash := generateRandomSession()
+	newUser := new(user)
+	newUser.Student = getStudent(id)
+	ACTIVE_USERS[sessionHash] = *newUser
+	encoder.Encode(sessionHash)
 	return
 }
 
@@ -78,18 +54,17 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
-	if user == nil {
+	if user == nil || user.Student == nil {
 		fmt.Println("! ! !first you MUST log in! ! !")
 		encoder.Encode(false)
 		return
 	}
-	getCourses(user.Student)
-	json.NewEncoder(w).Encode(user.Student.Courses)
+	courses := getCourses(user.Student)
+	json.NewEncoder(w).Encode(courses)
 }
 
 /*
-T
-his function responses the request by encoding the timetable in json format
+This function responses the request by encoding the timetable in json format
 !ATTENTION! - STUDENT MUST ALREADY LOGGED IN - !ATTENTION!
 */
 
@@ -98,11 +73,12 @@ func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
-	if user == nil {
+	if user == nil || user.Student == nil {
 		fmt.Println("! ! !first you MUST log in! ! !")
+		json.NewEncoder(w).Encode(false)
 	}
-	getCoursesTimeTable(user.Student)
-	json.NewEncoder(w).Encode(user.Student.TimeTable)
+	timeTable := getCoursesTimeTable(user.Student)
+	json.NewEncoder(w).Encode(timeTable)
 }
 
 /*
@@ -136,19 +112,19 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("password error")
 		encoder.Encode("false")
 	}
-	//create student struct and return its information
-	isFoundLecturer, lecturer := getLecturer(id)
-	if isFoundLecturer == false {
-		encoder.Encode(false)
-		return
-	}
-	encoder.Encode(lecturer)
+	//create a session for the new user, type of lecturer
+	sessionHash := generateRandomSession()
+	newUser := new(user)
+	newUser.Lecturer = getLecturer(id)
+	ACTIVE_USERS[sessionHash] = *newUser
+	encoder.Encode(sessionHash)
+	return
 }
 
 /*
 This function encodes the logging manager if there is a match in the DB with the given id-password pair
 */
-func responseManagerLogIn(w http.ResponseWriter, r *http.Request) {
+func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
@@ -165,14 +141,12 @@ func responseManagerLogIn(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode("WRONG PASSWORD!")
 		return
 	}
-	//create student struct and return its information
-	isCreatedManager, manager := getManager(id)
-	if isCreatedManager == false {
-		encoder.Encode(false)
-		fmt.Println("problem with finding the manager in the DB")
-		return
-	}
-	encoder.Encode(manager)
+	//create a session for the new user, type of lecturer
+	sessionHash := generateRandomSession()
+	newUser := new(user)
+	newUser.Manager = getManager(id)
+	ACTIVE_USERS[sessionHash] = *newUser
+	encoder.Encode(sessionHash)
 }
 
 /*
