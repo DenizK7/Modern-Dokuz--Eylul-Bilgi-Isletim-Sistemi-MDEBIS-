@@ -57,6 +57,7 @@ type course struct {
 	Time_Inf        []course_time
 	Credit          int
 	Announcements   []announcement
+	IsActive        bool
 }
 
 type department struct {

@@ -146,7 +146,7 @@ func getCoursesTimeTable(student *student) *[40]time_table_entry {
 }
 
 func changeStatusOfCourse(courseId int, isActive bool) {
-	query := "UPDATE mdebis.course SET Active = '?' WHERE (Course_Id = ?);"
+	query := "UPDATE mdebis.course SET Active = ? WHERE (Course_Id = ?);"
 	_, err := DB.Exec(query, isActive, courseId)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -199,7 +199,7 @@ func getCoursesOfALecturer(lecturer *lecturer) []course {
 	for rowsCourses.Next() {
 		//create course struct because they will also send to general course map (not created yet)
 		var course course
-		if err := rowsCourses.Scan(&course.Id, &course.Name, &course.Dep_Id, &course.AttandenceLimit, &course.Credit); err != nil {
+		if err := rowsCourses.Scan(&course.Id, &course.Name, &course.Dep_Id, &course.AttandenceLimit, &course.Credit, &course.IsActive); err != nil {
 			fmt.Println(err.Error())
 			return nil
 		}

@@ -96,18 +96,14 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//!CHECK THIS COURSE IS OWNED BY THIS LECTURER!
-	courses := getCoursesOfALecturer(user.Lecturer)
-	isOwn := false
-	for _, course := range courses {
-		if course.Id == courseId {
-			isOwn = true
-			break
-		}
-	}
-	if !isOwn {
-		encoder.Encode(false)
+	var isOwned = checkACourseOwned(user, courseId)
+	if isOwned == false {
+		fmt.Println("course does not belong this user")
+		encoder.Encode("course does not belong this user")
 		return
 	}
+
+	//Find what user wants the course to be
 	var isActive bool
 	switch assignedStatus {
 	case "true":
@@ -118,6 +114,7 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 		encoder.Encode(false)
 		return
 	}
+	//Make the course what user wants the course to be
 	changeStatusOfCourse(courseId, isActive)
 
 }

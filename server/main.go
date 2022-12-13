@@ -29,12 +29,7 @@ func main() {
 	var user user
 	ACTIVE_USERS[sessionHash] = &user
 	user.Lecturer = getLecturer(2000506652)
-	courses := getCoursesOfALecturer(user.Lecturer)
-	for _, course := range courses {
-		if course.Id != "" {
-			fmt.Println(course)
-		}
-	}
+
 	//try any back-end function here
 	if err != nil {
 		panic(err.Error())
@@ -71,4 +66,17 @@ func generateRandomSession() string {
 	r1 := rand.New(s1)
 	return string(hashPassword(string(r1.Intn(100000))))
 
+}
+
+func checkACourseOwned(user *user, courseId int) (isOwned bool) {
+	//!CHECK THIS COURSE IS OWNED BY THIS LECTURER!
+	courses := getCoursesOfALecturer(user.Lecturer)
+	isOwn := false
+	for _, course := range courses {
+		if course.Id == courseId {
+			isOwn = true
+			break
+		}
+	}
+	return isOwn
 }
