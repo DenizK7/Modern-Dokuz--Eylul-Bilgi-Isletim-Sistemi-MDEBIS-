@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
-	"math/rand"
 	"net/http"
-	"time"
+	"strconv"
 )
 
 /*
@@ -21,12 +20,17 @@ func responseGetGeneralAnnouncements(w http.ResponseWriter, r *http.Request) {
 
 func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
-	params := mux.Vars(r)
-	id := params["username"]
-	typedPassword := params["password"]
 	encoder := json.NewEncoder(w)
-	err, realPassword := getRealPasswordStudent(id)
-	if err == false {
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["username"])
+	if err != nil {
+		fmt.Println("error wen converting id to int ")
+		encoder.Encode(false)
+		return
+	}
+	typedPassword := params["password"]
+	isFound, realPassword := getRealPasswordStudent(id)
+	if isFound == false {
 		encoder.Encode(false)
 		return
 	}
@@ -40,7 +44,7 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	sessionHash := generateRandomSession()
 	newUser := new(user)
 	newUser.Student = getStudent(id)
-	ACTIVE_USERS[sessionHash] = *newUser
+	ACTIVE_USERS[sessionHash] = newUser
 	encoder.Encode(sessionHash)
 	return
 }
@@ -54,19 +58,69 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
-	if user == nil || user.Student == nil {
+	if user == nil {
 		fmt.Println("! ! !first you MUST log in! ! !")
 		encoder.Encode(false)
 		return
 	}
-	courses := getCourses(user.Student)
-	json.NewEncoder(w).Encode(courses)
+	if user.Student != nil {
+		courses := getCoursesOfAStudent(user.Student)
+		json.NewEncoder(w).Encode(courses)
+	}
+	if user.Lecturer != nil {
+		courses := getCoursesOfALecturer(user.Lecturer)
+		json.NewEncoder(w).Encode(courses)
+	}
+
 }
 
 /*
 This function responses the request by encoding the timetable in json format
 !ATTENTION! - STUDENT MUST ALREADY LOGGED IN - !ATTENTION!
 */
+
+func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	courseId, err := strconv.Atoi(params["courseId"])
+	if err != nil {
+		encoder.Encode(false)
+		return
+	}
+	assignedStatus := params["assignedStatus"]
+	user := getUser(sessionHash)
+	if user == nil || user.Student != nil {
+		encoder.Encode(false)
+		return
+	}
+	//!CHECK THIS COURSE IS OWNED BY THIS LECTURER!
+	courses := getCoursesOfALecturer(user.Lecturer)
+	isOwn := false
+	for _, course := range courses {
+		if course.Id == courseId {
+			isOwn = true
+			break
+		}
+	}
+	if !isOwn {
+		encoder.Encode(false)
+		return
+	}
+	var isActive bool
+	switch assignedStatus {
+	case "true":
+		isActive = true
+	case "false":
+		isActive = false
+	default:
+		encoder.Encode(false)
+		return
+	}
+	changeStatusOfCourse(courseId, isActive)
+
+}
 
 func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -81,16 +135,19 @@ func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(timeTable)
 }
 
-/*
-This function returns randomly created hash
-to hold the logged user's records
-to be able to serve them later faster without a need to log in everytime
-*/
-func generateRandomSession() string {
-	s1 := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(s1)
-	return string(hashPassword(string(r1.Intn(100000))))
-
+func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if user == nil || user.Student == nil {
+		encoder.Encode(false)
+		return
+	}
+	id := user.Student.Id
+	user.Student = getStudent(id)
+	encoder.Encode(getDepartmentOfStudent(id))
 }
 
 /*
@@ -100,7 +157,7 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
-	id := params["username"]
+	id, _ := strconv.Atoi(params["username"])
 	typedPassword := params["password"]
 	isFound, realPassword := getRealPasswordLecturer(id)
 	if isFound == false {
@@ -116,7 +173,7 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 	sessionHash := generateRandomSession()
 	newUser := new(user)
 	newUser.Lecturer = getLecturer(id)
-	ACTIVE_USERS[sessionHash] = *newUser
+	ACTIVE_USERS[sessionHash] = newUser
 	encoder.Encode(sessionHash)
 	return
 }
@@ -128,9 +185,9 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
-	id := params["username"]
+	id, _ := strconv.Atoi(params["username"])
 	typedPassword := params["password"]
-	isFound, realPassword := getRealPasswordManager(id)
+	isFound, realPassword := getRealPasswordAdmin(id)
 	if isFound == false {
 		fmt.Println("no such a student")
 		encoder.Encode(false)
@@ -144,8 +201,8 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	//create a session for the new user, type of lecturer
 	sessionHash := generateRandomSession()
 	newUser := new(user)
-	newUser.Manager = getManager(id)
-	ACTIVE_USERS[sessionHash] = *newUser
+	newUser.Manager = getAdmin(id)
+	ACTIVE_USERS[sessionHash] = newUser
 	encoder.Encode(sessionHash)
 }
 
@@ -155,7 +212,7 @@ This function hashes the given string
 func hashPassword(password string) []byte {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 8)
 	if err != nil {
-		fmt.Printf("error occurred when hashing")
+		fmt.Println(err.Error())
 		return nil
 	}
 	return hashedPassword

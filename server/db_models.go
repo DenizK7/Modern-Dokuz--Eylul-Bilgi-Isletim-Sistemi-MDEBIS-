@@ -2,6 +2,14 @@ package main
 
 import "database/sql"
 
+type course_status int
+
+const (
+	Failed course_status = iota
+	Current
+	Passed
+)
+
 type user struct {
 	Student  *student
 	Lecturer *lecturer
@@ -42,7 +50,7 @@ type announcement struct {
 }
 
 type course struct {
-	Id              string
+	Id              int
 	Name            string
 	Dep_Id          int
 	AttandenceLimit int
