@@ -13,7 +13,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/log_lecturer/{username}/{password}", responseLecturerLogIn) //returns session hash if successful, false otherwise
 	router.HandleFunc("/change_course_status/{sessionHash}/{courseId}/{assignedStatus}", responseChangeActiveOfCourse)
 	router.HandleFunc("/add_grade/{sessionHash}/{courseId}/{studentId}/{grade}", responseAddGrade)
-	//TODO add announcement for a course
+	router.HandleFunc("/add_announcement/{sessionHash}/{courseId}/{title}/{content}", responseAddAnnouncement)
 
 	//Student requests
 	router.HandleFunc("/log_student/{username}/{password}", responseStudentLogIn) //returns session hash if successful, false otherwise

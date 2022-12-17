@@ -29,13 +29,13 @@ func main() {
 	fmt.Println(sessionHash)
 	var user user
 	ACTIVE_USERS[sessionHash] = &user
-	user.Lecturer = getLecturer(2000506652)
+	user.Lecturer = getLecturer(2000576383)
 
 	//try any back-end function here
 	if err != nil {
 		panic(err.Error())
 	}
-
+	addAnnouncement(2000506140, 288, "SECOND ANNOUNCEMENT OF THE COURSE", "PLEASE before the class, read the chapter shared with you in the resources page of the class.")
 	//start to listen to port and response to the requests
 	r := Router()
 	fmt.Println("Starting server on the port 8080...")

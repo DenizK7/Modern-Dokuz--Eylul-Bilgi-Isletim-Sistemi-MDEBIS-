@@ -102,6 +102,31 @@ func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	title := params["title"]
+	content := params["content"]
+	courseId, _ := strconv.Atoi(params["courseId"])
+
+	user := getUser(sessionHash)
+	if user == nil {
+		fmt.Println("! ! !first you MUST log in! ! !")
+		encoder.Encode(false)
+		return
+	}
+	if user.Student != nil {
+		json.NewEncoder(w).Encode(false)
+		return
+	}
+	if user.Lecturer != nil {
+		json.NewEncoder(w).Encode(addAnnouncement(user.Lecturer.Id, courseId, title, content))
+		return
+	}
+}
+
 /*
 This function responses the request by encoding the timetable in json format
 !ATTENTION! - STUDENT MUST ALREADY LOGGED IN - !ATTENTION!

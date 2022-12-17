@@ -330,14 +330,40 @@ func getLecturerOfCourse(course *course) []string {
 
 func addGrade(lecturerId int, courseId int, studentId int, grade string) bool {
 	//Checking whether this lecturer has this course or not
-	queryCheckingLecturerOwns := "select * from course_has_lecturer where Course_Course_Id=? and Lecturer_Lecturer_Id=?;"
-	if DB.QueryRow(queryCheckingLecturerOwns, courseId, lecturerId).Err() != nil {
+	if isLecturerOwnTheCourse(courseId, lecturerId) == false {
 		return false
 	}
 
 	queryMakeUpdate := "UPDATE course_has_student SET Grade=? where Course_Id=? and Student_Id=? and Situtation='Current';"
 	_, err := DB.Exec(queryMakeUpdate, grade, courseId, studentId)
 	if err != nil {
+		return false
+	}
+	return true
+}
+
+func isLecturerOwnTheCourse(courseId int, lecturerId int) bool {
+	//Checking whether this lecturer has this course or not
+	queryCheckingLecturerOwns := "select * from course_has_lecturer where Course_Course_Id=? and Lecturer_Lecturer_Id=?;"
+	res, err := DB.Query(queryCheckingLecturerOwns, courseId, lecturerId)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	if res.Next() == false {
+		return false
+	}
+	return true
+}
+
+func addAnnouncement(lecturerId int, courseId int, title string, content string) bool {
+	if isLecturerOwnTheCourse(courseId, lecturerId) == false {
+		return false
+	}
+	query := "INSERT INTO course_has_announcement VALUES (0,?,?,?,?);"
+	_, err := DB.Exec(query, courseId, title, content, lecturerId)
+	if err != nil {
+		fmt.Println(err.Error())
 		return false
 	}
 	return true
