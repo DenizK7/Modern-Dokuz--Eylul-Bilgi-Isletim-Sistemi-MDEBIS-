@@ -28,7 +28,7 @@ type student struct {
 }
 
 type lecturer struct {
-	Id        string
+	Id        int
 	Name      string
 	Surname   string
 	EMail     string

@@ -121,7 +121,7 @@ creates a timetable for a given student by querying the DB for the courses
 */
 func getCoursesTimeTable(student *student) *[40]time_table_entry {
 
-	courses := getCoursesOfAStudent(student)
+	courses := getCoursesOfAStudent(student.Id)
 	var timeTable [40]time_table_entry
 	for _, course := range courses {
 		courseTime := course.Time_Inf
@@ -214,9 +214,9 @@ func getCoursesOfALecturer(lecturer *lecturer) []course {
 
 }
 
-func getCoursesOfAStudent(student *student) []course {
+func getCoursesOfAStudent(studentId int) []course {
 	//GETTING COURSE IDS THAT STUDENT IS TAKING
-	rows, err := DB.Query("SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and Situtation='Current'", student.Id)
+	rows, err := DB.Query("SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and Situtation='Current'", studentId)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil
@@ -326,4 +326,19 @@ func getLecturerOfCourse(course *course) []string {
 		lecturerInfos = append(lecturerInfos, lecturerInfo)
 	}
 	return lecturerInfos
+}
+
+func addGrade(lecturerId int, courseId int, studentId int, grade string) bool {
+	//Checking whether this lecturer has this course or not
+	queryCheckingLecturerOwns := "select * from course_has_lecturer where Course_Course_Id=? and Lecturer_Lecturer_Id=?;"
+	if DB.QueryRow(queryCheckingLecturerOwns, courseId, lecturerId).Err() != nil {
+		return false
+	}
+
+	queryMakeUpdate := "UPDATE course_has_student SET Grade=? where Course_Id=? and Student_Id=? and Situtation='Current';"
+	_, err := DB.Exec(queryMakeUpdate, grade, courseId, studentId)
+	if err != nil {
+		return false
+	}
+	return true
 }

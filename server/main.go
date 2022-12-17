@@ -14,6 +14,7 @@ import (
 // DB CONSTANTS COME HERE
 var DB *sql.DB
 var ACTIVE_USERS = make(map[string]*user)
+var GRADES = [9]string{"AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF"}
 
 func main() {
 	//Connect to the DB
@@ -79,4 +80,13 @@ func checkACourseOwned(user *user, courseId int) (isOwned bool) {
 		}
 	}
 	return isOwn
+}
+
+func isGradeLegal(grade string) bool {
+	for _, oneGrade := range GRADES {
+		if oneGrade == grade {
+			return true
+		}
+	}
+	return false
 }

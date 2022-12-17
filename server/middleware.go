@@ -64,7 +64,7 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if user.Student != nil {
-		courses := getCoursesOfAStudent(user.Student)
+		courses := getCoursesOfAStudent(user.Student.Id)
 		json.NewEncoder(w).Encode(courses)
 	}
 	if user.Lecturer != nil {
@@ -72,6 +72,34 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(courses)
 	}
 
+}
+
+func responseAddGrade(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	grade := params["grade"]
+	courseid, _ := strconv.Atoi(params["courseId"])
+	studentId, _ := strconv.Atoi(params["studentId"])
+
+	user := getUser(sessionHash)
+	if user == nil {
+		fmt.Println("! ! !first you MUST log in! ! !")
+		encoder.Encode(false)
+		return
+	}
+	if user.Student != nil {
+		json.NewEncoder(w).Encode(false)
+		return
+	}
+	if user.Lecturer != nil {
+		if isGradeLegal(grade) == false {
+			json.NewEncoder(w).Encode(false)
+			return
+		}
+		json.NewEncoder(w).Encode(addGrade(user.Lecturer.Id, courseid, studentId, grade))
+	}
 }
 
 /*
@@ -116,6 +144,14 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 	}
 	//Make the course what user wants the course to be
 	changeStatusOfCourse(courseId, isActive)
+
+	/*todo
+	DB'e check statement eklenebilir.
+
+	Front end tarafına değişikliğin yapılamayacağını (zaten çoktan active veya inactive) olduğu bilgisi de DÖNDÜRÜLMELİ.
+
+	Ki böylede front end kullanıcıyı uyarabilsin!
+	*/
 
 }
 
