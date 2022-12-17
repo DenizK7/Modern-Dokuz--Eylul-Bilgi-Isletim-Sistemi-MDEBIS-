@@ -127,6 +127,21 @@ func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if user == nil || user.Student != nil {
+		encoder.Encode(false)
+		return
+	}
+	id := user.Student.Id
+	encoder.Encode(getPastCoursesOfStudent(id))
+	return
+}
+
 /*
 This function responses the request by encoding the timetable in json format
 !ATTENTION! - STUDENT MUST ALREADY LOGGED IN - !ATTENTION!

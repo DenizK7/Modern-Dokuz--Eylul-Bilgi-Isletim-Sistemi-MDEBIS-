@@ -294,6 +294,62 @@ func addTimeInfo(course *course) {
 gets the lecturer(s) information of a given course by querying the DB
 */
 
+func getPastCoursesOfStudent(studentId int) []course {
+	//GETTING COURSE IDS THAT STUDENT IS TAKING
+	rows, err := DB.Query("SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and (Situtation='Passed' or Situtation='Failed')", studentId)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+	var courseIds []int
+	for rows.Next() {
+		//create course struct because they will also send to general course map (not created yet)
+		var course int
+		if err := rows.Scan(&course); err != nil {
+			fmt.Println(err.Error())
+			return nil
+		}
+		courseIds = append(courseIds, course)
+	}
+	//GETTING COURSES WITH THE GIVEN IDS
+	params := make([]interface{}, 0)
+	query := []string{"SELECT * FROM mdebis.course where"}
+	if len(courseIds) > 0 {
+		query = append(query,
+			fmt.Sprintf(
+				"Course_Id IN (%s)",
+				strings.Join(strings.Split(strings.Repeat("?", len(courseIds)), ""), ", "),
+			),
+		)
+	}
+	for _, courseId := range courseIds {
+		params = append(params, courseId)
+	}
+	rowsCourses, err := DB.Query(strings.Join(query, " ")+";", params...)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+
+	var courses []course
+
+	for rowsCourses.Next() {
+		//create course struct because they will also send to general course map (not created yet)
+		var course course
+		if err := rowsCourses.Scan(&course.Id, &course.Name, &course.Dep_Id, &course.AttandenceLimit, &course.Credit); err != nil {
+			fmt.Println(err.Error())
+			return nil
+		}
+		addTimeInfo(&course)
+		courses = append(courses, course)
+	}
+	if err = rowsCourses.Err(); err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	return courses
+}
+
 func getLecturerOfCourse(course *course) []string {
 	rows, err := DB.Query("SELECT Lecturer_Lecturer_Id FROM mdebis.course_has_lecturer where Course_Course_Id=?", course.Id)
 	if err != nil {
