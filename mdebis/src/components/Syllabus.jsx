@@ -7,7 +7,7 @@ function Syllabus() {
    const{navVisible, infoStudent, setInfoStudent, token,setToken}= useContext(MainContext);
    
    
-   const[content, setContent] = useState([])
+   const[contents, setContent] = useState([])
    useEffect(() => {
     try {
       var xhttp = new XMLHttpRequest();
@@ -44,7 +44,7 @@ function Syllabus() {
       setCss('grid-container');
      }    
     console.log( sessionStorage.getItem("token"));
-    console.log(content);  
+    console.log(contents);  
     },[navVisible])
    
    
@@ -60,10 +60,10 @@ function Syllabus() {
       <div className="days" >Çarşamba</div>
       <div className="days">Perşembe</div>
       <div className="days">Cuma</div>
-      {/* {
-            content?.map(content =>  <div ><Lessons></Lessons></div>)
-          } */}
-      <div ><Lessons></Lessons></div>
+       {
+            contents?.map(contents =>  <div ><Lessons Department={contents.Department} Lecturer_name={contents.Lecturer_name} AttandanceLimit = {contents.AttandanceLimit}></Lessons></div>)
+          } 
+      {/* <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>
       <div><Lessons></Lessons></div>
@@ -106,7 +106,7 @@ function Syllabus() {
       <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
+      <div ><Lessons></Lessons></div> */}
 
       
       
