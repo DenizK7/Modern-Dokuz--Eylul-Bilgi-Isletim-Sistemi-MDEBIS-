@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"database/sql"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"time"
@@ -52,7 +52,7 @@ func main() {
 	counter := 0
 	for fileScanner.Scan() {
 		id := fileScanner.Text()
-		go MakeRequest("http://localhost:3030/log_student/"+id+"/354152", ch)
+		go MakeRequest("http://localhost:8080/log_student/"+id+"/354152", ch)
 		counter = counter + 1
 		if counter > limit {
 			break
@@ -60,15 +60,19 @@ func main() {
 	}
 
 	readFile.Close()
-
+	for i := 0; i < limit; i++ {
+		fmt.Println(<-ch)
+	}
 	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
 }
 func MakeRequest(url string, ch chan<- string) {
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(body)
+	resp, _ := http.Get(url)
+	body, _ := io.ReadAll(resp.Body)
+	sessionToken := string(body)
+
+	//now get time table of the student
+	resp2, _ := http.Get("http://localhost:8080/time_table/" + sessionToken)
+	body2, _ := io.ReadAll(resp2.Body)
+	fmt.Println(string(body2))
 
 }

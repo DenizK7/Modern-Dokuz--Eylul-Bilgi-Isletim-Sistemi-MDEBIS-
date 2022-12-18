@@ -437,7 +437,7 @@ func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionToken"]
 	user := getUser(sessionHash)
-	if isUserRight(user, 1) {
+	if !isUserRight(user, 1) {
 		err := encoder.Encode(false)
 		if err != nil {
 			fmt.Println(err.Error())
