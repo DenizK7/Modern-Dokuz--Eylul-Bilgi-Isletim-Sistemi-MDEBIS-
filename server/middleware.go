@@ -413,7 +413,7 @@ func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
-	if isUserRight(user, 1) {
+	if !isUserRight(user, 1) {
 		fmt.Println("! ! !first you MUST log in! ! !")
 		err := json.NewEncoder(w).Encode(false)
 		if err != nil {
