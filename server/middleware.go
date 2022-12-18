@@ -435,7 +435,7 @@ func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
-	sessionHash := params["sessionHash"]
+	sessionHash := params["sessionToken"]
 	user := getUser(sessionHash)
 	if isUserRight(user, 1) {
 		err := encoder.Encode(false)
