@@ -61,7 +61,7 @@ function Syllabus() {
       <div className="days">Perşembe</div>
       <div className="days">Cuma</div>
        {
-            contents?.map(contents =>  <div ><Lessons Department={contents.Department} Lecturer_name={contents.Lecturer_name} AttandanceLimit = {contents.AttandanceLimit}></Lessons></div>)
+            contents?.map(contents =>  <div ><Lessons Department={contents.Department} Course_name={contents.Course_name} Lecturer_name={contents.Lecturer_name} AttandenceLimit = {contents.AttandenceLimit}></Lessons></div>)
           } 
       {/* <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>

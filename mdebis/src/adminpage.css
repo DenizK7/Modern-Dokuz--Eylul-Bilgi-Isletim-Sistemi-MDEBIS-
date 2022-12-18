@@ -3,16 +3,16 @@
     background-image: none;
     background-color: aliceblue;
   }
- body {
+ bodyAdmin {
     margin: 0;
     font-family: sans-serif;
     background-color: #f8fafc;
   }
-  .container {
+  .containerAdmin {
     display: flex;
   }
   /* Style the sidebar */
-  .sidebar {
+  .sidebarAdmin {
     width: 200px;
     height: 100vh; /* Set the sidebar to take up the full height of the viewport */
     background-color: #ddd;
@@ -21,24 +21,24 @@
     top: 0;
     left: 0;
   }
-  .sidebar h3 {
+  .sidebarAdmin h3 {
     font-size: 18px;
     margin-bottom: 20px;
   }
-  .sidebar ul {
+  .sidebarAdmin ul {
     list-style: none;
     margin: 0;
     padding: 0;
     
   }
-  .sidebar li {
+  .sidebarAdmin li {
     margin-bottom: 10px;
   }
-  .sidebar a {
+  .sidebarAdmin a {
     color: #666;
     text-decoration: none;
   }
-  .sidebar a:hover {
+  .sidebarAdmin a:hover {
     text-decoration: underline;
   }
   /* Style the main content */

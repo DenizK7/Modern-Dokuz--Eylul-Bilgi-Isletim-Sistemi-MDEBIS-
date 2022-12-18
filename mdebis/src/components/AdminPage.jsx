@@ -4,9 +4,9 @@ function AdminPage(){
     return(
         <body className="noBg">
             {/* <!-- Create a container for the main content and the sidebar --> */}
-    <div class="container">
+    <div className="containerAdmin">
       {/* <!-- The sidebar --> */}
-      <aside class="sidebar">
+      <aside class="sidebarAdmin">
         <h3>Sidebar</h3>
         <p>Here is some content for the sidebar.</p>
         <ul>
@@ -16,7 +16,7 @@ function AdminPage(){
         </ul>
       </aside>
       {/* <!-- The main content --> */}
-      <div class="main-content">
+      <div className="main-content">
         <h1>Welcome to my web page!</h1>
         <p>Here is some content for the main part of the page.</p>
       </div>

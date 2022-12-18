@@ -34,7 +34,7 @@ nav{
 	font-size: 1rem;
 	padding: 5px 10px;
 	cursor: pointer;
-	color: #fff;
+	
 }
 
 .logo{
@@ -53,7 +53,7 @@ nav{
 .nav-link{
 	display: flex;
 	align-items: center;
-	color: #fff;
+	
 	text-decoration: none;
 	padding: 10px 1rem;
 	border-radius: 5px;
@@ -142,6 +142,7 @@ nav{
     font-size: 10px;
     display: table-cell;
     border: groove;
+	width: 16vw;
   }
   .grid-container-sm {
 	display: grid;
@@ -169,9 +170,11 @@ nav{
 	font-size: 10px;
 	display: table-cell;
     border: groove;
+	width: 13vw;
   }
   .item1 {
-	grid-row: 1 / 9;
+	grid-row: 1 / 10;
+	max-width: 5vw;
   }
   .days{
 	font-size : 6vw;
