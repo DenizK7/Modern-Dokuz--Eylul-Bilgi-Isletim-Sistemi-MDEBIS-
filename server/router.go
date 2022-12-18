@@ -6,7 +6,7 @@ func Router() *mux.Router {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/get_gen_announcements", responseGetGeneralAnnouncements) //returns all general announcements
-	//below request is same for students and lecturers (POLYMORPHISM)
+	//below requests are same for students and lecturers (POLYMORPHISM)
 	router.HandleFunc("/get_courses/{sessionHash}", responseGetCourses)                          //return courses if given hash is correct, false otherwise
 	router.HandleFunc("/get_announcement_of_course/{courseId}", responseGetAnnouncementOfCourse) //return courses if given hash is correct, false otherwise
 
@@ -28,8 +28,6 @@ func Router() *mux.Router {
 	router.HandleFunc("/log_admin/{id}/{password}", responseAdminLogIn) //returns session hash if successful, false otherwise
 	router.HandleFunc("/delete_student/{sessionHash}/{studentId}", responseDeleteStudent)
 	router.HandleFunc("/delete_lecturer/{sessionHash}/{lecturerId}", responseDeleteLecturer)
-
-	//TODO DELETE LECTURER
 	//TODO CREATE STUDENT
 	//TODO CREATE LECTURER
 	return router
