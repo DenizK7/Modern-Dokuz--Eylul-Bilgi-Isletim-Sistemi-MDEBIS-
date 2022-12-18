@@ -293,7 +293,22 @@ func addTimeInfo(course *course) {
 /*
 gets the lecturer(s) information of a given course by querying the DB
 */
+func getAnnouncementOfCourse(courseId int) []announcement {
+	var announcements []announcement
+	queryGetsAnnouncements := "SELECT * FROM course_announcements WHERE Course_Course_Id=?;"
+	rows, err := DB.Query(queryGetsAnnouncements, courseId)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+	for rows.Next() {
+		var announcement announcement
+		rows.Scan(&announcement.AnnouncementId, &announcement.CourseId, &announcement.Title, &announcement.Content, &announcement.LecturerId)
+		announcements = append(announcements, announcement)
+	}
 
+	return announcements
+}
 func getStudentsOfCourse(lecturerID, courseId int) []student {
 	//CHECK IF lecturer owns the course
 	if isLecturerOwnTheCourse(courseId, lecturerID) == false {

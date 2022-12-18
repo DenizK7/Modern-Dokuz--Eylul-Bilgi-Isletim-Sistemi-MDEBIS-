@@ -88,6 +88,20 @@ func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(getStudentsOfCourse(user.Lecturer.Id, courseId))
 	return
 }
+func responseGetAnnouncementOfCourse(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	courseId, _ := strconv.Atoi(params["courseId"])
+	user := getUser(sessionHash)
+	if !(isUserRight(user, 1) || isUserRight(user, 2)) {
+		encoder.Encode(false)
+		return
+	}
+	encoder.Encode(getAnnouncementOfCourse(courseId))
+	return
+}
 
 func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)

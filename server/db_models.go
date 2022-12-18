@@ -47,6 +47,7 @@ type announcement struct {
 	CourseId       int
 	Title          string
 	Content        string
+	LecturerId     int
 }
 
 type course struct {
