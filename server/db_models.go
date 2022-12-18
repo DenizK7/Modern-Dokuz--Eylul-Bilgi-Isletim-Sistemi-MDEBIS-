@@ -59,6 +59,7 @@ type course struct {
 	Credit          int
 	Announcements   []announcement
 	IsActive        bool
+	//TODO FILL ANNOUNCEMENTS IN THE COURSE STRUCT!!!! USE IT!!!!!
 }
 
 type department struct {

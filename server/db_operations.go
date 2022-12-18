@@ -418,7 +418,7 @@ func getPastCoursesOfStudent(studentId int) []course {
 	for rowsCourses.Next() {
 		//create course struct because they will also send to general course map (not created yet)
 		var course course
-		if err := rowsCourses.Scan(&course.Id, &course.Name, &course.Dep_Id, &course.AttandenceLimit, &course.Credit); err != nil {
+		if err := rowsCourses.Scan(&course.Id, &course.Name, &course.Dep_Id, &course.AttandenceLimit, &course.Credit, &course.IsActive); err != nil {
 			fmt.Println(err.Error())
 			return nil
 		}

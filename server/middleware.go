@@ -73,39 +73,6 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 /*
 this function encodes the courses as a response
 */
-func responseGetCourses(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-	encoder := json.NewEncoder(w)
-	params := mux.Vars(r)
-	sessionHash := params["sessionHash"]
-	user := getUser(sessionHash)
-	if user == nil {
-		fmt.Println("! ! !first you MUST log in! ! !")
-		err := encoder.Encode(false)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		return
-	}
-	if user.Student != nil {
-		courses := getCoursesOfAStudent(user.Student.Id)
-		err := json.NewEncoder(w).Encode(courses)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-	}
-	if user.Lecturer != nil {
-		courses := getCoursesOfALecturer(user.Lecturer)
-		err := json.NewEncoder(w).Encode(courses)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-	}
-
-}
 
 func responseDeleteStudent(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -268,13 +235,47 @@ func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
+func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
-	if user == nil || user.Student != nil {
+	if user == nil {
+		fmt.Println("! ! !first you MUST log in! ! !")
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	if user.Student != nil {
+		courses := getCoursesOfAStudent(user.Student.Id)
+		err := json.NewEncoder(w).Encode(courses)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+	}
+	if user.Lecturer != nil {
+		courses := getCoursesOfALecturer(user.Lecturer)
+		err := json.NewEncoder(w).Encode(courses)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+	}
+
+}
+
+func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionToken"]
+	user := getUser(sessionHash)
+	if user == nil || user.Student == nil {
 		err := encoder.Encode(false)
 		if err != nil {
 			fmt.Println(err.Error())
