@@ -24,14 +24,6 @@ func main() {
 	if DB != nil {
 
 	}
-	//trying functions
-	fmt.Println(getRealPasswordStudent(2015501167))
-	sessionHash := generateRandomSession()
-	fmt.Println(sessionHash)
-	var user user
-	ACTIVE_USERS[sessionHash] = &user
-	user.Lecturer = getLecturer(2000576383)
-
 	//try any back-end function here
 	if err != nil {
 		panic(err.Error())
