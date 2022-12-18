@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import {useState} from 'react';
 import { useTranslation } from "react-i18next";
-import axios from "axios";
+
 import DropDownn from "./DropDown";
 import Button from "./Button";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import{MainContext, useContext} from '../context'
 const ButtonContainer = styled.div`
   margin: 1rem 0 1rem 0;
   width: 100%;
@@ -27,65 +28,75 @@ const FormatMail = styled.span`
   width:80%;
 `;
 
-const LoginInputs = ()=>{
-  let endpoint = "http://localhost:8080";
+function LoginInputs(){
   const {t} = useTranslation();
   const [inpt, setMessage] = useState('');
   const [pssw, setpssw] = useState('');
- 
+  const{setInfoStudent, infoStudent}= useContext(MainContext);
   const handleChangeinpt = event => {
     setMessage(event.target.value);
 
-    console.log('value is:', event.target.value);
+    
   };
   const handleChangepsw = event => {
     setpssw(event.target.value);
 
-    console.log('value is:', event.target.value);
+    
   };
   function handleClick() {
     try {
        var xhttp = new XMLHttpRequest();
        xhttp.open("GET", "http://localhost:8080/log_student/"+inpt+"/"+pssw,false);
        xhttp.setRequestHeader("Content-type", "text/html");
-       xhttp.send();
-       var response = JSON.parse(xhttp.response);
-      console.log(response);
-    } catch (error) {
-      alert("Kullanıcı adı veya şifre hatalı");
-  }
-  if(!response){
-   setHomePage(false);
-  }
-  else{
-    setHomePage(true);
-  }
-    
-  };
-  const [homePage, setHomePage] = useState(false);
-  if(homePage){
-    return <Navigate to="/Homepage/infoLecture" />;
-  }
-  return(
-    <div>
-      <ButtonContainer>
-      <StyledInput  type="text"
-        id="inpt" name="inpt" placeholder={t("EMAIL")} onChange={handleChangeinpt}
-        value={inpt}  ></StyledInput>
-      <FormatMail>
-      <DropDownn placeholder={t("EXTENSION")}></DropDownn>
-      </FormatMail>
-    </ButtonContainer>
-    <InputContainer>
-    <StyledInputPassword  type="password"
-        id="psw" name="psw" placeholder={t("PASSWORD")} onChange={handleChangepsw}
-        value={pssw} ></StyledInputPassword>
-    </InputContainer>
-    <ButtonContainer>
-      <Button  content={t("LOGIN_BTN") } onClick={handleClick}/>
-    </ButtonContainer>
-    </div>
-        );
+       xhttp.onload = function (e) {
+        if (xhttp.readyState === 4) {
+            if (xhttp.status === 200) {
+
+               var response = JSON.parse(xhttp.responseText);
+               setInfoStudent(response);
+               sessionStorage.setItem("token", response.Id);
+               
+            }
+         }
+      }
+     
+      xhttp.send();
+     
+  
+   } catch (error) {
+     alert("Wrong pass or id");
+   }
+}
+
+ 
+    if(!infoStudent || infoStudent.length===0){
+      return(
+        <div>
+          <ButtonContainer>
+          <StyledInput  type="text"
+            id="inpt" name="inpt" placeholder={t("EMAIL")} onChange={handleChangeinpt}
+            value={inpt}  ></StyledInput>
+          <FormatMail>
+          <DropDownn placeholder={t("EXTENSION")}></DropDownn>
+          </FormatMail>
+        </ButtonContainer>
+        <InputContainer>
+        <StyledInputPassword  type="password"
+            id="psw" name="psw" placeholder={t("PASSWORD")} onChange={handleChangepsw}
+            value={pssw} ></StyledInputPassword>
+        </InputContainer>
+        <ButtonContainer>
+          <Button  content={t("LOGIN_BTN") } onClick={handleClick}/>
+        </ButtonContainer>
+        </div>
+            );
+    }
+    else{
+      
+      return <Navigate to="/Homepage/infoLecture" />;
+    }
+ 
+ 
       
 }
 const StyledInputPassword = styled.input`
