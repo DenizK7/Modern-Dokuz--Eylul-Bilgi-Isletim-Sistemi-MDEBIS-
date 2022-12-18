@@ -80,26 +80,21 @@ func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	grade := params["grade"]
-	courseid, _ := strconv.Atoi(params["courseId"])
+	courseId, _ := strconv.Atoi(params["courseId"])
 	studentId, _ := strconv.Atoi(params["studentId"])
 
 	user := getUser(sessionHash)
-	if user == nil {
+	isUserRight := isUserRight(user, 2)
+	if isUserRight == false {
 		fmt.Println("! ! !first you MUST log in! ! !")
 		encoder.Encode(false)
 		return
 	}
-	if user.Student != nil {
+	if isGradeLegal(grade) == false {
 		json.NewEncoder(w).Encode(false)
 		return
 	}
-	if user.Lecturer != nil {
-		if isGradeLegal(grade) == false {
-			json.NewEncoder(w).Encode(false)
-			return
-		}
-		json.NewEncoder(w).Encode(addGrade(user.Lecturer.Id, courseid, studentId, grade))
-	}
+	json.NewEncoder(w).Encode(addGrade(user.Lecturer.Id, courseId, studentId, grade))
 }
 
 func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
@@ -142,6 +137,29 @@ func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func isUserRight(user *user, whichUser int) bool {
+	//whichUser
+	//1 --> student
+	//2 --> lecturer
+	//3 --> manager
+
+	if user == nil {
+		return false
+	}
+	if user.Student == nil && whichUser == 1 {
+		return false
+	}
+
+	if user.Lecturer == nil && whichUser == 2 {
+		return false
+	}
+
+	if user.Manager == nil && whichUser == 3 {
+		return false
+	}
+	return true
+}
+
 /*
 This function responses the request by encoding the timetable in json format
 !ATTENTION! - STUDENT MUST ALREADY LOGGED IN - !ATTENTION!
@@ -159,7 +177,7 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 	}
 	assignedStatus := params["assignedStatus"]
 	user := getUser(sessionHash)
-	if user == nil || user.Student != nil {
+	if isUserRight(user, 2) {
 		encoder.Encode(false)
 		return
 	}
@@ -200,7 +218,7 @@ func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
-	if user == nil || user.Student == nil {
+	if isUserRight(user, 1) {
 		fmt.Println("! ! !first you MUST log in! ! !")
 		json.NewEncoder(w).Encode(false)
 	}
@@ -214,7 +232,7 @@ func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
-	if user == nil || user.Student == nil {
+	if isUserRight(user, 1) {
 		encoder.Encode(false)
 		return
 	}
