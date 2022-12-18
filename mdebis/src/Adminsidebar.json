@@ -1,0 +1,99 @@
+
+ [   
+       
+    {
+        "title": "Home",
+        "icon": "bi-house-fill",
+        "path": "/HomePage/infoLecture"
+    },
+    {
+        "title": "Syllabus",
+        "icon": "bi-calendar2-week",
+        "path": "/HomePage/Syllabus"
+    },
+    {
+        "title": "Contact",
+        "icon": "bi-phone-fill",
+        "childrens": [
+            {
+                "title": "Facebook",
+                "icon": "bi-facebook",
+                "path": "https://tr-tr.facebook.com/deuceng/"
+            },
+            {
+                "title": "Twitter",
+                "icon": "bi-twitter",
+                "path": "https://twitter.com/deumuhendislik"
+
+            },
+            {
+                "title": "Instagram",
+                "icon": "bi-instagram",
+                "path": "https://www.instagram.com/deu_ceng/"
+            }
+        ]
+    },
+    {
+        "title": "FAQ",
+        "icon": "bi-question-circle-fill",
+        "childrens": [
+            {
+                "title": "Proxy Settings",
+                "path": "http://web.deu.edu.tr/sss/proxy.html",
+                "icon": "bi-question"
+            },
+            {
+                "title": "What Is Spam",
+                "path": "http://web.deu.edu.tr/sss/spam.html",
+                "icon": "bi-question"
+            },
+            {
+                "title": "E-mail Questions",
+                "path": "http://web.deu.edu.tr/sss/posta.html",
+                "icon": "bi-question"
+            },
+            {
+                "title": "WiFi",
+                "path": "https://bid.deu.edu.tr/",
+                "icon": "bi-question"
+                
+            }
+        ]
+    },
+
+
+{
+"title": "Profile",
+"icon": "bi-person-fill",
+"childrens": [
+    {
+        "title": "Profile",
+        "path": "/profile"
+    },
+    {
+        "title": "Forgot Password",
+        "path": "/forgot-password"
+    }
+]
+},
+{
+"title": "Past Courses",
+"path": "/HomePage/PastCourses",
+"icon": "bi-bookmarks"
+},
+{
+"title": "Email",
+"icon": "bi-envelope",
+"path": "https://webmail7.deu.edu.tr/"
+},
+{
+"title": "Support",
+"icon": "bi-question-circle-fill",
+"path": "/support"
+},
+{
+"title": "Logout",
+"path": "/",
+"icon": "bi-x -circle"
+}
+]

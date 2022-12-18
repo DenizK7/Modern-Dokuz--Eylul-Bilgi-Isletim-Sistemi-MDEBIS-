@@ -15,6 +15,7 @@ const ICON_SIZE = 20;
 function Navbar({visible, show}) {
 	const{setInfoStudent, infoStudent}= useContext(MainContext);
 	const info = useMemo(() => infoStudent.Id );
+	const[DepId, setDepId] = useState();
 	var response;
 	useEffect(() => {
         try {
@@ -26,7 +27,7 @@ function Navbar({visible, show}) {
                if (xhttp.status === 200) {
       
                  response = JSON.parse(xhttp.response);   
-                    
+                    setDepId(response);
                    
                }
             }
@@ -38,7 +39,7 @@ function Navbar({visible, show}) {
       } catch (error) {
         alert("Wrong pass or id");
       }
-         
+         console.log(DepId);
          
        }, []);
 	return (
@@ -62,7 +63,7 @@ function Navbar({visible, show}) {
 						? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
 				</button>
                 <img src={require('../pp.jpeg')} style={{padding : "2rem" , height: "10rem", borderRadius: "40%"}} />
-			 <div>{response}</div>			
+			 <div>{DepId}</div>			
                  <div className="sidebar">
          		 { items.map((item, index) => <SidebarItem key={index} item={item} />) }
         		</div> 

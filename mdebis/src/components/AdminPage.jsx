@@ -1,5 +1,7 @@
 
 import "../adminpage.css";
+import items from "../Adminsidebar.json";
+import SidebarItem from './HomeSideBarItems';
 function AdminPage(){
     return(
         <body className="noBg">
@@ -7,13 +9,7 @@ function AdminPage(){
     <div className="containerAdmin">
       {/* <!-- The sidebar --> */}
       <aside class="sidebarAdmin">
-        <h3>Sidebar</h3>
-        <p>Here is some content for the sidebar.</p>
-        <ul>
-          <li><a href="#"> Delete Student</a></li>
-          <li><a href="#">Delete Lecturer</a></li>
-          <li><a href="#">Lol</a></li>
-        </ul>
+      { items.map((item, index) => <SidebarItem key={index} item={item} />) }
       </aside>
       {/* <!-- The main content --> */}
       <div className="main-content">
