@@ -294,6 +294,31 @@ func addTimeInfo(course *course) {
 gets the lecturer(s) information of a given course by querying the DB
 */
 
+func getStudentsOfCourse(lecturerID, courseId int) []student {
+	//CHECK IF lecturer owns the course
+	if isLecturerOwnTheCourse(courseId, lecturerID) == false {
+		return nil
+	}
+	//Check that whether the course is active or not
+	queryCheckCourse := "select * from course where Course_Id=? and Active=1;"
+	row, err := DB.Query(queryCheckCourse, courseId)
+	if err != nil || row.Next() == false {
+		print(err.Error())
+		return nil
+	}
+
+	var students []student
+	queryGetStudent := "SELECT Student_Id,Name,Surname,Year,Department_Id,Mail,GPA,Photo_Path  FROM student WHERE Student_Id IN" +
+		"(SELECT Student_Id FROM course_has_student where Course_Id=?);"
+	rowStudents, _ := DB.Query(queryGetStudent, courseId)
+	for rowStudents.Next() {
+		var student student
+		rowStudents.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
+		students = append(students, student)
+	}
+	return students
+}
+
 func getPastCoursesOfStudent(studentId int) []course {
 	//GETTING COURSE IDS THAT STUDENT IS TAKING
 	rows, err := DB.Query("SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and (Situtation='Passed' or Situtation='Failed')", studentId)
