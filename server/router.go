@@ -15,7 +15,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/change_course_status/{sessionHash}/{courseId}/{assignedStatus}", responseChangeActiveOfCourse)
 	router.HandleFunc("/add_grade/{sessionHash}/{courseId}/{studentId}/{grade}", responseAddGrade)
 	router.HandleFunc("/add_announcement/{sessionHash}/{courseId}/{title}/{content}", responseAddAnnouncement)
-	router.HandleFunc("/add_announcement/{sessionHash}/{courseId}", responseGetStudentsOfCourse)
+	router.HandleFunc("/get_student_of_course/{sessionHash}/{courseId}", responseGetStudentsOfCourse)
 
 	//Student requests
 	router.HandleFunc("/log_student/{username}/{password}", responseStudentLogIn)                 //returns session hash if successful, false otherwise
@@ -23,9 +23,11 @@ func Router() *mux.Router {
 	router.HandleFunc("get_department_of_student/{sessionToken}", responseGetDepartmentOfStudent) // responseGetPastCoursesOfStudent
 	router.HandleFunc("get_past_courses/{sessionToken}", responseGetPastCoursesOfStudent)
 
-	//Admin requests
+	//Admin requests //responseDeleteStudent
 	router.HandleFunc("/log_admin/{id}/{password}", responseAdminLogIn) //returns session hash if successful, false otherwise
-	//TODO DELETE STUDENT
+	router.HandleFunc("/delete_student/{sessionHash}/{studentId}", responseDeleteStudent)
+	router.HandleFunc("/delete_lecturer/{sessionHash}/{lecturerId}", responseDeleteLecturer)
+
 	//TODO DELETE LECTURER
 	//TODO CREATE STUDENT
 	//TODO CREATE LECTURER

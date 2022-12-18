@@ -59,6 +59,26 @@ func getRealPasswordAdmin(id int) (bool, string) {
 	return true, realPassword
 }
 
+func deleteStudent(idStudent int) bool {
+	query := "DELETE FROM student WHERE Student_Id=?"
+	_, err := DB.Exec(query, idStudent)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
+
+func deleteLecturer(idLecturer int) bool {
+	query := "DELETE FROM lecturer WHERE Lecturer_Id=?"
+	_, err := DB.Exec(query, idLecturer)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
+
 /*
 Returns the student struct with its session hash, usually called after a successful login
 Also saves the student to the ACTIVE_USERS map

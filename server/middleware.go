@@ -74,6 +74,34 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func responseDeleteStudent(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	studentId, _ := strconv.Atoi(params["studentId"])
+	user := getUser(sessionHash)
+	if isUserRight(user, 3) == false {
+		encoder.Encode(false)
+		return
+	}
+	encoder.Encode(deleteStudent(studentId))
+}
+
+func responseDeleteLecturer(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	lecturerId, _ := strconv.Atoi(params["lecturerId"])
+	user := getUser(sessionHash)
+	if isUserRight(user, 3) == false {
+		encoder.Encode(false)
+		return
+	}
+	encoder.Encode(deleteLecturer(lecturerId))
+}
+
 func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
