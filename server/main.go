@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -58,7 +59,9 @@ to be able to serve them later faster without a need to log in everytime
 func generateRandomSession() string {
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
-	return string(hashPassword(strconv.Itoa(r1.Intn(100000))))
+	hash := string(hashPassword(strconv.Itoa(r1.Intn(100000))))
+	hash = strings.Replace(hash, "/", "", -1)
+	return hash
 
 }
 
