@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -65,21 +66,8 @@ to be able to serve them later faster without a need to log in everytime
 func generateRandomSession() string {
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
-	return string(hashPassword(string(r1.Intn(100000))))
+	return string(hashPassword(strconv.Itoa(r1.Intn(100000))))
 
-}
-
-func checkACourseOwned(user *user, courseId int) (isOwned bool) {
-	//!CHECK THIS COURSE IS OWNED BY THIS LECTURER!
-	courses := getCoursesOfALecturer(user.Lecturer)
-	isOwn := false
-	for _, course := range courses {
-		if course.Id == courseId {
-			isOwn = true
-			break
-		}
-	}
-	return isOwn
 }
 
 func isGradeLegal(grade string) bool {

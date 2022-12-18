@@ -359,6 +359,23 @@ func getStudentsOfCourse(lecturerID, courseId int) []student {
 	return students
 }
 
+func changeNonAttendance(lecturerId int, courseId int, studentId int, nonAttendance int) bool {
+	//check the lecturer owns the course
+	if isLecturerOwnTheCourse(courseId, lecturerId) == false {
+		return false
+	}
+	//NO NEED TO CHECK WHETHER THE STUDENT IS TAKING THE COURSE OR NOT
+	//BECAUSE IF THE STUDENT IS NOT TAKING, THE DB WILL RETURN AN ERROR
+	//AND SO THIS ERROR WILL ALSO BE RETURNED BY THIS FUNCTION :)
+	queryToChange := "UPDATE course_has_student SET Non_Attendance=? where Course_Id=? and Student_Id=?;"
+	_, err := DB.Exec(queryToChange, nonAttendance, courseId, studentId)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
+
 func getPastCoursesOfStudent(studentId int) []course {
 	//GETTING COURSE IDS THAT STUDENT IS TAKING
 	rows, err := DB.Query("SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and (Situtation='Passed' or Situtation='Failed')", studentId)

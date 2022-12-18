@@ -1,7 +1,7 @@
 package main
 
 import (
-	json "encoding/json"
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"golang.org/x/crypto/bcrypt"
@@ -12,10 +12,14 @@ import (
 /*
 This function encodes all the GENERAL ANNOUNCEMENTS as a response
 */
-func responseGetGeneralAnnouncements(w http.ResponseWriter, r *http.Request) {
+func responseGetGeneralAnnouncements(w http.ResponseWriter, _ *http.Request) {
 	enableCors(&w)
 	announcements := getGeneralAnnouncements()
-	json.NewEncoder(w).Encode(announcements)
+	err := json.NewEncoder(w).Encode(announcements)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
 
 func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
@@ -25,19 +29,32 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(params["username"])
 	if err != nil {
 		fmt.Println("error wen converting id to int ")
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	typedPassword := params["password"]
 	isFound, realPassword := getRealPasswordStudent(id)
 	if isFound == false {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+
+			return
+		}
 		return
 	}
 	if bcrypt.CompareHashAndPassword([]byte(realPassword), []byte(typedPassword)) != nil {
 		// If the two passwords don't match, return a 401 status
 		fmt.Println("password error")
-		encoder.Encode("false")
+		err := encoder.Encode("false")
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	//create a session for the new user, type of student
@@ -45,7 +62,11 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	newUser := new(user)
 	newUser.Student = getStudent(id)
 	ACTIVE_USERS[sessionHash] = newUser
-	encoder.Encode(sessionHash)
+	err = encoder.Encode(sessionHash)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	return
 }
 
@@ -60,16 +81,28 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 	user := getUser(sessionHash)
 	if user == nil {
 		fmt.Println("! ! !first you MUST log in! ! !")
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	if user.Student != nil {
 		courses := getCoursesOfAStudent(user.Student.Id)
-		json.NewEncoder(w).Encode(courses)
+		err := json.NewEncoder(w).Encode(courses)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 	}
 	if user.Lecturer != nil {
 		courses := getCoursesOfALecturer(user.Lecturer)
-		json.NewEncoder(w).Encode(courses)
+		err := json.NewEncoder(w).Encode(courses)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 	}
 
 }
@@ -82,10 +115,18 @@ func responseDeleteStudent(w http.ResponseWriter, r *http.Request) {
 	studentId, _ := strconv.Atoi(params["studentId"])
 	user := getUser(sessionHash)
 	if isUserRight(user, 3) == false {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
-	encoder.Encode(deleteStudent(studentId))
+	err := encoder.Encode(deleteStudent(studentId))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
 
 func responseDeleteLecturer(w http.ResponseWriter, r *http.Request) {
@@ -96,10 +137,18 @@ func responseDeleteLecturer(w http.ResponseWriter, r *http.Request) {
 	lecturerId, _ := strconv.Atoi(params["lecturerId"])
 	user := getUser(sessionHash)
 	if isUserRight(user, 3) == false {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
-	encoder.Encode(deleteLecturer(lecturerId))
+	err := encoder.Encode(deleteLecturer(lecturerId))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
 
 func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
@@ -110,10 +159,18 @@ func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
 	courseId, _ := strconv.Atoi(params["courseId"])
 	user := getUser(sessionHash)
 	if isUserRight(user, 2) == false {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
-	encoder.Encode(getStudentsOfCourse(user.Lecturer.Id, courseId))
+	err := encoder.Encode(getStudentsOfCourse(user.Lecturer.Id, courseId))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	return
 }
 func responseGetAnnouncementOfCourse(w http.ResponseWriter, r *http.Request) {
@@ -124,10 +181,18 @@ func responseGetAnnouncementOfCourse(w http.ResponseWriter, r *http.Request) {
 	courseId, _ := strconv.Atoi(params["courseId"])
 	user := getUser(sessionHash)
 	if !(isUserRight(user, 1) || isUserRight(user, 2)) {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
-	encoder.Encode(getAnnouncementOfCourse(courseId))
+	err := encoder.Encode(getAnnouncementOfCourse(courseId))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	return
 }
 
@@ -144,14 +209,26 @@ func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 	isUserRight := isUserRight(user, 2)
 	if isUserRight == false {
 		fmt.Println("! ! !first you MUST log in! ! !")
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	if isGradeLegal(grade) == false {
-		json.NewEncoder(w).Encode(false)
+		err := json.NewEncoder(w).Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
-	json.NewEncoder(w).Encode(addGrade(user.Lecturer.Id, courseId, studentId, grade))
+	err := json.NewEncoder(w).Encode(addGrade(user.Lecturer.Id, courseId, studentId, grade))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
 
 func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
@@ -166,15 +243,27 @@ func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
 	user := getUser(sessionHash)
 	if user == nil {
 		fmt.Println("! ! !first you MUST log in! ! !")
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	if user.Student != nil {
-		json.NewEncoder(w).Encode(false)
+		err := json.NewEncoder(w).Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	if user.Lecturer != nil {
-		json.NewEncoder(w).Encode(addAnnouncement(user.Lecturer.Id, courseId, title, content))
+		err := json.NewEncoder(w).Encode(addAnnouncement(user.Lecturer.Id, courseId, title, content))
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 }
@@ -186,11 +275,19 @@ func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
 	if user == nil || user.Student != nil {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	id := user.Student.Id
-	encoder.Encode(getPastCoursesOfStudent(id))
+	err := encoder.Encode(getPastCoursesOfStudent(id))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	return
 }
 
@@ -217,6 +314,31 @@ func isUserRight(user *user, whichUser int) bool {
 	return true
 }
 
+func responseChangeNonAttendance(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	courseId, _ := strconv.Atoi(params["courseId"])
+	studentId, _ := strconv.Atoi(params["studentId"])
+	nonAttendance, _ := strconv.Atoi(params["nonAttendance"])
+	user := getUser(sessionHash)
+	if !isUserRight(user, 2) {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	err := encoder.Encode(changeNonAttendance(user.Student.Id, courseId, studentId, nonAttendance))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	return
+}
+
 /*
 This function responses the request by encoding the timetable in json format
 !ATTENTION! - STUDENT MUST ALREADY LOGGED IN - !ATTENTION!
@@ -229,20 +351,32 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 	sessionHash := params["sessionHash"]
 	courseId, err := strconv.Atoi(params["courseId"])
 	if err != nil {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	assignedStatus := params["assignedStatus"]
 	user := getUser(sessionHash)
-	if isUserRight(user, 2) {
-		encoder.Encode(false)
+	if !isUserRight(user, 2) {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	//!CHECK THIS COURSE IS OWNED BY THIS LECTURER!
-	var isOwned = checkACourseOwned(user, courseId)
+	var isOwned = isLecturerOwnTheCourse(courseId, user.Lecturer.Id)
 	if isOwned == false {
 		fmt.Println("course does not belong this user")
-		encoder.Encode("course does not belong this user")
+		err := encoder.Encode("course does not belong this user")
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 
@@ -254,7 +388,11 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 	case "false":
 		isActive = false
 	default:
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	//Make the course what user wants the course to be
@@ -277,10 +415,19 @@ func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
 	user := getUser(sessionHash)
 	if isUserRight(user, 1) {
 		fmt.Println("! ! !first you MUST log in! ! !")
-		json.NewEncoder(w).Encode(false)
+		err := json.NewEncoder(w).Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 	}
 	timeTable := getCoursesTimeTable(user.Student)
-	json.NewEncoder(w).Encode(timeTable)
+	err := json.NewEncoder(w).Encode(timeTable)
+	if err != nil {
+		fmt.Println(err.Error())
+
+		return
+	}
 }
 
 func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
@@ -290,12 +437,20 @@ func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
 	if isUserRight(user, 1) {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	id := user.Student.Id
 	user.Student = getStudent(id)
-	encoder.Encode(getDepartmentOfStudent(id))
+	err := encoder.Encode(getDepartmentOfStudent(id))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
 
 /*
@@ -309,20 +464,32 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 	typedPassword := params["password"]
 	isFound, realPassword := getRealPasswordLecturer(id)
 	if isFound == false {
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	if bcrypt.CompareHashAndPassword([]byte(realPassword), []byte(typedPassword)) != nil {
 		// If the two passwords do not match, return a 401 status
 		fmt.Println("password error")
-		encoder.Encode("false")
+		err := encoder.Encode("false")
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 	}
 	//create a session for the new user, type of lecturer
 	sessionHash := generateRandomSession()
 	newUser := new(user)
 	newUser.Lecturer = getLecturer(id)
 	ACTIVE_USERS[sessionHash] = newUser
-	encoder.Encode(sessionHash)
+	err := encoder.Encode(sessionHash)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	return
 }
 
@@ -338,12 +505,20 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	isFound, realPassword := getRealPasswordAdmin(id)
 	if isFound == false {
 		fmt.Println("no such a student")
-		encoder.Encode(false)
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 	}
 	if bcrypt.CompareHashAndPassword([]byte(realPassword), []byte(typedPassword)) != nil {
 		// If the two passwords don't match, return a 401 status
 		fmt.Println("password error")
-		encoder.Encode("WRONG PASSWORD!")
+		err := encoder.Encode("WRONG PASSWORD!")
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	//create a session for the new user, type of lecturer
@@ -351,7 +526,11 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	newUser := new(user)
 	newUser.Manager = getAdmin(id)
 	ACTIVE_USERS[sessionHash] = newUser
-	encoder.Encode(sessionHash)
+	err := encoder.Encode(sessionHash)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
 
 /*
