@@ -1,24 +1,26 @@
 import "../homeSide.css";
 import Lessons from "./Lessons";
-import { Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import{MainContext, useContext} from '../context'
 function Syllabus() {
     const [css, setCss] = useState('grid-container');
-   const{navVisible}= useContext(MainContext);
-
-    
+   const{navVisible, infoStudent, setInfoStudent, token,setToken}= useContext(MainContext);
+   
+   
+ 
 	useEffect (() =>{
+    
      if(navVisible){
       setCss('grid-container-sm');
      }
      else{
       setCss('grid-container');
-     }
-     
-     
+     }    
+    console.log( sessionStorage.getItem("token"));
     },[navVisible])
     
+   
+      
 	return (
         <>
         

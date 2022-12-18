@@ -1,19 +1,32 @@
 import './index.css'
-import {BrowserRouter as Router, Route, Routes, Outlet, useLocation} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Loginpage from "./Pages/LoginPage"
 import ForgotPassword from './Pages/ForgotPassword';
 import Home from "./components/Home"
 import Syllabus from './components/Syllabus';
 import InfoLecture from './components/InfoLecture';
+import {MainContext} from "./context";
 
 import React, {useState} from 'react';
-function App() {
- 
+function  App ()  {
+  
+  const [infoStudent, setInfoStudent] = useState([]);
+  const [token, setToken] = useState();
+  const [navVisible, showNavbar] = useState(false);
+    const data = {
+      token,
+      setToken,
+        navVisible,
+        showNavbar,
+        infoStudent,
+        setInfoStudent,
+    }
   return (
+    <MainContext.Provider value ={data}>
     <body >
       <Router>
         <Routes>
-          <Route path ="/" element ={<Loginpage/>} />   
+          <Route path ="/" element ={<Loginpage />} />   
           <Route path ="/ForgotPassword" element ={<ForgotPassword/>} />      
           <Route path ="/HomePage"   element ={<Home/>} >
           <Route path ="/HomePage/infoLecture" element ={<InfoLecture/>} />
@@ -23,6 +36,7 @@ function App() {
         </Routes>
       </Router>
     </body>
+    </MainContext.Provider>
     
   );
 }

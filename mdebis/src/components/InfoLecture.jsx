@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import Navbar from "./HomeSideInner";
 import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
 import "../homeSide.css";
 import Syllabus from "./Syllabus";
 import {Outlet} from "react-router-dom";
+import{MainContext, useContext} from '../context'
 
 function InfoLecture() {
-	 
+    const{navVisible, infoStudent, setInfoStudent}= useContext(MainContext);
+   
 	return (
 		
 			<div className='grid-container-info'>

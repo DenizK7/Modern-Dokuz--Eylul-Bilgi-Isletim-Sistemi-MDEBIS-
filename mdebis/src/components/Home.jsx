@@ -6,16 +6,13 @@ import "../homeSide.css";
 import Syllabus from "./Syllabus";
 import {Outlet, useLocation} from "react-router-dom";
 import InfoLecture from './InfoLecture';
-import {MainContext} from "../context";
+import{MainContext, useContext} from '../context'
 
 function Home(){
-    const [navVisible, showNavbar] = useState(false);
-    const data = {
-        navVisible,
-        showNavbar
-    }
+    
+    const{navVisible, showNavbar}= useContext(MainContext);
     return(
-        <MainContext.Provider value ={data}>
+       
         <body className='noBg'>
           
            <Navbar  visible={ navVisible } show={ showNavbar } />		
@@ -23,7 +20,7 @@ function Home(){
            
                       
         </body>
-        </MainContext.Provider>
+       
         
     );
 }

@@ -126,9 +126,7 @@ const FormatMail = styled.span`
   if(goForgotPassword){
     return <Navigate to="/ForgotPassword" />;
   }
-  if(homePage){
-    return <Navigate to="/Homepage/infoLecture" />;
-  }
+  
   return (
     <MainContain>
     <WelcomeText>{t("WELCOME")}</WelcomeText>

@@ -5,14 +5,16 @@ import {
 	FaBars
 } from 'react-icons/fa';
 import { NavLink } from "react-router-dom";
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import items from "../sidebar.json";
 import SidebarItem from './HomeSideBarItems';
+import{MainContext, useContext} from '../context'
 const ICON_SIZE = 20;
 
 
 function Navbar({visible, show}) {
-	
+	const{setInfoStudent, infoStudent}= useContext(MainContext);
+	const info = useMemo(() => infoStudent.Id );
 	return (
 		<>
 			<div className="mobile-nav">
@@ -37,6 +39,7 @@ function Navbar({visible, show}) {
                  <div className="sidebar">
          		 { items.map((item, index) => <SidebarItem key={index} item={item} />) }
         		</div> 
+				<div>{info}</div>
 				
 			</nav>
 		</>
