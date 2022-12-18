@@ -43,7 +43,7 @@ function Syllabus() {
      else{
       setCss('grid-container');
      }    
-    console.log( sessionStorage.getItem("token"));
+    console.log( "departman adı budur" +sessionStorage.getItem( "lastname"));
     console.log(contents);  
     },[navVisible])
    

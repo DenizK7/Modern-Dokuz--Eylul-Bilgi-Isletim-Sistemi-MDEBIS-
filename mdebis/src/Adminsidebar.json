@@ -6,11 +6,7 @@
         "icon": "bi-house-fill",
         "path": "/HomePage/infoLecture"
     },
-    {
-        "title": "Syllabus",
-        "icon": "bi-calendar2-week",
-        "path": "/HomePage/Syllabus"
-    },
+   
     {
         "title": "Contact",
         "icon": "bi-phone-fill",
@@ -76,11 +72,7 @@
     }
 ]
 },
-{
-"title": "Past Courses",
-"path": "/HomePage/PastCourses",
-"icon": "bi-bookmarks"
-},
+
 {
 "title": "Email",
 "icon": "bi-envelope",
