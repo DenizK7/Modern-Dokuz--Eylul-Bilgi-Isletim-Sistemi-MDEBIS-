@@ -54,7 +54,8 @@ function LoginInputs(){
 
                var response = JSON.parse(xhttp.responseText);
                setInfoStudent(response);
-               sessionStorage.setItem("token", response.Id);
+               sessionStorage.setItem("token", response);
+             
                
             }
          }

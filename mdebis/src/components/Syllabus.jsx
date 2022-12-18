@@ -7,7 +7,34 @@ function Syllabus() {
    const{navVisible, infoStudent, setInfoStudent, token,setToken}= useContext(MainContext);
    
    
- 
+   const[content, setContent] = useState([])
+   useEffect(() => {
+    try {
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "http://localhost:8080/time_table/"+sessionStorage.getItem("token"),false);
+      xhttp.setRequestHeader("Content-type", "text/html");
+      xhttp.onload = function (e) {
+       if (xhttp.readyState === 4) {
+           if (xhttp.status === 200) {
+  
+            var response = JSON.parse(xhttp.response);   
+            setContent(response);    
+               
+           }
+        }
+     }
+    
+     xhttp.send();
+    
+  
+  } catch (error) {
+    alert("Wrong pass or id");
+  }
+     
+     
+   }, []);
+  
+
 	useEffect (() =>{
     
      if(navVisible){
@@ -17,9 +44,11 @@ function Syllabus() {
       setCss('grid-container');
      }    
     console.log( sessionStorage.getItem("token"));
+    console.log(content);  
     },[navVisible])
-    
    
+   
+  
       
 	return (
         <>
@@ -31,7 +60,9 @@ function Syllabus() {
       <div className="days" >Çarşamba</div>
       <div className="days">Perşembe</div>
       <div className="days">Cuma</div>
-      
+      {/* {
+            content?.map(content =>  <div ><Lessons></Lessons></div>)
+          } */}
       <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>

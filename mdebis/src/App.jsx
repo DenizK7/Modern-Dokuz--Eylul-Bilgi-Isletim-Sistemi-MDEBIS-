@@ -5,9 +5,10 @@ import ForgotPassword from './Pages/ForgotPassword';
 import Home from "./components/Home"
 import Syllabus from './components/Syllabus';
 import InfoLecture from './components/InfoLecture';
+import AdminPage from './components/AdminPage';
 import {MainContext} from "./context";
-
 import React, {useState} from 'react';
+
 function  App ()  {
   
   const [infoStudent, setInfoStudent] = useState([]);
@@ -27,12 +28,16 @@ function  App ()  {
       <Router>
         <Routes>
           <Route path ="/" element ={<Loginpage />} />   
-          <Route path ="/ForgotPassword" element ={<ForgotPassword/>} />      
+          <Route path ="/ForgotPassword" element ={<ForgotPassword/>} />  
+          <Route path ="/AdminPage" element ={<AdminPage/>} />
+          
+
           <Route path ="/HomePage"   element ={<Home/>} >
           <Route path ="/HomePage/infoLecture" element ={<InfoLecture/>} />
           <Route path ="/HomePage/Syllabus" element ={<Syllabus/>} />
-          
           </Route>    
+
+          
         </Routes>
       </Router>
     </body>

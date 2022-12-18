@@ -8,7 +8,7 @@ import{MainContext, useContext} from '../context'
 
 function InfoLecture() {
     const{navVisible, infoStudent, setInfoStudent}= useContext(MainContext);
-   
+    console.log("session storage is " +sessionStorage.getItem("token"));
 	return (
 		
 			<div className='grid-container-info'>
