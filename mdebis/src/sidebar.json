@@ -76,7 +76,11 @@
             }
         ]
     },
-   
+    {
+        "title": "Past Courses",
+        "path": "/HomePage/PastCourses",
+        "icon": "bi-bookmarks"
+    },
     {
         "title": "Email",
         "icon": "bi-envelope",

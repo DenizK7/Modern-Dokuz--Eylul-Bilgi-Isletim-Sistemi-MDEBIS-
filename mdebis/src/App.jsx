@@ -6,6 +6,7 @@ import Home from "./components/Home"
 import Syllabus from './components/Syllabus';
 import InfoLecture from './components/InfoLecture';
 import AdminPage from './components/AdminPage';
+import PastCourses from './components/PastCourses';
 import {MainContext} from "./context";
 import React, {useState} from 'react';
 
@@ -35,6 +36,7 @@ function  App ()  {
           <Route path ="/HomePage"   element ={<Home/>} >
           <Route path ="/HomePage/infoLecture" element ={<InfoLecture/>} />
           <Route path ="/HomePage/Syllabus" element ={<Syllabus/>} />
+          <Route path ="/HomePage/PastCourses" element ={<PastCourses/>} />
           </Route>    
 
           
