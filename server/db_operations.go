@@ -303,10 +303,12 @@ func getAnnouncementOfCourse(courseId int) []announcement {
 	}
 	for rows.Next() {
 		var announcement announcement
-		rows.Scan(&announcement.AnnouncementId, &announcement.CourseId, &announcement.Title, &announcement.Content, &announcement.LecturerId)
+		err := rows.Scan(&announcement.AnnouncementId, &announcement.CourseId, &announcement.Title, &announcement.Content, &announcement.LecturerId)
+		if err != nil {
+			return announcements
+		}
 		announcements = append(announcements, announcement)
 	}
-
 	return announcements
 }
 func getStudentsOfCourse(lecturerID, courseId int) []student {
@@ -328,7 +330,10 @@ func getStudentsOfCourse(lecturerID, courseId int) []student {
 	rowStudents, _ := DB.Query(queryGetStudent, courseId)
 	for rowStudents.Next() {
 		var student student
-		rowStudents.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
+		err := rowStudents.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
+		if err != nil {
+			return students
+		}
 		students = append(students, student)
 	}
 	return students
