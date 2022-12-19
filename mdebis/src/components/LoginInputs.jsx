@@ -46,7 +46,7 @@ function LoginInputs(){
   function handleClick() {
     try {
        var xhttp = new XMLHttpRequest();
-       xhttp.open("GET", "http://localhost:8080/log_student/"+inpt+"/"+pssw,false);
+       xhttp.open("GET", "http://localhost:8080/log_admin/"+inpt+"/"+pssw,false);
        xhttp.setRequestHeader("Content-type", "text/html");
        xhttp.onload = function (e) {
         if (xhttp.readyState === 4) {
@@ -94,7 +94,7 @@ function LoginInputs(){
     }
     else{
       
-      return <Navigate to="/Homepage/infoLecture" />;
+      return <Navigate to="/Homepage/AdminPage" />;
     }
  
  

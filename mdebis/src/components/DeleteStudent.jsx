@@ -66,7 +66,7 @@ const Inputt = ()=>{
     useEffect(() => {
       try {
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "http://localhost:8080/time_table/"+sessionStorage.getItem("token"),false);
+        xhttp.open("GET", "http://localhost:8080/get_students/"+sessionStorage.getItem("token"),false);
         xhttp.setRequestHeader("Content-type", "text/html");
         xhttp.onload = function (e) {
          if (xhttp.readyState === 4) {
@@ -99,12 +99,12 @@ const Inputt = ()=>{
              
         <div style={{transition:"0.8s"}} className={"grid-container-sm-admin"}  >
       
-      <div className="days" >Student Number</div>
-      <div className="days">Student Name</div>
-      <div className="days" >Grade vs.</div>
+      <div><div className="days" >Student Number</div></div>
+      <div><div className="days">Student Name</div></div>
+      <div><div className="days" >Grade vs.</div></div>
       
        {
-            lessons?.map(lessons =>  <div ><Lessons Department={lessons.Department} Course_name={lessons.Course_name} Lecturer_name={lessons.Lecturer_name} AttandenceLimit = {lessons.AttandenceLimit}></Lessons></div>)
+            lessons?.map(lessons => <div> <div > {lessons.Department}</div><div> {lessons.Course_name}</div><div> {lessons.Lecturer_name} </div> <div> {lessons.AttandenceLimit}</div></div>)
           } 
         </div>
     
