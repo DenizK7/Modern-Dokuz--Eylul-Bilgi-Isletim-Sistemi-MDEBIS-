@@ -213,7 +213,39 @@ func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func responseGetCourses(w http.ResponseWriter, r *http.Request) {
+func convertHomePageEntryLecturer(courses []course) []homePageEntryLecturer {
+	var homePageEntries []homePageEntryLecturer
+	for _, course := range courses {
+		var homePageEntry homePageEntryLecturer
+		homePageEntry.CourseName = course.Name
+		homePageEntry.Announcements = course.Announcements
+		homePageEntry.Credit = course.Credit
+		homePageEntry.AttendanceLimit = course.AttandenceLimit
+		homePageEntry.TimeInfo = course.Time_Inf
+		homePageEntry.DepName = getDepartmentName(course.Dep_Id)
+		homePageEntry.LecName = getLecturerNamesOfCourse(course.Id)
+		homePageEntries = append(homePageEntries, homePageEntry)
+	}
+	return homePageEntries
+}
+func convertHomePageEntryStudent(courses []course, studentId int) []homePageEntryStudent {
+	var homePageEntries []homePageEntryStudent
+	for _, course := range courses {
+		var homePageEntry homePageEntryStudent
+		homePageEntry.CourseName = course.Name
+		homePageEntry.Announcements = course.Announcements
+		homePageEntry.Credit = course.Credit
+		homePageEntry.AttendanceLimit = course.AttandenceLimit
+		homePageEntry.TimeInfo = course.Time_Inf
+		homePageEntry.DepName = getDepartmentName(course.Dep_Id)
+		homePageEntry.LecName = getLecturerNamesOfCourse(course.Id)
+		homePageEntry.CurrentNonAttendance = getNonAttendanceOfStudent(studentId, course.Id)
+		homePageEntries = append(homePageEntries, homePageEntryStudent{})
+	}
+	return homePageEntries
+}
+
+func responseGetHomeEntry(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
@@ -230,7 +262,7 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 	}
 	if user.Student != nil {
 		courses := getCoursesOfAStudent(user.Student.Id)
-		err := json.NewEncoder(w).Encode(courses)
+		err := json.NewEncoder(w).Encode(convertHomePageEntryStudent(courses, user.Student.Id))
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -238,7 +270,7 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 	}
 	if user.Lecturer != nil {
 		courses := getCoursesOfALecturer(user.Lecturer)
-		err := json.NewEncoder(w).Encode(courses)
+		err := json.NewEncoder(w).Encode(convertHomePageEntryLecturer(courses))
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -246,7 +278,61 @@ func responseGetCourses(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
-
+func responseLogOut(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if user == nil {
+		fmt.Println("! ! !first you MUST log in! ! !")
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	delete(ACTIVE_USERS, sessionHash)
+	err := encoder.Encode(true)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	return
+}
+func responseGetStudents(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if isUserRight(user, 3) == false {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	encoder.Encode(getAllStudents())
+}
+func responseGetLecturers(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if isUserRight(user, 3) == false {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	encoder.Encode(getAllLecturers())
+}
 func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)

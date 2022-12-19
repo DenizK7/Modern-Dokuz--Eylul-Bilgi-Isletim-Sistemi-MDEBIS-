@@ -32,6 +32,73 @@ func getRealPasswordLecturer(id int) (bool, string) {
 	return true, realPassword
 }
 
+func getDepartmentName(depId int) string {
+	query := "select Name from department WHERE Department_Id=?"
+	var depName string
+	if err := DB.QueryRow(query, depId).Scan(&depName); err != nil {
+		fmt.Println(err.Error())
+	}
+	return depName
+}
+func getLecturerNamesOfCourse(courseId int) string {
+	query := "select Title,Name,Surname from lecturer where Lecturer_Id IN " +
+		"(select Lecturer_Lecturer_Id from course_has_lecturer where Course_Course_Id=?)"
+	rows, err := DB.Query(query, courseId)
+	var names string
+	if err != nil {
+		fmt.Println(err.Error())
+		return names
+	}
+	for rows.Next() {
+		var title string
+		var name string
+		var surname string
+		rows.Scan(&title, &name, &surname)
+		names += title + ";" + name + ";" + surname + ";"
+	}
+	return names
+}
+
+func getNonAttendanceOfStudent(studentId int, courseId int) int {
+	query := "select Non_Attendance from department WHERE Course_Id=? and Student_Id=?"
+	var nonAttendance int
+	if err := DB.QueryRow(query, courseId, studentId).Scan(&nonAttendance); err != nil {
+		fmt.Println(err.Error())
+	}
+	return nonAttendance
+}
+
+func getAllStudents() []student {
+	var students []student
+	query := "SELECT Student_Id,Name,Surname,Year,Department_Id,Mail,GPA,Photo_Path  FROM STUDENT"
+	rows, err := DB.Query(query)
+	if err != nil {
+		fmt.Println(err.Error())
+		return students
+	}
+	for rows.Next() {
+		var student student
+		rows.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
+		students = append(students, student)
+	}
+	return students
+}
+func getAllLecturers() []lecturer {
+	var lecturers []lecturer
+	query := "SELECT Lecturer_Id,Name,Surname,Mail,Department_Id,Title,Photo_Path from FROM lecturer"
+	rows, err := DB.Query(query)
+	if err != nil {
+		fmt.Println(err.Error())
+		return lecturers
+	}
+	for rows.Next() {
+		var lecturer lecturer
+		rows.Scan(&lecturer.Id, &lecturer.Name, &lecturer.Surname, &lecturer.EMail, &lecturer.DepId, &lecturer.Title, &lecturer.PhotoPath)
+		lecturers = append(lecturers, lecturer)
+	}
+	return lecturers
+}
+
 func getDepartmentOfStudent(id int) *department {
 	var department department
 	query := "SELECT Department_Id,Name,Head_Lecturer_Id FROM mdebis.student_department where Student_Id=(?)"
@@ -178,94 +245,7 @@ func changeStatusOfCourse(courseId int, isActive bool) {
 gets the courses that student enrolled in the current semester
 */
 func getCoursesOfALecturer(lecturer *lecturer) []course {
-	query := "SELECT Course_Course_Id FROM mdebis.course_has_lecturer where Lecturer_Lecturer_Id=? "
-	rows, err := DB.Query(query, lecturer.Id)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
-	var courseIds []int
-	for rows.Next() {
-		//create course struct because they will also send to general course map (not created yet)
-		var course int
-		if err := rows.Scan(&course); err != nil {
-			fmt.Println(err.Error())
-			return nil
-		}
-		courseIds = append(courseIds, course)
-	}
-	//GETTING COURSES WITH THE GIVEN IDS
-	params := make([]interface{}, 0)
-	query_2 := []string{"SELECT * FROM mdebis.course where"}
-	if len(courseIds) > 0 {
-		query_2 = append(query_2,
-			fmt.Sprintf(
-				"Course_Id IN (%s)",
-				strings.Join(strings.Split(strings.Repeat("?", len(courseIds)), ""), ", "),
-			),
-		)
-	}
-	for _, courseId := range courseIds {
-		params = append(params, courseId)
-	}
-	rowsCourses, err := DB.Query(strings.Join(query_2, " ")+";", params...)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
-
-	var courses []course
-
-	for rowsCourses.Next() {
-		//create course struct because they will also send to general course map (not created yet)
-		var course course
-		if err := rowsCourses.Scan(&course.Id, &course.Name, &course.Dep_Id, &course.AttandenceLimit, &course.Credit, &course.IsActive); err != nil {
-			fmt.Println(err.Error())
-			return nil
-		}
-		addTimeInfo(&course)
-		courses = append(courses, course)
-	}
-	if err = rowsCourses.Err(); err != nil {
-		fmt.Println(err)
-		return nil
-	}
-	return courses
-
-}
-
-func getCoursesOfAStudent(studentId int) []course {
-	//GETTING COURSE IDS THAT STUDENT IS TAKING
-	rows, err := DB.Query("SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and Situtation='Current'", studentId)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
-	var courseIds []int
-	for rows.Next() {
-		//create course struct because they will also send to general course map (not created yet)
-		var course int
-		if err := rows.Scan(&course); err != nil {
-			fmt.Println(err.Error())
-			return nil
-		}
-		courseIds = append(courseIds, course)
-	}
-	//GETTING COURSES WITH THE GIVEN IDS
-	params := make([]interface{}, 0)
-	query := []string{"SELECT * FROM mdebis.course where"}
-	if len(courseIds) > 0 {
-		query = append(query,
-			fmt.Sprintf(
-				"Course_Id IN (%s)",
-				strings.Join(strings.Split(strings.Repeat("?", len(courseIds)), ""), ", "),
-			),
-		)
-	}
-	for _, courseId := range courseIds {
-		params = append(params, courseId)
-	}
-	rowsCourses, err := DB.Query(strings.Join(query, " ")+";", params...)
+	rowsCourses, err := DB.Query("select * from course where Course_Id IN (SELECT Course_Course_Id FROM mdebis.course_has_lecturer where Lecturer_Lecturer_Id=?)", lecturer.Id)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil
@@ -288,6 +268,37 @@ func getCoursesOfAStudent(studentId int) []course {
 		fmt.Println(err)
 		return nil
 	}
+	return courses
+
+}
+
+func getCoursesOfAStudent(studentId int) []course {
+	//GETTING COURSE IDS THAT STUDENT IS TAKING
+
+	rowsCourses, err := DB.Query("select * from course where Course_Id IN (SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and Situtation='Current')", studentId)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+
+	var courses []course
+
+	for rowsCourses.Next() {
+		//create course struct because they will also send to general course map (not created yet)
+		var course course
+		if err := rowsCourses.Scan(&course.Id, &course.Name, &course.Dep_Id, &course.AttandenceLimit, &course.Credit, &course.IsActive); err != nil {
+			fmt.Println(err.Error())
+			return nil
+		}
+		addTimeInfo(&course)
+		course.Announcements = getAnnouncementOfCourse(course.Id)
+		courses = append(courses, course)
+	}
+	if err = rowsCourses.Err(); err != nil {
+		fmt.Println(err)
+		return nil
+	}
+	//TODO HOMEENTRY BURAYA
 	return courses
 }
 

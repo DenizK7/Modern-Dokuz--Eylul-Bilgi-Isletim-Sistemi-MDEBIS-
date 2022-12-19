@@ -10,6 +10,26 @@ const (
 	Passed
 )
 
+type homePageEntryLecturer struct {
+	CourseName      string
+	Announcements   []announcement
+	Credit          int
+	LecName         string
+	DepName         string
+	TimeInfo        []course_time
+	AttendanceLimit int
+}
+type homePageEntryStudent struct {
+	CourseName           string
+	Announcements        []announcement
+	Credit               int
+	LecName              string
+	DepName              string
+	TimeInfo             []course_time
+	CurrentNonAttendance int
+	AttendanceLimit      int
+}
+
 type user struct {
 	Student  *student
 	Lecturer *lecturer
