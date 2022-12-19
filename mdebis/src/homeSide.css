@@ -247,7 +247,7 @@ nav{
     height: -webkit-fill-available;
     width: 78vw;
     align-content: flex-start;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto ;
     row-gap: 1vh;
     /* background-color: #2196F3; */
     position: fixed;
@@ -261,17 +261,24 @@ nav{
     overflow: scroll;
     padding-bottom: 1vh;
   }
-  .grid-container-sm-admin > div >div {
+  .grid-container-sm-admin > div  {
+    width: 75vw;
 	background-color: rgba(255, 255, 255, 0.8);
 	text-align: center;
 	padding: 20px 10px;
 	font-size: 10px;
 	display: table-cell;
     border: groove;
-	width: 13vw;
+	
   }
+  
   .deleteID{
     position: absolute;
     top: 13vh;
 	left: 19vw;
+  }
+  .perpendicular-line {
+    
+    display: inline-block; /* inline-block görünümü ile span'ı blok olarak gösterir */
+    border-bottom: 1px solid black; /* altına 1px kalınlığında siyah renkte bir çizgi çek */
   }
