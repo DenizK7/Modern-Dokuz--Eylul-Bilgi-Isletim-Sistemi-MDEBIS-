@@ -127,19 +127,28 @@ function handleClick() {
        
       
              
-        <div style={{transition:"0.8s"}} className={"grid-container-sm-admin"}  >
-      
-      <div><div className="days" >Student Number Student Name Grade vs.</div></div>
-      
-      
-       {
-             lessons?.map(lessons => <div > <Makediv info={lessons.DepId}/> <Makediv info={lessons.Id}/><Makediv info={lessons.EMail}/>  </div>)
-           
-          
-          
-          } 
+        
+        <table className={"grid-container-sm-admin"} >
+     
+      <tbody>
+      <thead >
+        <tr>
+          <th >Department ID</th>
+          <th>NAME</th>
+          <th>E-mail</th>
+        </tr>
+      </thead>
+        {lessons.map(student => (
+          <tr>
+            <td className="tdstyle">{student.DepId}</td>
+            <td className="tdstyle">{student.Name}</td>
+            <td className="tdstyle">{student.EMail}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
 
-        </div>
+       
     
       
           </body>

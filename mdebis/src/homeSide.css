@@ -247,7 +247,7 @@ nav{
     height: -webkit-fill-available;
     width: 78vw;
     align-content: flex-start;
-    grid-template-columns: auto ;
+    grid-template-columns: auto auto auto;
     row-gap: 1vh;
     /* background-color: #2196F3; */
     position: fixed;
@@ -270,6 +270,15 @@ nav{
 	display: table-cell;
     border: groove;
 	
+  }
+  .tdstyle {
+    width: 75vw;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 10px;
+    display: table-cell;
+      border: groove;
   }
   
   .deleteID{
