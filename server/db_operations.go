@@ -157,8 +157,15 @@ func getRealPasswordAdmin(id int) (bool, string) {
 }
 
 func deleteStudent(idStudent int) bool {
+	queryDeleteCourses := "DELETE FROM course_has_student WHERE Student_Id=?"
+	_, err := DB.Exec(queryDeleteCourses, idStudent)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+
 	query := "DELETE FROM student WHERE Student_Id=?"
-	_, err := DB.Exec(query, idStudent)
+	_, err = DB.Exec(query, idStudent)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false

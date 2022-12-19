@@ -50,7 +50,7 @@ const Inputt = ({setRerender, rerender})=>{
 function handleClick() {
   try {
      var xhttp = new XMLHttpRequest();
-     xhttp.open("GET", "http://localhost:8080//delete_student/"+sessionStorage.getItem("token")+"/"+inpt,false);
+     xhttp.open("GET", "http://localhost:8080/delete_student/"+sessionStorage.getItem("token")+"/"+inpt,false);
      xhttp.setRequestHeader("Content-type", "text/html");
      xhttp.onload = function (e) {
       if (xhttp.readyState === 4) {
@@ -133,14 +133,14 @@ function handleClick() {
       <tbody>
       <thead >
         <tr>
-          <th >Department ID</th>
+          <th >Student ID</th>
           <th>NAME</th>
           <th>E-mail</th>
         </tr>
       </thead>
         {lessons.map(student => (
           <tr>
-            <td className="tdstyle">{student.DepId}</td>
+            <td className="tdstyle">{student.Id}</td>
             <td className="tdstyle">{student.Name}</td>
             <td className="tdstyle">{student.EMail}</td>
           </tr>
