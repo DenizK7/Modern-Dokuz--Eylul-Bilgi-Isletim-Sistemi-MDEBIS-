@@ -6,7 +6,36 @@
         "icon": "bi-house-fill",
         "path": "/HomePage/infoLecture"
     },
-   
+    {
+        "title": "Add Lesson",
+        "icon": "bi-file-earmark-plus",
+        "path": "/AdminPage/AddLesson"
+    },
+    {
+        "title": "Delete Lesson",
+        "icon": "bi-file-earmark-minus",
+        "path": "/AdminPage/DeleteLesson"
+    },
+    {
+        "title": "Add student",
+        "icon": "bi-person-plus",
+        "path": "/AdminPage/AddStudent"
+    },
+    {
+        "title": "Delete Student",
+        "icon": "bi-person-x",
+        "path": "/AdminPage/DeleteStudent"
+    },
+    {
+        "title": "Add Lecturer",
+        "icon": "bi-person-plus-fill",
+        "path": "/AdminPage/AddStudent"
+    },
+    {
+        "title": "Delete Lecturer",
+        "icon": "bi-person-x-fill",
+        "path": "/AdminPage/AddStudent"
+    },
     {
         "title": "Contact",
         "icon": "bi-phone-fill",

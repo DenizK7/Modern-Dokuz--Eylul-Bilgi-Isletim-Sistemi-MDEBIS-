@@ -247,7 +247,7 @@ nav{
     height: -webkit-fill-available;
     width: 78vw;
     align-content: flex-start;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: auto auto auto;
     row-gap: 1vh;
     /* background-color: #2196F3; */
     position: fixed;
