@@ -9,6 +9,10 @@ import AdminPage from './components/AdminPage';
 import PastCourses from './components/PastCourses';
 import {MainContext} from "./context";
 import React, {useState} from 'react';
+import AddStudent from './components/AddStudent';
+import DeleteStudent from './components/DeleteStudent';
+import AddLesson from './components/AddLesson';
+import DeleteLesson from './components/DeleteLesson';
 
 function  App ()  {
   
@@ -30,8 +34,14 @@ function  App ()  {
         <Routes>
           <Route path ="/" element ={<Loginpage />} />   
           <Route path ="/ForgotPassword" element ={<ForgotPassword/>} />  
-          <Route path ="/AdminPage" element ={<AdminPage/>} />
-          
+
+
+          <Route path ="/AdminPage" element ={<AdminPage/>}>
+          <Route path ="/AdminPage/AddStudent" element ={<AddStudent/>} />
+          <Route path ="/AdminPage/AddLesson" element ={<AddLesson/>} />
+          <Route path ="/AdminPage/DeleteLesson" element ={<DeleteLesson/>} />
+          <Route path ="/AdminPage/DeleteStudent" element ={<DeleteStudent/>} />
+          </Route>  
 
           <Route path ="/HomePage"   element ={<Home/>} >
           <Route path ="/HomePage/infoLecture" element ={<InfoLecture/>} />

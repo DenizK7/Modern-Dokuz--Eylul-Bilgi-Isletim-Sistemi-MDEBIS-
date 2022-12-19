@@ -4,6 +4,7 @@ import items from "../Adminsidebar.json";
 import { useEffect, useState } from 'react';
 import SidebarItem from './HomeSideBarItems';
 import Lessons from "./Lessons";
+import {Outlet, useLocation} from "react-router-dom";
 
 const StyledInput = styled.input`
 background: rgba(255, 255, 255, 0.15);
@@ -35,25 +36,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 `;
-const Inputt = ()=>{
-  const [inpt, setMessage] = useState('');
- 
-  const [inpta, setMessagae] = useState('');
-  const handleChangeinpt = event => {
-    setMessage(event.target.value);
 
-    
-  };
-  return(
-    <div  className="deleteID"> You can delete with ID : 
-  <StyledInput type="text"
-  id="inpt" name="inpt" placeholder="DELETE" onChange={handleChangeinpt}
-  value={inpt}  ></StyledInput>
-  <ButtonContainer> <button>Delete</button></ButtonContainer>
-  </div>
-  );
-  
-}
 
 function AdminPage(){
   
@@ -89,7 +72,7 @@ function AdminPage(){
     return(
         <body className="noBg">
             {/* <!-- Create a container for the main content and the sidebar --> */}
-      <Inputt />
+ 
      
       {/* <!-- The sidebar --> */}
       <aside class="sidebarAdmin">
@@ -98,19 +81,18 @@ function AdminPage(){
       {/* <!-- The main content --> */}
       
            
-      <div style={{transition:"0.8s"}} className={"grid-container-sm-admin"}  >
+      {/* <div style={{transition:"0.8s"}} className={"grid-container-sm-admin"}  >
     
     <div className="days" >Course ID</div>
     <div className="days">Deparment Name</div>
     <div className="days" >Lecturer Name</div>
-    <div className="days">Perşembe</div>
-    <div className="days">Cuma</div>
+    
      {
           lessons?.map(lessons =>  <div ><Lessons Department={lessons.Department} Course_name={lessons.Course_name} Lecturer_name={lessons.Lecturer_name} AttandenceLimit = {lessons.AttandenceLimit}></Lessons></div>)
         } 
-      </div>
+      </div> */}
   
-    
+      <Outlet></Outlet>
         </body>
         
     );
