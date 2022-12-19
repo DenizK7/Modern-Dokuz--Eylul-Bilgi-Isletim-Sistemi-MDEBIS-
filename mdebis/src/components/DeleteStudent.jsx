@@ -39,10 +39,39 @@ align-items: center;
 justify-content: center;
 `;
 
-const Inputt = ()=>{
+const Makediv =({info})=>{
+  return(<div className="perpendicular-line">{info} </div>)
+}
+
+const Inputt = ({setRerender, rerender})=>{
+  
   const [inpt, setMessage] = useState('');
+
+function handleClick() {
+  try {
+     var xhttp = new XMLHttpRequest();
+     xhttp.open("GET", "http://localhost:8080//delete_student/"+sessionStorage.getItem("token")+"/"+inpt,false);
+     xhttp.setRequestHeader("Content-type", "text/html");
+     xhttp.onload = function (e) {
+      if (xhttp.readyState === 4) {
+          if (xhttp.status === 200) {
+
+             setRerender(!rerender);
+           
+             
+          }
+       }
+    }
+    console.log(inpt + " has been succesfully deleted");
+    xhttp.send();
+   
+
+ } catch (error) {
+   alert("Wrong pass or id");
+ }
+}
  
-  const [inpta, setMessagae] = useState('');
+  
   const handleChangeinpt = event => {
     setMessage(event.target.value);
 
@@ -53,7 +82,7 @@ const Inputt = ()=>{
   <StyledInput type="text"
   id="inpt" name="inpt" placeholder="DELETE" onChange={handleChangeinpt}
   value={inpt}  ></StyledInput>
-  <Button  content={"Delete"}> Delete</Button>
+  <Button  content={"Delete"} onClick={handleClick}> Delete</Button>
   </ButtonContainer>
   );
   
@@ -61,7 +90,7 @@ const Inputt = ()=>{
 
   function DeleteStudent(){
   
- 
+    const[rerender, setRerender] = useState(false);
     const[lessons, setContent] = useState([])
     useEffect(() => {
       try {
@@ -87,26 +116,29 @@ const Inputt = ()=>{
     }
 
        
-     }, []);
+     }, [rerender]);
 
       console.log(lessons)
 
       return(
           <body className="noBg">
               
-        <Inputt />
+        <Inputt setRerender={setRerender} rerender={rerender}/>
        
       
              
         <div style={{transition:"0.8s"}} className={"grid-container-sm-admin"}  >
       
-      <div><div className="days" >Student Number</div></div>
-      <div><div className="days">Student Name</div></div>
-      <div><div className="days" >Grade vs.</div></div>
+      <div><div className="days" >Student Number Student Name Grade vs.</div></div>
+      
       
        {
-            lessons?.map(lessons => <div> <div > {lessons.Department}</div><div> {lessons.Course_name}</div><div> {lessons.Lecturer_name} </div> <div> {lessons.AttandenceLimit}</div></div>)
+             lessons?.map(lessons => <div > <Makediv info={lessons.DepId}/> <Makediv info={lessons.Id}/><Makediv info={lessons.EMail}/>  </div>)
+           
+          
+          
           } 
+
         </div>
     
       
