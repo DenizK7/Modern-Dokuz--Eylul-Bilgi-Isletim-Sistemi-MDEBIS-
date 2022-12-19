@@ -94,7 +94,7 @@ function LoginInputs(){
     }
     else{
       
-      return <Navigate to="/Homepage/AdminPage" />;
+      return <Navigate to="/AdminPage/DeleteStudent" />;
     }
  
  

@@ -76,7 +76,9 @@ func getAllStudents() []student {
 		fmt.Println(err.Error())
 		return students
 	}
-	for rows.Next() {
+
+	for i := 0; i < 100; i++ {
+		rows.Next()
 		var student student
 		rows.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
 		students = append(students, student)

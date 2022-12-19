@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `mdebis` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `mdebis`;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: localhost    Database: mdebis
@@ -27,6 +29,7 @@ CREATE TABLE `manager` (
   `Password` varchar(1000) NOT NULL,
   `Name` varchar(45) NOT NULL,
   `Surname` varchar(45) NOT NULL,
+  `Photo_Path` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`Manager_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,6 +40,7 @@ CREATE TABLE `manager` (
 
 LOCK TABLES `manager` WRITE;
 /*!40000 ALTER TABLE `manager` DISABLE KEYS */;
+INSERT INTO `manager` VALUES (1,'$2a$08$N/XCQshfTdMm8dBK4WDEfOILu0Uaknh1rNf1lUdfar/qPwzwsyLV2','Deniz','Küçükkara',NULL);
 /*!40000 ALTER TABLE `manager` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-18 20:13:02
+-- Dump completed on 2022-12-19 20:44:13

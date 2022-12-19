@@ -316,6 +316,7 @@ func responseGetStudents(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	encoder.Encode(getAllStudents())
+	fmt.Println("returned succesfully")
 }
 func responseGetLecturers(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)

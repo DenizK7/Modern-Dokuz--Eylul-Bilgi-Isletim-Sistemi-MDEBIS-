@@ -85,11 +85,12 @@ const Inputt = ()=>{
     } catch (error) {
       alert("Wrong pass or id");
     }
-       
+
        
      }, []);
-  
-  
+
+      console.log(lessons)
+
       return(
           <body className="noBg">
               

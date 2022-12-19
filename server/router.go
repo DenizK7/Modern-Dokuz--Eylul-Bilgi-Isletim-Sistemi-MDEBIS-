@@ -24,11 +24,11 @@ func Router() *mux.Router {
 	router.HandleFunc("/get_past_courses/{sessionToken}", responseGetPastCoursesOfStudent)
 
 	//Admin requests //responseDeleteStudent
-	router.HandleFunc("/log_admin/{id}/{password}", responseAdminLogIn) //returns session hash if successful, false otherwise
+	router.HandleFunc("/log_admin/{username}/{password}", responseAdminLogIn) //returns session hash if successful, false otherwise
 	router.HandleFunc("/delete_student/{sessionHash}/{studentId}", responseDeleteStudent)
 	router.HandleFunc("/delete_lecturer/{sessionHash}/{lecturerId}", responseDeleteLecturer)
-	router.HandleFunc("/get_students/{sessionHash}/", responseGetStudents)
-	router.HandleFunc("/get_lecturers/{sessionHash}/", responseGetLecturers)
+	router.HandleFunc("/get_students/{sessionHash}", responseGetStudents)
+	router.HandleFunc("/get_lecturers/{sessionHash}", responseGetLecturers)
 
 	//TODO CREATE STUDENT
 	//TODO CREATE LECTURER

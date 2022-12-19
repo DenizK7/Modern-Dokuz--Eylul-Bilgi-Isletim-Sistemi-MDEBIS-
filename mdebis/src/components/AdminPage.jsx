@@ -42,31 +42,9 @@ function AdminPage(){
   
  
   const[lessons, setContent] = useState([])
-  useEffect(() => {
-    try {
-      var xhttp = new XMLHttpRequest();
-      xhttp.open("GET", "http://localhost:8080/time_table/"+sessionStorage.getItem("token"),false);
-      xhttp.setRequestHeader("Content-type", "text/html");
-      xhttp.onload = function (e) {
-       if (xhttp.readyState === 4) {
-           if (xhttp.status === 200) {
-  
-            var response = JSON.parse(xhttp.response);   
-            setContent(response);    
-               
-           }
-        }
-     }
-    
-     xhttp.send();
-    
-  
-  } catch (error) {
-    alert("Wrong pass or id");
-  }
+
      
-     
-   }, []);
+
 
 
     return(
