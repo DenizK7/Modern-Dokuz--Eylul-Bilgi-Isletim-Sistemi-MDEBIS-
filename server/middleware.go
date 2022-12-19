@@ -384,7 +384,50 @@ func responseCreateLecturer(w http.ResponseWriter, r *http.Request) {
 	departmentName := params["departmentName"]
 	encoder.Encode(createLecturer(id, password, title, name, surname, departmentName))
 }
-
+func responseCreateStudent(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if isUserRight(user, 3) == false {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	//id int, password string, title string, name string, surname string, departmentName string
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		fmt.Println("error occured when casting string to int")
+		encoder.Encode(false)
+		return
+	}
+	password := params["password"]
+	name := params["name"]
+	surname := params["surname"]
+	departmentName := params["departmentName"]
+	encoder.Encode(createStudent(id, password, name, surname, departmentName))
+}
+func responseGetAllDepartmentNames(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if isUserRight(user, 3) == false {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	encoder.Encode(getAllDepartmentNames())
+	return
+}
 func isUserRight(user *user, whichUser int) bool {
 	//whichUser
 	//1 --> student

@@ -16,6 +16,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/add_announcement/{sessionHash}/{courseId}/{title}/{content}", responseAddAnnouncement)
 	router.HandleFunc("/get_student_of_course/{sessionHash}/{courseId}", responseGetStudentsOfCourse)                             //
 	router.HandleFunc("/change_non_attendance/{sessionHash}/{courseId}/{studentId}/{nonAttendance}", responseChangeNonAttendance) //
+	//TODO add course
 
 	//Student requests
 	router.HandleFunc("/log_student/{username}/{password}", responseStudentLogIn)                  //returns session hash if successful, false otherwise
@@ -29,8 +30,9 @@ func Router() *mux.Router {
 	router.HandleFunc("/delete_lecturer/{sessionHash}/{lecturerId}", responseDeleteLecturer)
 	router.HandleFunc("/get_students/{sessionHash}", responseGetStudents)
 	router.HandleFunc("/get_lecturers/{sessionHash}", responseGetLecturers)
-	//	encoder.Encode(createLecturer(id, password, title, name, surname, departmentName))
-	router.HandleFunc("create_lecturer/{id}/{password}/{title}/{name}/{surname}/{departmentName}", responseCreateLecturer)
-	//TODO CREATE LECTURER
+	router.HandleFunc("create_lecturer/{sessionHash}/{id}/{password}/{title}/{name}/{surname}/{departmentName}", responseCreateLecturer)
+	router.HandleFunc("create_student/{sessionHash}/{id}/{password}/{name}/{surname}/{departmentName}", responseCreateStudent)
+	router.HandleFunc("get_all_department_names/{sessionHash}", responseGetAllDepartmentNames)
+
 	return router
 }

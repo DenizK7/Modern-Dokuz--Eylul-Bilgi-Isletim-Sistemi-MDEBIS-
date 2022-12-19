@@ -59,6 +59,22 @@ func getLecturerNamesOfCourse(courseId int) string {
 	return names
 }
 
+func getAllDepartmentNames() []string {
+	var departmentNames []string
+	query := "SELECT Name FROM department;"
+	row, err := DB.Query(query)
+	if err != nil {
+		fmt.Println(err.Error())
+		return departmentNames
+	}
+	for row.Next() {
+		var depName string
+		row.Scan(&depName)
+		departmentNames = append(departmentNames, depName)
+	}
+	return departmentNames
+}
+
 func getNonAttendanceOfStudent(studentId int, courseId int) int {
 	query := "select Non_Attendance from department WHERE Course_Id=? and Student_Id=?"
 	var nonAttendance int
@@ -86,15 +102,9 @@ func getAllStudents() []student {
 	return students
 }
 
-func createLecturer(id int, password string, title string, name string, surname string, departmentName string) bool {
-	query := "INSERT INTO lecturer ('Lecturer_Id', 'Password', 'Name', 'Surname', 'Mail', 'Department_Id', 'Title') VALUES (?, ?, ?,?, ?, ?, ?)"
-	mail := name + "." + surname + "@ogr.deu.edu.tr"
-	success, id := getDepIdByName(departmentName)
-	if success != true {
-		fmt.Println("error occured when finding the department in createLecturer function")
-		return false
-	}
-	_, err := DB.Exec(query, id, password, name, surname, mail, id, title)
+func addCourseHasLecturer(lecId int, courseId int) bool {
+	query := "INSERT INTO course_has_lecturer (Course_Course_Id, Lecturer_Lecturer_Id) VALUES (?, ?)"
+	_, err := DB.Query(query, courseId, lecId)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
@@ -102,6 +112,60 @@ func createLecturer(id int, password string, title string, name string, surname 
 	return true
 }
 
+func addCourse(lecturer *lecturer, courseName string, attendanceLimit int, credit int) bool {
+	//Check to see the course exists and is active
+	queryToCheck := "select Course_Id from course where Name=? and Active=1"
+	var isCourseExistId int
+	DB.QueryRow(queryToCheck, courseName).Scan(&isCourseExistId)
+	if isCourseExistId == 0 {
+		//means the course should be created
+		queryAdd := "INSERT INTO course (Name, Departmend_Ids, Attandence_Limit, Credit) VALUES (?,?,?);"
+		_, err := DB.Exec(queryAdd, lecturer.DepId, attendanceLimit, credit)
+		if err != nil {
+			fmt.Println(err)
+			return false
+		}
+		var courseID int
+		queryToGetId := "select Course_Id from course where Name=? and Departmend_Ids=?"
+		DB.QueryRow(queryToGetId, courseName, lecturer.DepId).Scan(&courseID)
+		return addCourseHasLecturer(lecturer.Id, courseID)
+	} else {
+		fmt.Println("course already exist!")
+		return false
+	}
+
+}
+
+func createLecturer(id int, password string, title string, name string, surname string, departmentName string) bool {
+	query := "INSERT INTO lecturer ('Lecturer_Id', 'Password', 'Name', 'Surname', 'Mail', 'Department_Id', 'Title') VALUES (?, ?, ?,?, ?, ?, ?)"
+	mail := name + "." + surname + "@deu.edu.tr"
+	success, depId := getDepIdByName(departmentName)
+	if success != true {
+		fmt.Println("error occured when finding the department in createLecturer function")
+		return false
+	}
+	_, err := DB.Exec(query, id, password, name, surname, mail, depId, title)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
+func createStudent(id int, password string, name string, surname string, departmentName string) bool {
+	query := "INSERT INTO student ('Student_Id', 'Password', 'Name', 'Surname', 'Year','Mail','GPA', 'Department_Id') VALUES (?,?,?,?,?,?,?,?)"
+	mail := name + "." + surname + "@ogr.deu.edu.tr"
+	success, depId := getDepIdByName(departmentName)
+	if success != true {
+		fmt.Println("error occured when finding the department in createLecturer function")
+		return false
+	}
+	_, err := DB.Exec(query, id, password, name, surname, 1, mail, 0, depId)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
 func getDepIdByName(name string) (bool, int) {
 	var depID int
 	query := "select Department_Id from department where name=?"
