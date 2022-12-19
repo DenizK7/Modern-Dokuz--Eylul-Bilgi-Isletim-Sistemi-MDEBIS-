@@ -29,8 +29,8 @@ func Router() *mux.Router {
 	router.HandleFunc("/delete_lecturer/{sessionHash}/{lecturerId}", responseDeleteLecturer)
 	router.HandleFunc("/get_students/{sessionHash}", responseGetStudents)
 	router.HandleFunc("/get_lecturers/{sessionHash}", responseGetLecturers)
-
-	//TODO CREATE STUDENT
+	//	encoder.Encode(createLecturer(id, password, title, name, surname, departmentName))
+	router.HandleFunc("create_lecturer/{id}/{password}/{title}/{name}/{surname}/{departmentName}", responseCreateLecturer)
 	//TODO CREATE LECTURER
 	return router
 }

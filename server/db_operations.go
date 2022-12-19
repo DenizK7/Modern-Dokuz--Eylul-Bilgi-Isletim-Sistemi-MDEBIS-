@@ -85,6 +85,34 @@ func getAllStudents() []student {
 	}
 	return students
 }
+
+func createLecturer(id int, password string, title string, name string, surname string, departmentName string) bool {
+	query := "INSERT INTO lecturer ('Lecturer_Id', 'Password', 'Name', 'Surname', 'Mail', 'Department_Id', 'Title') VALUES (?, ?, ?,?, ?, ?, ?)"
+	mail := name + "." + surname + "@ogr.deu.edu.tr"
+	success, id := getDepIdByName(departmentName)
+	if success != true {
+		fmt.Println("error occured when finding the department in createLecturer function")
+		return false
+	}
+	_, err := DB.Exec(query, id, password, name, surname, mail, id, title)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
+
+func getDepIdByName(name string) (bool, int) {
+	var depID int
+	query := "select Department_Id from department where name=?"
+	if err := DB.QueryRow(query, name).Scan(&depID); err != nil {
+		fmt.Println(err.Error())
+		return false, depID
+	}
+	return true, depID
+
+}
+
 func getAllLecturers() []lecturer {
 	var lecturers []lecturer
 	query := "SELECT Lecturer_Id,Name,Surname,Mail,Department_Id,Title,Photo_Path from FROM lecturer"
