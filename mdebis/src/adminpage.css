@@ -12,6 +12,41 @@
     display: flex;
   }
   /* Style the sidebar */
+  
+  .grid-container-info {
+    z-index: 1;
+    display: grid;
+      height: -webkit-fill-available;
+    justify-content: space-evenly;
+      width: 90vw;
+      align-content: flex-start;
+      grid-template-columns: auto auto;
+      row-gap: 1vh;
+      /* background-color: #2196F3; */
+      position: fixed;
+      top: 4vh;
+      /* bottom: 0px; */
+      right: 6vw;
+      padding-right: 1vw;
+      overflow-y: visible;
+      padding-left: 1vw;
+      padding-top: 1vh;
+      overflow: scroll;
+      padding-bottom: 1vh;
+    }
+    
+    .grid-container-info > div {
+    background-color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      padding: 20px 10px;
+      display: table-cell;
+      border: groove;
+      font-size: inherit;
+      width: 25vw;
+      overflow-wrap: anywhere;
+  }
+    
+
   .sidebarAdmin {
     width: 200px;
     height: 100vh; /* Set the sidebar to take up the full height of the viewport */
@@ -25,7 +60,7 @@
   .sidebarAdmin h3 {
     font-size: 18px;
     margin-bottom: 20px;
-  }
+  }  
   .sidebarAdmin ul {
     list-style: none;
     margin: 0;
@@ -51,4 +86,7 @@
     font-size: 36px;
     margin-bottom: 20px;
   }
-  
+  .deleteID{
+    position: absolute;
+    top: 0;
+  }

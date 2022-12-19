@@ -27,8 +27,8 @@ function Navbar({visible, show}) {
                if (xhttp.status === 200) {
       
                  response = JSON.parse(xhttp.response);   
-                    setDepId(response);
-					sessionStorage.setItem("lastname",DepId)
+                    setDepId(response.Name);
+					
                    
                }
             }
@@ -64,7 +64,7 @@ function Navbar({visible, show}) {
 						? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
 				</button>
                 <img src={require('../pp.jpeg')} style={{padding : "2rem" , height: "10rem", borderRadius: "40%"}} />
-			  <div>{response}</div>			 
+			  <div>{DepId}</div>			 
                  <div className="sidebar">
          		 { items.map((item, index) => <SidebarItem key={index} item={item} />) }
         		</div> 

@@ -212,4 +212,66 @@ nav{
     width: 25vw;
     overflow-wrap: anywhere;
 }
-  
+.sidebarAdmin {
+    width: 200px;
+    height: 100vh; /* Set the sidebar to take up the full height of the viewport */
+    background-color: #ddd;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #0b2733d5;
+  }
+  .sidebarAdmin h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }  
+  .sidebarAdmin ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+  }
+  .sidebarAdmin li {
+    margin-bottom: 10px;
+  }
+  .sidebarAdmin a {
+    color: #666;
+    text-decoration: none;
+  }
+  .sidebarAdmin a:hover {
+    text-decoration: underline;
+  }
+  .grid-container-sm-admin {
+	display: grid;
+    height: -webkit-fill-available;
+    width: 78vw;
+    align-content: flex-start;
+    grid-template-columns: auto auto auto auto auto;
+    row-gap: 1vh;
+    /* background-color: #2196F3; */
+    position: fixed;
+    top: 25vh;
+    /* bottom: 0px; */
+    right: 4vw;
+    padding-right: 1vw;
+    overflow-y: visible;
+    padding-left: 1vw;
+    padding-top: 1vh;
+    overflow: scroll;
+    padding-bottom: 1vh;
+  }
+  .grid-container-sm-admin > div {
+	background-color: rgba(255, 255, 255, 0.8);
+	text-align: center;
+	padding: 20px 10px;
+	font-size: 10px;
+	display: table-cell;
+    border: groove;
+	width: 13vw;
+  }
+  .deleteID{
+    position: absolute;
+    top: 13vh;
+	left: 19vw;
+  }
