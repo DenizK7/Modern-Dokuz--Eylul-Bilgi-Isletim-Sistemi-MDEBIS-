@@ -21,7 +21,8 @@ var GRADES = [9]string{"AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF"}
 func main() {
 	//Connect to the DB
 	var err error
-	DB, err = sql.Open("mysql", "root:deniz2000@tcp(127.0.0.1:3306)/mdebis")
+	DB, err = sql.Open("mysql", "root:354152@tcp(127.0.0.1:3306)/mdebis")
+	DB.SetMaxOpenConns(10000000)
 	if DB != nil {
 
 	}

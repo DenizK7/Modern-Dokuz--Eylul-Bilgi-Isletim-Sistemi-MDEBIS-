@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -69,10 +70,11 @@ func MakeRequest(url string, ch chan<- string) {
 	resp, _ := http.Get(url)
 	body, _ := io.ReadAll(resp.Body)
 	sessionToken := string(body)
-
+	sessionToken = strings.Replace(sessionToken, "\"", "", -1)
+	sessionToken = strings.Replace(sessionToken, "\n", "", -1)
+	ch <- fmt.Sprintf("elapsed with response length: %d %s", len(body), url)
 	//now get time table of the student
-	resp2, _ := http.Get("http://localhost:8080/time_table/" + sessionToken)
-	body2, _ := io.ReadAll(resp2.Body)
-	fmt.Println(string(body2))
+	url2 := "http://localhost:8080/time_table/" + sessionToken
+	http.Get(url2)
 
 }

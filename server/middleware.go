@@ -140,28 +140,6 @@ func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
 	}
 	return
 }
-func responseGetAnnouncementOfCourse(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-	encoder := json.NewEncoder(w)
-	params := mux.Vars(r)
-	sessionHash := params["sessionHash"]
-	courseId, _ := strconv.Atoi(params["courseId"])
-	user := getUser(sessionHash)
-	if !(isUserRight(user, 1) || isUserRight(user, 2)) {
-		err := encoder.Encode(false)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		return
-	}
-	err := encoder.Encode(getAnnouncementOfCourse(courseId))
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	return
-}
 
 func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -398,14 +376,6 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 	}
 	//Make the course what user wants the course to be
 	changeStatusOfCourse(courseId, isActive)
-
-	/*todo
-	DB'e check statement eklenebilir.
-
-	Front end tarafına değişikliğin yapılamayacağını (zaten çoktan active veya inactive) olduğu bilgisi de DÖNDÜRÜLMELİ.
-
-	Ki böylede front end kullanıcıyı uyarabilsin!
-	*/
 
 }
 

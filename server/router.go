@@ -7,8 +7,7 @@ func Router() *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/get_gen_announcements", responseGetGeneralAnnouncements) //returns all general announcements
 	//below requests are same for students and lecturers (POLYMORPHISM)
-	router.HandleFunc("/get_courses/{sessionHash}", responseGetCourses)                          //return courses if given hash is correct, false otherwise
-	router.HandleFunc("/get_announcement_of_course/{courseId}", responseGetAnnouncementOfCourse) //return courses if given hash is correct, false otherwise
+	router.HandleFunc("/get_courses/{sessionHash}", responseGetCourses) //return courses if given hash is correct, false otherwise
 
 	//Lecturer requests
 	router.HandleFunc("/log_lecturer/{username}/{password}", responseLecturerLogIn) //returns session hash if successful, false otherwise

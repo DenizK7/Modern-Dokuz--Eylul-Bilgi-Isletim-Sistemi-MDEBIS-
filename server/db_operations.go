@@ -281,6 +281,7 @@ func getCoursesOfAStudent(studentId int) []course {
 			return nil
 		}
 		addTimeInfo(&course)
+		course.Announcements = getAnnouncementOfCourse(course.Id)
 		courses = append(courses, course)
 	}
 	if err = rowsCourses.Err(); err != nil {
