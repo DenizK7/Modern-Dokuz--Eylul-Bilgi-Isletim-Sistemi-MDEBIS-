@@ -51,7 +51,7 @@ const Inputt = ({setRerender, rerender})=>{
 function handleClick() {
   try {
      var xhttp = new XMLHttpRequest();
-     xhttp.open("GET", "http://localhost:8080/change_course_status/"+sessionStorage.getItem("token")+"/"+inpt,false);
+     xhttp.open("GET", "http:/localhost:8080/change_course_status/"+sessionStorage.getItem("token")+"/"+inpt,false);
      xhttp.setRequestHeader("Content-type", "text/html");
      console.log("hi")
      xhttp.onload = function (e) {
@@ -109,7 +109,7 @@ const mystyle = {
     setSelectedExtension(event.target.value);     
     try {
       var xhttp = new XMLHttpRequest();//change_course_status/{sessionHash}/{courseId}
-      xhttp.open("GET", "http://localhost:8080//get_student_of_course/"+sessionStorage.getItem("token")+ "/" + selectedExtension.CourseId ,false);
+      xhttp.open("GET", "http://localhost:8080/get_student_of_course/"+sessionStorage.getItem("token")+ "/" + selectedExtension.CourseId ,false);
       xhttp.setRequestHeader("Content-type", "text/html");
       xhttp.onload = function (e) {
        if (xhttp.readyState === 4) {
