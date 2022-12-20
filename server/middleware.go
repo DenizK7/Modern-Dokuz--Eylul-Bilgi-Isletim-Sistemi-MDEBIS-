@@ -245,6 +245,29 @@ func convertHomePageEntryStudent(courses []course, studentId int) []homePageEntr
 	return homePageEntries
 }
 
+func responseAddCourse(w http.ResponseWriter, r *http.Request) {
+	//lecturer *lecturer, courseName string, attendanceLimit int, credit int
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	courseName := params["courseName"]
+	attendanceLimit, _ := strconv.Atoi(params["attendanceLimit"])
+	credit, _ := strconv.Atoi(params["credit"])
+	user := getUser(sessionHash)
+	if !isUserRight(user, 2) {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	lecturer := user.Lecturer
+	encoder.Encode(addCourse(lecturer, courseName, attendanceLimit, credit))
+	return
+}
+
 func responseGetHomeEntry(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
