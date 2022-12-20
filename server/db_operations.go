@@ -333,13 +333,30 @@ func getCoursesTimeTable(student *student) *[40]time_table_entry {
 	return &timeTable
 }
 
+func canCourseClosed(courseId int) bool {
+	query := "select * from course_has_student where Course_Id=? and Situtation='Current'"
+	rows, err := DB.Query(query, courseId)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	for rows.Next() {
+		return false
+	}
+	return true
+
+}
+
 func changeStatusOfCourse(courseId int, isActive bool) bool {
+
+	//check whether there is a student taking the course
+	if !canCourseClosed(courseId) {
+		return false
+	}
 	query := "UPDATE mdebis.course SET Active = ? WHERE (Course_Id = ?);"
 	_, err := DB.Exec(query, isActive, courseId)
 	if err != nil {
 		fmt.Println(err.Error())
-		fmt.Println("bu dersi alan öğrenci var!")
-
 		return false
 	}
 	return true
@@ -349,7 +366,7 @@ func changeStatusOfCourse(courseId int, isActive bool) bool {
 gets the courses that student enrolled in the current semester
 */
 func getCoursesOfALecturer(lecturer *lecturer) []course {
-	rowsCourses, err := DB.Query("select * from course where Course_Id IN (SELECT Course_Course_Id FROM mdebis.course_has_lecturer where Lecturer_Lecturer_Id=?)", lecturer.Id)
+	rowsCourses, err := DB.Query("select * from course where Course_Id IN (SELECT Course_Course_Id FROM mdebis.course_has_lecturer where Lecturer_Lecturer_Id=? and Active=1)", lecturer.Id)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil
@@ -431,7 +448,8 @@ gets the lecturer(s) information of a given course by querying the DB
 */
 func getAnnouncementOfCourse(courseId int) []announcement {
 	var announcements []announcement
-	queryGetsAnnouncements := "SELECT * FROM course_announcements WHERE Course_Course_Id=?;"
+	//TODO NEW TABLE CHECK
+	queryGetsAnnouncements := "SELECT * FROM course_has_announcement WHERE Course_Id=?;"
 	rows, err := DB.Query(queryGetsAnnouncements, courseId)
 	if err != nil {
 		fmt.Println(err.Error())
