@@ -480,7 +480,7 @@ func getStudentsOfCourse(lecturerID, courseId int) []student {
 
 	var students []student
 	queryGetStudent := "SELECT Student_Id,Name,Surname,Year,Department_Id,Mail,GPA,Photo_Path  FROM student WHERE Student_Id IN" +
-		"(SELECT Student_Id FROM course_has_student where Course_Id=?);"
+		"(SELECT Student_Id FROM course_has_student where Course_Id=? and Situtation='Current');"
 	rowStudents, _ := DB.Query(queryGetStudent, courseId)
 	for rowStudents.Next() {
 		var student student
