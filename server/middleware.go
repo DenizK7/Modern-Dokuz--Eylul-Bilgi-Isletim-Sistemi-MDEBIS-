@@ -518,7 +518,6 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	assignedStatus := params["assignedStatus"]
 	user := getUser(sessionHash)
 	if !isUserRight(user, 2) {
 		err := encoder.Encode(false)
@@ -541,22 +540,8 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Find what user wants the course to be
-	var isActive bool
-	switch assignedStatus {
-	case "true":
-		isActive = true
-	case "false":
-		isActive = false
-	default:
-		err := encoder.Encode(false)
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		return
-	}
 	//Make the course what user wants the course to be
-	changeStatusOfCourse(courseId, isActive)
+	changeStatusOfCourse(courseId, false)
 
 }
 
