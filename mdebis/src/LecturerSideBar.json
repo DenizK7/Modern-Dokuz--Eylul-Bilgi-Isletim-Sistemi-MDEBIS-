@@ -1,0 +1,120 @@
+
+ [   
+       
+ {
+     "title": "Home",
+     "icon": "bi-house-fill",
+     "path": "/HomePage/infoLecture"
+ },
+ {
+     "title": "Change Course Status",
+     "icon": "bi-file-earmark-plus",
+     "path": "/LecturerPage/ChangeCourse"
+ },
+ {
+     "title": "Add Grade",
+     "icon": "bi-file-earmark-minus",
+     "path": "/AdminPage/DeleteLesson"
+ },
+ {
+     "title": "Add Announcment",
+     "icon": "bi-person-plus",
+     "path": "/AdminPage/AddStudent"
+ },
+ {
+     "title": "Get Student Of Course",
+     "icon": "bi-person-x",
+     "path": "/AdminPage/DeleteStudent"
+ },
+ {
+     "title": "Change Number of Attandance",
+     "icon": "bi-person-plus-fill",
+     "path": "/AdminPage/AddLecturer"
+ },
+ {
+     "title": "Delete Lecturer",
+     "icon": "bi-person-x-fill",
+     "path": "/AdminPage/DeleteLecturer"
+ },
+ {
+     "title": "Contact",
+     "icon": "bi-phone-fill",
+     "childrens": [
+         {
+             "title": "Facebook",
+             "icon": "bi-facebook",
+             "path": "https://tr-tr.facebook.com/deuceng/"
+         },
+         {
+             "title": "Twitter",
+             "icon": "bi-twitter",
+             "path": "https://twitter.com/deumuhendislik"
+
+         },
+         {
+             "title": "Instagram",
+             "icon": "bi-instagram",
+             "path": "https://www.instagram.com/deu_ceng/"
+         }
+     ]
+ },
+ {
+     "title": "FAQ",
+     "icon": "bi-question-circle-fill",
+     "childrens": [
+         {
+             "title": "Proxy Settings",
+             "path": "http://web.deu.edu.tr/sss/proxy.html",
+             "icon": "bi-question"
+         },
+         {
+             "title": "What Is Spam",
+             "path": "http://web.deu.edu.tr/sss/spam.html",
+             "icon": "bi-question"
+         },
+         {
+             "title": "E-mail Questions",
+             "path": "http://web.deu.edu.tr/sss/posta.html",
+             "icon": "bi-question"
+         },
+         {
+             "title": "WiFi",
+             "path": "https://bid.deu.edu.tr/",
+             "icon": "bi-question"
+             
+         }
+     ]
+ },
+
+
+{
+"title": "Profile",
+"icon": "bi-person-fill",
+"childrens": [
+ {
+     "title": "Profile",
+     "path": "/profile"
+ },
+ {
+     "title": "Forgot Password",
+     "path": "/forgot-password"
+ }
+]
+},
+
+{
+"title": "Email",
+"icon": "bi-envelope",
+"path": "https://webmail7.deu.edu.tr/"
+},
+{
+"title": "Support",
+"icon": "bi-question-circle-fill",
+"path": "/support"
+},
+{
+"title": "Logout",
+"path": "/",
+"icon": "bi-x -circle"
+}
+]

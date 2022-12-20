@@ -50,7 +50,7 @@ const Inputt = ({setRerender, rerender})=>{
 function handleClick() {
   try {
      var xhttp = new XMLHttpRequest();
-     xhttp.open("GET", "http://localhost:8080//delete_student/"+sessionStorage.getItem("token")+"/"+inpt,false);
+     xhttp.open("GET", "http://localhost:8080//delete_lecturer/"+sessionStorage.getItem("token")+"/"+inpt,false);
      xhttp.setRequestHeader("Content-type", "text/html");
      xhttp.onload = function (e) {
       if (xhttp.readyState === 4) {
@@ -88,7 +88,7 @@ function handleClick() {
   
 }
 
-  function DeleteLesson(){
+  function DeleteLecturer(){
   
     const[rerender, setRerender] = useState(false);
     const[lessons, setContent] = useState([])
@@ -155,4 +155,4 @@ function handleClick() {
           
       );
   }
-      export default DeleteLesson;
+      export default DeleteLecturer;

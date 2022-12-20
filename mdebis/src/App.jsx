@@ -13,13 +13,23 @@ import AddStudent from './components/AddStudent';
 import DeleteStudent from './components/DeleteStudent';
 import AddLesson from './components/AddLesson';
 import DeleteLesson from './components/DeleteLesson';
-
+import DeleteLecturer from './components/DeleteLecturer';
+import LecturerPage from './components/LecturerPage';
+import ChangeCourse from './components/ChangeCourse'
 function  App ()  {
   
   const [infoStudent, setInfoStudent] = useState([]);
   const [token, setToken] = useState();
   const [navVisible, showNavbar] = useState(false);
+  const extensions = [
+    { name: '@ogr.deu.edu.tr', code: 'student' },
+    { name: '@deu.edu.tr', code: 'teacher' }
+];   
+const [selectedExtension, setSelectedExtension] = useState(null);
     const data = {
+      extensions,
+      selectedExtension,
+      setSelectedExtension,
       token,
       setToken,
         navVisible,
@@ -36,11 +46,18 @@ function  App ()  {
           <Route path ="/ForgotPassword" element ={<ForgotPassword/>} />  
 
 
+          <Route path ="/LecturerPage" element ={<LecturerPage/>}>
+          <Route path ="/LecturerPage/ChangeCourse" element ={<ChangeCourse/>} />
+
+
+          </Route>
+
           <Route path ="/AdminPage" element ={<AdminPage/>}>
           <Route path ="/AdminPage/AddStudent" element ={<AddStudent/>} />
           <Route path ="/AdminPage/AddLesson" element ={<AddLesson/>} />
           <Route path ="/AdminPage/DeleteLesson" element ={<DeleteLesson/>} />
           <Route path ="/AdminPage/DeleteStudent" element ={<DeleteStudent/>} />
+          <Route path ="/AdminPage/DeleteLecturer" element ={<DeleteLecturer/>} />
           </Route>  
 
           <Route path ="/HomePage"   element ={<Home/>} >

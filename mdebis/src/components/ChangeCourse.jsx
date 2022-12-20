@@ -50,19 +50,22 @@ const Inputt = ({setRerender, rerender})=>{
 function handleClick() {
   try {
      var xhttp = new XMLHttpRequest();
-     xhttp.open("GET", "http://localhost:8080//delete_student/"+sessionStorage.getItem("token")+"/"+inpt,false);
+     xhttp.open("GET", "http://localhost:8080/change_course_status/"+sessionStorage.getItem("token")+"/"+inpt,false);
      xhttp.setRequestHeader("Content-type", "text/html");
+     console.log("hi")
      xhttp.onload = function (e) {
       if (xhttp.readyState === 4) {
           if (xhttp.status === 200) {
-
+          
              setRerender(!rerender);
            
              
           }
        }
+       
     }
     console.log(inpt + " has been succesfully deleted");
+    
     xhttp.send();
    
 
@@ -78,24 +81,24 @@ function handleClick() {
     
   };
   return(
-    <ButtonContainer  className="deleteID"> You can delete with ID : 
+    <ButtonContainer  className="deleteID"> You can close the course by entering ID : 
   <StyledInput type="text"
-  id="inpt" name="inpt" placeholder="DELETE" onChange={handleChangeinpt}
+  id="inpt" name="inpt" placeholder="Close" onChange={handleChangeinpt}
   value={inpt}  ></StyledInput>
-  <Button  content={"Delete"} onClick={handleClick}> Delete</Button>
+  <Button  content={"Close"} onClick={handleClick}> Delete</Button>
   </ButtonContainer>
   );
   
 }
 
-  function DeleteLesson(){
+  function ChangeCourse(){
   
     const[rerender, setRerender] = useState(false);
     const[lessons, setContent] = useState([])
     useEffect(() => {
       try {
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "http://localhost:8080/get_students/"+sessionStorage.getItem("token"),false);
+        var xhttp = new XMLHttpRequest();//change_course_status/{sessionHash}/{courseId}
+        xhttp.open("GET", "http://localhost:8080/get_home_entry/"+sessionStorage.getItem("token"),false);
         xhttp.setRequestHeader("Content-type", "text/html");
         xhttp.onload = function (e) {
          if (xhttp.readyState === 4) {
@@ -106,6 +109,7 @@ function handleClick() {
                  
              }
           }
+         
        }
       
        xhttp.send();
@@ -133,16 +137,16 @@ function handleClick() {
       <tbody>
       <thead >
         <tr>
-          <th >Department ID</th>
+          <th >Student ID</th>
           <th>NAME</th>
           <th>E-mail</th>
         </tr>
       </thead>
         {lessons.map(student => (
           <tr>
-            <td className="tdstyle">{student.DepId}</td>
-            <td className="tdstyle">{student.Name}</td>
-            <td className="tdstyle">{student.EMail}</td>
+            <td className="tdstyle">{student.CourseId}</td>
+            <td className="tdstyle">{student.CourseName}</td>
+            <td className="tdstyle">{student.DepName}</td>
           </tr>
         ))}
       </tbody>
@@ -155,4 +159,4 @@ function handleClick() {
           
       );
   }
-      export default DeleteLesson;
+      export default ChangeCourse;

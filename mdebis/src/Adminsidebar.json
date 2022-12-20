@@ -29,12 +29,12 @@
     {
         "title": "Add Lecturer",
         "icon": "bi-person-plus-fill",
-        "path": "/AdminPage/AddStudent"
+        "path": "/AdminPage/AddLecturer"
     },
     {
         "title": "Delete Lecturer",
         "icon": "bi-person-x-fill",
-        "path": "/AdminPage/AddStudent"
+        "path": "/AdminPage/DeleteLecturer"
     },
     {
         "title": "Contact",

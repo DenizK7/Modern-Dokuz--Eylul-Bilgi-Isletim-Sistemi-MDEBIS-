@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import {useState} from 'react';
 import { useTranslation } from "react-i18next";
+import 'primeicons/primeicons.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.css';
+import { Dropdown } from 'primereact/dropdown';
 
-import DropDownn from "./DropDown";
 import Button from "./Button";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import{MainContext, useContext} from '../context'
+import { useEffect } from "react";
 const ButtonContainer = styled.div`
   margin: 1rem 0 1rem 0;
   width: 100%;
@@ -29,11 +33,18 @@ const FormatMail = styled.span`
 `;
 
 function LoginInputs(){
+  const navigate = useNavigate();
   const {t} = useTranslation();
   const [inpt, setMessage] = useState('');
   const [pssw, setpssw] = useState('');
-  const{setInfoStudent, infoStudent}= useContext(MainContext);
+  const extensions = [
+    { name: '@ogr.deu.edu.tr', code: 'student' },
+    { name: '@deu.edu.tr', code: 'teacher' }
+];   
+const [selectedExtension, setSelectedExtension] = useState('');
+
   const handleChangeinpt = event => {
+   
     setMessage(event.target.value);
 
     
@@ -43,25 +54,46 @@ function LoginInputs(){
 
     
   };
+  const onExtensionChange = event => {
+    setSelectedExtension(event.target.value);     
+  }
   function handleClick() {
     try {
        var xhttp = new XMLHttpRequest();
-       xhttp.open("GET", "http://localhost:8080/log_admin/"+inpt+"/"+pssw,false);
+       
+       xhttp.open("GET", "http://localhost:8080/log_lecturer/"+inpt+"/"+pssw,false);//buraya if lerle neye giriceğini seçtir log admin student vs vs.
        xhttp.setRequestHeader("Content-type", "text/html");
        xhttp.onload = function (e) {
         if (xhttp.readyState === 4) {
             if (xhttp.status === 200) {
 
                var response = JSON.parse(xhttp.responseText);
-               setInfoStudent(response);
+               
                sessionStorage.setItem("token", response);
+               if(selectedExtension.name==='@ogr.deu.edu.tr'){
+                navigate("/HomePage/infoLecture");
+                
+               }
+               
+               else if(selectedExtension.name==='@deu.edu.tr'){
+                navigate("/LecturerPage")
+                
+               }
              
                
+               
             }
+            
+           
          }
+         else{
+          alert("Wrong pass or id");
+        }
+       
       }
      
       xhttp.send();
+      
      
   
    } catch (error) {
@@ -69,8 +101,18 @@ function LoginInputs(){
    }
 }
 
+    
+    
+    
+    const mystyle = {
+      fontSize: "10px",
+      fontFamily: "Arial",
+      fontWeight: "200",
+      width: "10vw"
+    };
+    
  
-    if(!infoStudent || infoStudent.length===0){
+    
       return(
         <div>
           <ButtonContainer>
@@ -78,7 +120,11 @@ function LoginInputs(){
             id="inpt" name="inpt" placeholder={t("EMAIL")} onChange={handleChangeinpt}
             value={inpt}  ></StyledInput>
           <FormatMail>
-          <DropDownn placeholder={t("EXTENSION")}></DropDownn>
+          <div className="dropdown">
+            <div className="card">
+                <Dropdown value={selectedExtension} options={extensions} onChange={onExtensionChange} optionLabel="name" placeholder={t("EXTENSION")}style={mystyle}/>                                
+            </div>
+        </div>
           </FormatMail>
         </ButtonContainer>
         <InputContainer>
@@ -91,11 +137,8 @@ function LoginInputs(){
         </ButtonContainer>
         </div>
             );
-    }
-    else{
-      
-      return <Navigate to="/AdminPage/DeleteStudent" />;
-    }
+    
+    
  
  
       

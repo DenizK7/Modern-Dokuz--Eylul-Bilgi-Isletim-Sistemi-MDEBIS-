@@ -5,15 +5,10 @@ import 'primereact/resources/primereact.css';
 import { Dropdown } from 'primereact/dropdown';
 import { useTranslation } from "react-i18next";
 
-const DropdownExtens = () => {
+const DropdownExtens = ({extensions}) => {
     const {t} = useTranslation();
     const [selectedExtension, setSelectedExtension] = useState(null);
-    let student = '@ogr.deu.edu.tr';
-    let teacher = '@.deu.edu.tr';
-    const extensions = [
-        { name: student, code: 'student' },
-        { name: teacher, code: 'teacher' }
-    ];   
+    
     const onExtensionChange = (e) => {
         setSelectedExtension(e.value);
     }
