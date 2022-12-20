@@ -15,7 +15,8 @@ import AddLesson from './components/AddLesson';
 import DeleteLesson from './components/DeleteLesson';
 import DeleteLecturer from './components/DeleteLecturer';
 import LecturerPage from './components/LecturerPage';
-import ChangeCourse from './components/ChangeCourse'
+import ChangeCourse from './components/ChangeCourse';
+import AddGrade from './components/AddGrade';
 function  App ()  {
   
   const [infoStudent, setInfoStudent] = useState([]);
@@ -48,6 +49,7 @@ const [selectedExtension, setSelectedExtension] = useState(null);
 
           <Route path ="/LecturerPage" element ={<LecturerPage/>}>
           <Route path ="/LecturerPage/ChangeCourse" element ={<ChangeCourse/>} />
+          <Route path ="/LecturerPage/AddGrade" element ={<AddGrade/>} />
 
 
           </Route>

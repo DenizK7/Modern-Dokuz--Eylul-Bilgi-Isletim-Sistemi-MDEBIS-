@@ -14,7 +14,7 @@
  {
      "title": "Add Grade",
      "icon": "bi-file-earmark-minus",
-     "path": "/AdminPage/DeleteLesson"
+     "path": "/LecturerPage/AddGrade"
  },
  {
      "title": "Add Announcment",

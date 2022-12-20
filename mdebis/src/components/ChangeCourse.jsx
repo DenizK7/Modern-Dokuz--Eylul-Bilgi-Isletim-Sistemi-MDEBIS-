@@ -80,6 +80,7 @@ function handleClick() {
 
     
   };
+ 
   return(
     <ButtonContainer  className="deleteID"> You can close the course by entering ID : 
   <StyledInput type="text"
@@ -92,6 +93,7 @@ function handleClick() {
 }
 
   function ChangeCourse(){
+    
   
     const[rerender, setRerender] = useState(false);
     const[lessons, setContent] = useState([])
@@ -146,7 +148,7 @@ function handleClick() {
           <tr>
             <td className="tdstyle">{student.CourseId}</td>
             <td className="tdstyle">{student.CourseName}</td>
-            <td className="tdstyle">{student.DepName}</td>
+            <td  className="tdstyle">{student.DepName}</td>
           </tr>
         ))}
       </tbody>
