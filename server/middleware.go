@@ -543,7 +543,7 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 
 	//Find what user wants the course to be
 	//Make the course what user wants the course to be
-	changeStatusOfCourse(courseId, false)
+	encoder.Encode(changeStatusOfCourse(courseId, false))
 
 }
 

@@ -333,13 +333,16 @@ func getCoursesTimeTable(student *student) *[40]time_table_entry {
 	return &timeTable
 }
 
-func changeStatusOfCourse(courseId int, isActive bool) {
+func changeStatusOfCourse(courseId int, isActive bool) bool {
 	query := "UPDATE mdebis.course SET Active = ? WHERE (Course_Id = ?);"
 	_, err := DB.Exec(query, isActive, courseId)
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		fmt.Println("bu dersi alan öğrenci var!")
+
+		return false
 	}
+	return true
 }
 
 /*
