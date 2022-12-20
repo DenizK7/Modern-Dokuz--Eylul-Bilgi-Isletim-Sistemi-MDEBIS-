@@ -11,6 +11,7 @@ const (
 )
 
 type homePageEntryLecturer struct {
+	CourseId        int
 	CourseName      string
 	Announcements   []announcement
 	Credit          int
@@ -20,6 +21,7 @@ type homePageEntryLecturer struct {
 	AttendanceLimit int
 }
 type homePageEntryStudent struct {
+	CourseId             int
 	CourseName           string
 	Announcements        []announcement
 	Credit               int

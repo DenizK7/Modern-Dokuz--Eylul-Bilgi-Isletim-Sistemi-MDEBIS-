@@ -224,6 +224,7 @@ func convertHomePageEntryLecturer(courses []course) []homePageEntryLecturer {
 		homePageEntry.TimeInfo = course.Time_Inf
 		homePageEntry.DepName = getDepartmentName(course.Dep_Id)
 		homePageEntry.LecName = getLecturerNamesOfCourse(course.Id)
+		homePageEntry.CourseId = course.Id
 		homePageEntries = append(homePageEntries, homePageEntry)
 	}
 	return homePageEntries
@@ -240,6 +241,7 @@ func convertHomePageEntryStudent(courses []course, studentId int) []homePageEntr
 		homePageEntry.DepName = getDepartmentName(course.Dep_Id)
 		homePageEntry.LecName = getLecturerNamesOfCourse(course.Id)
 		homePageEntry.CurrentNonAttendance = getNonAttendanceOfStudent(studentId, course.Id)
+		homePageEntry.CourseId = course.Id
 		homePageEntries = append(homePageEntries, homePageEntryStudent{})
 	}
 	return homePageEntries
