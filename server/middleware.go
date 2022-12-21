@@ -242,7 +242,7 @@ func convertHomePageEntryStudent(courses []course, studentId int) []homePageEntr
 		homePageEntry.LecName = getLecturerNamesOfCourse(course.Id)
 		homePageEntry.CurrentNonAttendance = getNonAttendanceOfStudent(studentId, course.Id)
 		homePageEntry.CourseId = course.Id
-		homePageEntries = append(homePageEntries, homePageEntryStudent{})
+		homePageEntries = append(homePageEntries, homePageEntry)
 	}
 	return homePageEntries
 }
@@ -403,6 +403,7 @@ func responseCreateLecturer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	password := params["password"]
+	password = string(hashPassword(password))
 	title := params["title"]
 	name := params["name"]
 	surname := params["surname"]
@@ -431,6 +432,7 @@ func responseCreateStudent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	password := params["password"]
+	password = string(hashPassword(password))
 	name := params["name"]
 	surname := params["surname"]
 	departmentName := params["departmentName"]
@@ -543,7 +545,7 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 
 	//Find what user wants the course to be
 	//Make the course what user wants the course to be
-	encoder.Encode(changeStatusOfCourse(courseId, false))
+	encoder.Encode(changeStatusOfCourse(courseId))
 
 }
 

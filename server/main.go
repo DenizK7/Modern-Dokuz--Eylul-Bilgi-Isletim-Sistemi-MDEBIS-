@@ -21,7 +21,7 @@ var GRADES = [9]string{"AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF"}
 func main() {
 	//Connect to the DB
 	var err error
-	DB, err = sql.Open("mysql", "root:deniz2000@tcp(127.0.0.1:3306)/mdebis")
+	DB, err = sql.Open("mysql", "root:354152@tcp(127.0.0.1:3306)/mdebis")
 	DB.SetMaxOpenConns(10000000)
 	if DB != nil {
 
@@ -30,7 +30,6 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	addAnnouncement(2000506140, 288, "SECOND ANNOUNCEMENT OF THE COURSE", "PLEASE before the class, read the chapter shared with you in the resources page of the class.")
 	//start to listen to port and response to the requests
 	r := Router()
 	fmt.Println("Starting server on the port 8080...")
