@@ -97,7 +97,7 @@ const Inputt = ({setRerender, rerender, lessons})=>{
 function handleClick() {
   try {
      var xhttp = new XMLHttpRequest();
-     xhttp.open("GET", "http://localhost:8080/change_course_status/"+sessionStorage.getItem("token")+"/"+selectedExtension.CourseId+"/"+header+"/"+content,false);
+     xhttp.open("GET", "http://localhost:8080/add_announcement/"+sessionStorage.getItem("token")+"/"+selectedExtension.CourseId+"/"+header+"/"+content,false);
      xhttp.setRequestHeader("Content-type", "text/html");
      
      xhttp.onload = function (e) {
