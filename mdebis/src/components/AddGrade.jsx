@@ -78,7 +78,7 @@ const mystyle = {
       alert("Wrong pass or id");
     }
 
-       
+      console.log("http://localhost:8080/get_student_of_course/"+sessionStorage.getItem("token")+"/"+as.CourseId)
       console.log("Course id is " +as.CourseId)
       console.log(selectedStudent)
       

@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"strings"
 )
 
 /*
@@ -76,7 +75,7 @@ func getAllDepartmentNames() []string {
 }
 
 func getNonAttendanceOfStudent(studentId int, courseId int) int {
-	query := "select Non_Attendance from department WHERE Course_Id=? and Student_Id=?"
+	query := "select Non_Attendance from course_has_student WHERE Course_Id=? and Student_Id=?"
 	var nonAttendance int
 	if err := DB.QueryRow(query, courseId, studentId).Scan(&nonAttendance); err != nil {
 		fmt.Println(err.Error())
@@ -86,7 +85,7 @@ func getNonAttendanceOfStudent(studentId int, courseId int) int {
 
 func getAllStudents() []student {
 	var students []student
-	query := "SELECT Student_Id,Name,Surname,Year,Department_Id,Mail,GPA,Photo_Path  FROM STUDENT"
+	query := "SELECT Student_Id,Name,Surname,Year,Department_Id,Mail,GPA,Photo_Path  FROM STUDENT where isActive=1"
 	rows, err := DB.Query(query)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -120,7 +119,7 @@ func addCourse(lecturer *lecturer, courseName string, attendanceLimit int, credi
 	if isCourseExistId == 0 {
 		//means the course should be created
 		queryAdd := "INSERT INTO course (Name, Departmend_Ids, Attandence_Limit, Credit) VALUES (?,?,?);"
-		_, err := DB.Exec(queryAdd, lecturer.DepId, attendanceLimit, credit)
+		_, err := DB.Exec(queryAdd, courseName, lecturer.DepId, attendanceLimit, credit)
 		if err != nil {
 			fmt.Println(err)
 			return false
@@ -137,14 +136,13 @@ func addCourse(lecturer *lecturer, courseName string, attendanceLimit int, credi
 }
 
 func createLecturer(id int, password string, title string, name string, surname string, departmentName string) bool {
-	query := "INSERT INTO lecturer ('Lecturer_Id', 'Password', 'Name', 'Surname', 'Mail', 'Department_Id', 'Title') VALUES (?, ?, ?,?, ?, ?, ?)"
-	mail := name + "." + surname + "@deu.edu.tr"
+	query := "INSERT INTO lecturer (Lecturer_Id, Password, Name, Surname, Department_Id, Title) VALUES (?,?,?,?,?,?)"
 	success, depId := getDepIdByName(departmentName)
 	if success != true {
 		fmt.Println("error occured when finding the department in createLecturer function")
 		return false
 	}
-	_, err := DB.Exec(query, id, password, name, surname, mail, depId, title)
+	_, err := DB.Exec(query, id, password, name, surname, depId, title)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
@@ -152,14 +150,13 @@ func createLecturer(id int, password string, title string, name string, surname 
 	return true
 }
 func createStudent(id int, password string, name string, surname string, departmentName string) bool {
-	query := "INSERT INTO student ('Student_Id', 'Password', 'Name', 'Surname', 'Year','Mail','GPA', 'Department_Id') VALUES (?,?,?,?,?,?,?,?)"
-	mail := name + "." + surname + "@ogr.deu.edu.tr"
+	query := "INSERT INTO student (Student_Id, Password, Name, Surname, Year,GPA, Department_Id) VALUES (?,?,?,?,?,?,?)"
 	success, depId := getDepIdByName(departmentName)
 	if success != true {
 		fmt.Println("error occured when finding the department in createLecturer function")
 		return false
 	}
-	_, err := DB.Exec(query, id, password, name, surname, 1, mail, 0, depId)
+	_, err := DB.Exec(query, id, password, name, surname, 1, 0, depId)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
@@ -179,16 +176,21 @@ func getDepIdByName(name string) (bool, int) {
 
 func getAllLecturers() []lecturer {
 	var lecturers []lecturer
-	query := "SELECT Lecturer_Id,Name,Surname,Mail,Department_Id,Title,Photo_Path from FROM lecturer"
+	query := "SELECT Lecturer_Id,Name,Surname,Mail,Department_Id,Title,Photo_Path FROM lecturer where isActive=1"
 	rows, err := DB.Query(query)
 	if err != nil {
 		fmt.Println(err.Error())
 		return lecturers
 	}
+	i := 0
 	for rows.Next() {
+		if i == 100 {
+			break
+		}
 		var lecturer lecturer
 		rows.Scan(&lecturer.Id, &lecturer.Name, &lecturer.Surname, &lecturer.EMail, &lecturer.DepId, &lecturer.Title, &lecturer.PhotoPath)
 		lecturers = append(lecturers, lecturer)
+		i = i + 1
 	}
 	return lecturers
 }
@@ -220,16 +222,23 @@ func getRealPasswordAdmin(id int) (bool, string) {
 	return true, realPassword
 }
 
-func deleteStudent(idStudent int) bool {
-	queryDeleteCourses := "DELETE FROM course_has_student WHERE Student_Id=?"
-	_, err := DB.Exec(queryDeleteCourses, idStudent)
+func makeFailAllCoursesOfStudent(id int) bool {
+	query := "update course_has_student set Situtation='Failed' where Student_Id=?"
+	_, err := DB.Exec(query, id)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
 	}
+	return true
+}
 
-	query := "DELETE FROM student WHERE Student_Id=?"
-	_, err = DB.Exec(query, idStudent)
+func deleteStudent(idStudent int) bool {
+	if makeFailAllCoursesOfStudent(idStudent) == false {
+		return false
+	}
+
+	query := "UPDATE student SET isActive=0 WHERE Student_Id=?"
+	_, err := DB.Exec(query, idStudent)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
@@ -238,8 +247,26 @@ func deleteStudent(idStudent int) bool {
 }
 
 func deleteLecturer(idLecturer int) bool {
-	query := "DELETE FROM lecturer WHERE Lecturer_Id=?"
+
+	//First, delete its courses
+	if makeFailAllStudentsOfLecturer(idLecturer) == false {
+		return false
+	}
+	query := "UPDATE lecturer set isActive=0 WHERE Lecturer_Id=?"
 	_, err := DB.Exec(query, idLecturer)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
+
+/*This function makes fail all students in the courses that currently giving by the given lecturer
+ */
+func makeFailAllStudentsOfLecturer(lecId int) bool {
+	query := "UPDATE course_has_student set Situtation='Failed' where  Situtation='Current' and " +
+		"Course_Id IN (select Course_Course_Id from course_has_lecturer where Lecturer_Lecturer_Id=?)"
+	_, err := DB.Exec(query, lecId)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
@@ -419,7 +446,6 @@ func getCoursesOfAStudent(studentId int) []course {
 		fmt.Println(err)
 		return nil
 	}
-	//TODO HOMEENTRY BURAYA
 	return courses
 }
 
@@ -510,44 +536,17 @@ func changeNonAttendance(lecturerId int, courseId int, studentId int, nonAttenda
 	return true
 }
 
-func getPastCoursesOfStudent(studentId int) []course {
-	//GETTING COURSE IDS THAT STUDENT IS TAKING
-	rows, err := DB.Query("SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and (Situtation='Passed' or Situtation='Failed')", studentId)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
-	var courseIds []int
-	for rows.Next() {
-		//create course struct because they will also send to general course map (not created yet)
-		var course int
-		if err := rows.Scan(&course); err != nil {
-			fmt.Println(err.Error())
-			return nil
-		}
-		courseIds = append(courseIds, course)
-	}
+func getPastCoursesOfStudent(studentId int) []PastCourse {
 	//GETTING COURSES WITH THE GIVEN IDS
-	params := make([]interface{}, 0)
-	query := []string{"SELECT * FROM mdebis.course where"}
-	if len(courseIds) > 0 {
-		query = append(query,
-			fmt.Sprintf(
-				"Course_Id IN (%s)",
-				strings.Join(strings.Split(strings.Repeat("?", len(courseIds)), ""), ", "),
-			),
-		)
-	}
-	for _, courseId := range courseIds {
-		params = append(params, courseId)
-	}
-	rowsCourses, err := DB.Query(strings.Join(query, " ")+";", params...)
+	query := "SELECT * FROM mdebis.course where " +
+		"Course_Id In (SELECT Course_Id FROM mdebis.course_has_student where Student_Id=? and (Situtation='Passed' or Situtation='Failed'))"
+	rowsCourses, err := DB.Query(query, studentId)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil
 	}
 
-	var courses []course
+	var pastCourses []PastCourse
 
 	for rowsCourses.Next() {
 		//create course struct because they will also send to general course map (not created yet)
@@ -557,15 +556,29 @@ func getPastCoursesOfStudent(studentId int) []course {
 			return nil
 		}
 		addTimeInfo(&course)
-		courses = append(courses, course)
+		var pastCourse PastCourse
+		pastCourse.Course = course
+		pastCourse.Grade = getGrade(studentId, course.Id)
+		pastCourses = append(pastCourses, pastCourse)
 	}
 	if err = rowsCourses.Err(); err != nil {
 		fmt.Println(err)
-		return nil
+		return pastCourses
 	}
-	return courses
+	return pastCourses
 }
+func getGrade(idStudent int, idCourse int) string {
+	query := "select Grade from course_has_student where Student_Id=? and Course_Id=?"
+	var grade string
+	if err := DB.QueryRow(query, idStudent, idCourse).Scan(&grade); err != nil {
+		return "N/A"
+	}
+	if grade == "FF" || grade == "" {
+		grade = "FF | Failed"
+	}
+	return grade
 
+}
 func getLecturerOfCourse(course *course) []string {
 	rows, err := DB.Query("SELECT Lecturer_Lecturer_Id FROM mdebis.course_has_lecturer where Course_Course_Id=?", course.Id)
 	if err != nil {

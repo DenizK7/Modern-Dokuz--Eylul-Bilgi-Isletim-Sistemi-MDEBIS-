@@ -10,6 +10,11 @@ const (
 	Passed
 )
 
+type PastCourse struct {
+	Course course
+	Grade  string
+}
+
 type homePageEntryLecturer struct {
 	CourseId        int
 	CourseName      string
