@@ -17,6 +17,9 @@ import DeleteLecturer from './components/DeleteLecturer';
 import LecturerPage from './components/LecturerPage';
 import ChangeCourse from './components/ChangeCourse';
 import AddGrade from './components/AddGrade';
+import AddAnnouncment from './components/AddAnnouncment';
+import ChangeNumberOf from './components/ChangeNumberOf';
+import AddLecturer from './components/AddLecturer';
 function  App ()  {
   
   const [infoStudent, setInfoStudent] = useState([]);
@@ -40,7 +43,7 @@ const [selectedExtension, setSelectedExtension] = useState(null);
     }
   return (
     <MainContext.Provider value ={data}>
-    <body >
+    
       <Router>
         <Routes>
           <Route path ="/" element ={<Loginpage />} />   
@@ -50,16 +53,17 @@ const [selectedExtension, setSelectedExtension] = useState(null);
           <Route path ="/LecturerPage" element ={<LecturerPage/>}>
           <Route path ="/LecturerPage/ChangeCourse" element ={<ChangeCourse/>} />
           <Route path ="/LecturerPage/AddGrade" element ={<AddGrade/>} />
+          <Route path ="/LecturerPage/AddAnnouncment" element ={<AddAnnouncment/>} />
+          <Route path ="/LecturerPage/ChangeNumberOf" element ={<ChangeNumberOf/>} />
 
 
           </Route>
 
           <Route path ="/AdminPage" element ={<AdminPage/>}>
           <Route path ="/AdminPage/AddStudent" element ={<AddStudent/>} />
-          <Route path ="/AdminPage/AddLesson" element ={<AddLesson/>} />
-          <Route path ="/AdminPage/DeleteLesson" element ={<DeleteLesson/>} />
           <Route path ="/AdminPage/DeleteStudent" element ={<DeleteStudent/>} />
           <Route path ="/AdminPage/DeleteLecturer" element ={<DeleteLecturer/>} />
+          <Route path ="/AdminPage/AddLecturer" element ={<AddLecturer/>} />
           </Route>  
 
           <Route path ="/HomePage"   element ={<Home/>} >
@@ -71,7 +75,7 @@ const [selectedExtension, setSelectedExtension] = useState(null);
           
         </Routes>
       </Router>
-    </body>
+    
     </MainContext.Provider>
     
   );

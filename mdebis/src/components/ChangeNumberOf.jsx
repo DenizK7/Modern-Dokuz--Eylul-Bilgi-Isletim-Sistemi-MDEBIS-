@@ -50,7 +50,7 @@ const mystyle = {
     right: "45vh"
   };
   
-  function ChangeCourse(){
+  function ChangeNumberOf(){
     var as;
     const[selectedStudent, setSelectedStudent] = useState([]);
     const [selectedExtension, setSelectedExtension] = useState([]);
@@ -152,4 +152,4 @@ const mystyle = {
           
       );
   }
-      export default ChangeCourse;
+      export default ChangeNumberOf;

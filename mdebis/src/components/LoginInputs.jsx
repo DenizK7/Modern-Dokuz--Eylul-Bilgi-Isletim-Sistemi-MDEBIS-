@@ -39,7 +39,8 @@ function LoginInputs(){
   const [pssw, setpssw] = useState('');
   const extensions = [
     { name: '@ogr.deu.edu.tr', code: 'student' },
-    { name: '@deu.edu.tr', code: 'teacher' }
+    { name: '@deu.edu.tr', code: 'teacher' },
+    { name: '@admin.deu.edu.tr', code: 'admin' }
 ];   
 const [selectedExtension, setSelectedExtension] = useState('');
 
@@ -58,10 +59,23 @@ const [selectedExtension, setSelectedExtension] = useState('');
     setSelectedExtension(event.target.value);     
   }
   function handleClick() {
+    var ex;
+    if(selectedExtension.name==='@ogr.deu.edu.tr'){
+       ex = "http://localhost:8080/log_student/";
+      
+     }
+     else if(selectedExtension.name==='@deu.edu.tr'){
+      ex = "http://localhost:8080/log_lecturer/";
+      
+    }
+    else if(selectedExtension.name==='@admin.deu.edu.tr'){
+      ex = "http://localhost:8080/log_admin/";
+      
+     }
     try {
        var xhttp = new XMLHttpRequest();
        
-       xhttp.open("GET", "http://localhost:8080/log_lecturer/"+inpt+"/"+pssw,false);//buraya if lerle neye giriceğini seçtir log admin student vs vs.
+       xhttp.open("GET",ex +inpt+"/"+pssw,false);//buraya if lerle neye giriceğini seçtir log admin student vs vs.
        xhttp.setRequestHeader("Content-type", "text/html");
        xhttp.onload = function (e) {
         if (xhttp.readyState === 4) {
@@ -76,7 +90,11 @@ const [selectedExtension, setSelectedExtension] = useState('');
                }
                
                else if(selectedExtension.name==='@deu.edu.tr'){
-                navigate("/LecturerPage")
+                navigate("/LecturerPage/AddAnnouncment")
+                
+               }
+               else if(selectedExtension.name==='@admin.deu.edu.tr'){
+                navigate("/AdminPage/DeleteStudent")
                 
                }
              

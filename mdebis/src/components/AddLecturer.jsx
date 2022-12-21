@@ -48,7 +48,7 @@ const Inputt = ({setRerender, rerender})=>{
 
   const [password, setPassword] = useState('');
 
-  
+  const [title, setTitle] = useState('');
 
   const [name, setName] = useState('');
 
@@ -59,7 +59,7 @@ const Inputt = ({setRerender, rerender})=>{
 function handleClick() {
   try {
      var xhttp = new XMLHttpRequest();
-     xhttp.open("GET", "http://localhost:8080/create_student/"+sessionStorage.getItem("token")+"/"+id+"/"+password+"/"+name+"/"+surname+"/"+dep_name,false);
+     xhttp.open("GET", "http://localhost:8080/create_lecturer/"+sessionStorage.getItem("token")+"/"+id+"/"+password+"/"+title+"/"+name+"/"+surname+"/"+dep_name,false);
      xhttp.setRequestHeader("Content-type", "text/html");
      xhttp.onload = function (e) {
       if (xhttp.readyState === 4) {
@@ -87,7 +87,9 @@ function handleClick() {
   const handleChangeinpt2 = event => {
     setPassword(event.target.value);
   };
-  
+  const handleChangeinpt3 = event => {
+    setTitle(event.target.value);
+  };
   const handleChangeinpt4 = event => {
     setName(event.target.value);
   };
@@ -108,23 +110,24 @@ function handleClick() {
   value={password}  ></StyledInput>
   
   <StyledInput type="text"
-  id="name" name="name" placeholder="NAME" onChange={handleChangeinpt4}
-  value={name}  ></StyledInput>
+  id="title" name="title" placeholder="TITLE" onChange={handleChangeinpt3}
+  value={title}  ></StyledInput>
   
   
   
   </ButtonContainer>
   <ButtonContainer>
- 
+  <StyledInput type="text"
+  id="name" name="name" placeholder="NAME" onChange={handleChangeinpt4}
+  value={name}  ></StyledInput>
    <StyledInput type="text"
   id="surname" name="surname" placeholder="SURNAME" onChange={handleChangeinpt5}
   value={surname}  ></StyledInput>
   <StyledInput type="text"
   id="dep_name" name="dep_name" placeholder="DEP_NAME" onChange={handleChangeinpt6}
   value={dep_name}  ></StyledInput>
-  <Button  content={"Add"} onClick={handleClick}> Add</Button>
   </ButtonContainer>
-  
+  <Button  content={"Add"} onClick={handleClick}> Add</Button>
     </div>
    
   
@@ -139,7 +142,7 @@ function handleClick() {
     useEffect(() => {
       try {
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "http://localhost:8080/get_students/"+sessionStorage.getItem("token"),false);
+        xhttp.open("GET", "http://localhost:8080/get_lecturers/"+sessionStorage.getItem("token"),false);
         xhttp.setRequestHeader("Content-type", "text/html");
         xhttp.onload = function (e) {
          if (xhttp.readyState === 4) {

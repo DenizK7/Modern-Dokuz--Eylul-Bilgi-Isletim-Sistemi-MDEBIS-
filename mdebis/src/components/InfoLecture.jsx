@@ -25,7 +25,7 @@ function InfoLecture() {
     useEffect(() => {
         try {
           var xhttp = new XMLHttpRequest();
-          xhttp.open("GET", "http://localhost:8080/get_courses/"+sessionStorage.getItem("token"),false);
+          xhttp.open("GET", "http://localhost:8080/get_home_entry/"+sessionStorage.getItem("token"),false);
           xhttp.setRequestHeader("Content-type", "text/html");
           xhttp.onload = function (e) {
            if (xhttp.readyState === 4) {

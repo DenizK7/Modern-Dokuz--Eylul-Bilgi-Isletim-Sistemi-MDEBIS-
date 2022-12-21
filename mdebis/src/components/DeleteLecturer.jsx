@@ -50,7 +50,7 @@ const Inputt = ({setRerender, rerender})=>{
 function handleClick() {
   try {
      var xhttp = new XMLHttpRequest();
-     xhttp.open("GET", "http://localhost:8080//delete_lecturer/"+sessionStorage.getItem("token")+"/"+inpt,false);
+     xhttp.open("GET", "http://localhost:8080/delete_lecturer/"+sessionStorage.getItem("token")+"/"+inpt,false);
      xhttp.setRequestHeader("Content-type", "text/html");
      xhttp.onload = function (e) {
       if (xhttp.readyState === 4) {
@@ -62,7 +62,7 @@ function handleClick() {
           }
        }
     }
-    console.log(inpt + " has been succesfully deleted");
+  
     xhttp.send();
    
 
@@ -95,13 +95,16 @@ function handleClick() {
     useEffect(() => {
       try {
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "http://localhost:8080/get_students/"+sessionStorage.getItem("token"),false);
+        xhttp.open("GET", "http://localhost:8080/get_lecturers/"+sessionStorage.getItem("token"),false);
         xhttp.setRequestHeader("Content-type", "text/html");
         xhttp.onload = function (e) {
          if (xhttp.readyState === 4) {
              if (xhttp.status === 200) {
     
               var response = JSON.parse(xhttp.response);   
+              if(response===null)
+              console.log("empty")
+              else
               setContent(response);    
                  
              }
@@ -133,16 +136,16 @@ function handleClick() {
       <tbody>
       <thead >
         <tr>
-          <th >Department ID</th>
-          <th>NAME</th>
-          <th>E-mail</th>
+          <th >ID</th>
+          <th>Name</th>
+          <th>Surname</th>
         </tr>
       </thead>
         {lessons.map(student => (
           <tr>
-            <td className="tdstyle">{student.DepId}</td>
+            <td className="tdstyle">{student.Id}</td>
             <td className="tdstyle">{student.Name}</td>
-            <td className="tdstyle">{student.EMail}</td>
+            <td className="tdstyle">{student.Surname}</td>
           </tr>
         ))}
       </tbody>

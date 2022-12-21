@@ -6,16 +6,8 @@
         "icon": "bi-house-fill",
         "path": "/HomePage/infoLecture"
     },
-    {
-        "title": "Add Lesson",
-        "icon": "bi-file-earmark-plus",
-        "path": "/AdminPage/AddLesson"
-    },
-    {
-        "title": "Delete Lesson",
-        "icon": "bi-file-earmark-minus",
-        "path": "/AdminPage/DeleteLesson"
-    },
+   
+    
     {
         "title": "Add student",
         "icon": "bi-person-plus",

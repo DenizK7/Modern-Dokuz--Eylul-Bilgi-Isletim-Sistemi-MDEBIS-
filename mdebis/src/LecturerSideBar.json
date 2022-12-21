@@ -4,38 +4,30 @@
  {
      "title": "Home",
      "icon": "bi-house-fill",
-     "path": "/HomePage/infoLecture"
+     "path": "/LecturerPage/AddAnnouncment"
  },
  {
      "title": "Change Course Status",
-     "icon": "bi-file-earmark-plus",
+     "icon": "bi-bar-chart-steps",
      "path": "/LecturerPage/ChangeCourse"
  },
  {
      "title": "Add Grade",
-     "icon": "bi-file-earmark-minus",
+     "icon": "bi-bar-chart",
      "path": "/LecturerPage/AddGrade"
  },
  {
      "title": "Add Announcment",
-     "icon": "bi-person-plus",
-     "path": "/AdminPage/AddStudent"
+     "icon": "bi-megaphone",
+     "path": "/LecturerPage/AddAnnouncment"
  },
- {
-     "title": "Get Student Of Course",
-     "icon": "bi-person-x",
-     "path": "/AdminPage/DeleteStudent"
- },
+ 
  {
      "title": "Change Number of Attandance",
-     "icon": "bi-person-plus-fill",
-     "path": "/AdminPage/AddLecturer"
+     "icon": "bi-star",
+     "path": "/LecturerPage/ChangeNumberOf"
  },
- {
-     "title": "Delete Lecturer",
-     "icon": "bi-person-x-fill",
-     "path": "/AdminPage/DeleteLecturer"
- },
+ 
  {
      "title": "Contact",
      "icon": "bi-phone-fill",

@@ -144,6 +144,9 @@ nav{
     border: groove;
 	width: 16vw;
   }
+  .heig{
+    height: 15vh;
+  }
   .grid-container-sm {
 	display: grid;
     height: -webkit-fill-available;
@@ -175,6 +178,20 @@ nav{
   .item1 {
 	grid-row: 1 / 10;
 	max-width: 5vw;
+  grid-template-columns: auto;
+  
+  }
+  .item1 > div {
+    background-color: rgba(255, 255, 255, 0.8);
+  
+      text-align: center;
+      padding: 20px 10px;
+      padding-top: 1vh;
+      display: grid;
+      font-size: inherit;
+      width: 3vw;
+      overflow-wrap: anywhere;
+      height: 15vh;
   }
   .days{
 	font-size : 6vw;
@@ -210,6 +227,7 @@ nav{
     border: groove;
     font-size: inherit;
     width: 25vw;
+    
     overflow-wrap: anywhere;
 }
 .sidebarAdmin {
@@ -271,6 +289,35 @@ nav{
     border: groove;
 	
   }
+  .grid-container-sm-admin2 {
+    display: grid;
+      height: -webkit-fill-available;
+      width: 78vw;
+      align-content: flex-start;
+      grid-template-columns: auto auto auto;
+      row-gap: 1vh;
+      /* background-color: #2196F3; */
+      position: fixed;
+      top: 35vh;
+      /* bottom: 0px; */
+      right: 4vw;
+      padding-right: 1vw;
+      overflow-y: visible;
+      padding-left: 1vw;
+      padding-top: 1vh;
+      overflow: scroll;
+      padding-bottom: 1vh;
+    }
+    .grid-container-sm-admin2 > div  {
+      width: 75vw;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 10px;
+    display: table-cell;
+      border: groove;
+    
+    }
   .tdstyle {
     width: 75vw;
     background-color: rgba(255, 255, 255, 0.8);
@@ -284,6 +331,11 @@ nav{
   .deleteID{
     position: absolute;
     top: 13vh;
+	left: 19vw;
+  }
+  .deleteID2{
+    position: absolute;
+    top: 6vh;
 	left: 19vw;
   }
   .perpendicular-line {

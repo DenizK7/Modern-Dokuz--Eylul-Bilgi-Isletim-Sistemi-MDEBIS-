@@ -54,14 +54,16 @@ function Syllabus() {
         <>
         
         <div style={{transition:"0.8s"}} className={css}  >
-    <div className="item1" >Saat</div>
+    <div className="item1" >
+      Saat
+    </div>
       <div className="days" >Pazartesi</div>
       <div className="days">Salı</div>
       <div className="days" >Çarşamba</div>
       <div className="days">Perşembe</div>
       <div className="days">Cuma</div>
        {
-            contents?.map(contents =>  <div ><Lessons Department={contents.Department} Course_name={contents.Course_name} Lecturer_name={contents.Lecturer_name} AttandenceLimit = {contents.AttandenceLimit}></Lessons></div>)
+            contents?.map(contents =>  <div className="heig"><Lessons Department={contents.Department} Course_name={contents.Course_name} Lecturer_name={contents.Lecturer_name} AttandenceLimit = {contents.AttandenceLimit>0?"Devamsızlık Sınırı :"+contents.AttandenceLimit:null }></Lessons></div>)
           } 
       {/* <div ><Lessons></Lessons></div>
       <div ><Lessons></Lessons></div>
