@@ -8,7 +8,7 @@ const SidebarButton =() =>{
  
 return (
   <div>
-<button className={"sidebarButton"}
+<button className={"sidebarButton bi-fill"}
   onClick={() => {
     
     setShowModal(!showModal);

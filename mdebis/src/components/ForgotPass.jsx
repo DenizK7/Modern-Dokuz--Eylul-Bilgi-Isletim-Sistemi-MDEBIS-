@@ -26,6 +26,62 @@ const FormatMail = styled.span`
   align-items: left;
   width:80%;
 `;
+const MainContain = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 20vh;
+  width: 30vw;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border-radius: 10px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.4rem;
+  @media only screen and (max-width: 320px) {
+    width: 80vw;
+    height: 90vh;
+    hr {
+      margin-bottom: 0.3rem;
+    }
+    h4 {
+      font-size: small;
+    }
+  }
+  @media only screen and (max-height: 840px) {
+    height: 20vh;
+    
+  }
+  @media only screen and (min-width: 360px) {
+    width: 80vw;
+    height: 20vh;
+    h4 {
+      font-size: small;
+    }
+  }
+  @media only screen and (min-width: 411px) {
+    width: 80vw;
+    height: 20vh;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 80vw;
+    height: 80vh;
+  }
+  @media only screen and (min-width: 1024px) {
+    width: 70vw;
+    height: 70vh;
+  }
+  @media only screen and (min-width: 1280px) {
+    width: 30vw;
+    height: 20vh;
+  }
+  @media only screen and (min-width: 1600px) {
+    width: 30vw;
+    height: 20vh;
+  }
+`;
 
 const ForgotPassword = ()=>{
   let endpoint = "http://localhost:8080";
@@ -44,16 +100,16 @@ const ForgotPassword = ()=>{
     console.log('value is:', event.target.value);
   };
   function handleClick() {
-    try {
-      var xhttp = new XMLHttpRequest();
-      xhttp.open("GET", "http://localhost:8080/student_forgot/"+inpt, false);
-      xhttp.setRequestHeader("Content-type", "text/html");
-      xhttp.send();
-      var response = JSON.parse(xhttp.response);
-      console.log(response);
-    } catch (error) {
-      alert(error.message);
-  }
+  //   try {
+  //     var xhttp = new XMLHttpRequest();
+  //     xhttp.open("GET", "http://localhost:8080/student_forgot/"+inpt, false);
+  //     xhttp.setRequestHeader("Content-type", "text/html");
+  //     xhttp.send();
+  //     var response = JSON.parse(xhttp.response);
+  //     console.log(response);
+  //   } catch (error) {
+  //     alert(error.message);
+  // }
     // // axios
     // //   .put(endpoint + "/student_forgot/" + inpt, {
     // //     headers: {
@@ -67,7 +123,7 @@ const ForgotPassword = ()=>{
   }
   
   return(
-    <div>
+    <MainContain>
       
       <ButtonContainer>
       <StyledInput  type="text"
@@ -84,7 +140,7 @@ const ForgotPassword = ()=>{
 
     
 
-    </div>
+    </MainContain>
 
         
         );
