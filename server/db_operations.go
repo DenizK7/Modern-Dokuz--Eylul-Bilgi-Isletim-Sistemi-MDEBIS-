@@ -374,14 +374,14 @@ func canCourseClosed(courseId int) bool {
 
 }
 
-func changeStatusOfCourse(courseId int, isActive bool) bool {
+func changeStatusOfCourse(courseId int) bool {
 
 	//check whether there is a student taking the course
 	if !canCourseClosed(courseId) {
 		return false
 	}
-	query := "UPDATE mdebis.course SET Active = ? WHERE (Course_Id = ?);"
-	_, err := DB.Exec(query, isActive, courseId)
+	query := "UPDATE mdebis.course SET Active = 0 WHERE (Course_Id = ?);"
+	_, err := DB.Exec(query, courseId)
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
