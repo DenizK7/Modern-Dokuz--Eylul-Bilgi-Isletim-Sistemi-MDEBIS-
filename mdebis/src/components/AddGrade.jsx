@@ -47,24 +47,18 @@ const mystyle = {
     width: "25vw",
     position: "absolute",
     top: "15vh",
-    right: "45vh"
+    right: "10vw"
   };
   const mystyle2 = {
     fontSize: "10px",
     fontFamily: "Arial",
     fontWeight: "200",
-    width: "3vw",
+    width: "7vw",
     position: "absolute",
-    right: "0"
+    right: "-7vw"
   };
-  const grades =[
-    {grade: "AA"},
-    {grade: "BA"},
-    {grade: "BB"},
-    {grade: "CB"},
-    {grade: "CC"},
-    {grade: "DC"},
-    {grade: "DD"}
+  const grades =['AA','BA','BB','CB','CC','DC','DD','FD','FF'
+    
   ];
   const uniquegrades = Array.from(new Set(grades))
   console.log(uniquegrades);
@@ -102,11 +96,8 @@ const mystyle = {
       console.log(selectedStudent)
       
     } 
-  const [gradeSelect,setGradeseletct] = useState('')
-  const onExtensionChange2 = event => {
-      setGradeseletct(event.target.value);
-     
-   } 
+  
+  
 
   
   
@@ -139,11 +130,65 @@ const mystyle = {
 
        
      }, [rerender]);
+     const Inputt = ({setRerender, rerender})=>{
+      const [gradeSelect,setGradeseletct] = useState('')
+      const [inpt, setMessage] = useState('');
+    
+    function handleClick() {
+      try {
+         var xhttp = new XMLHttpRequest();//{courseId}/{studentId}/{grade}
+         xhttp.open("GET", "http://localhost:8080/add_grade/"+sessionStorage.getItem("token")+"/"+selectedExtension.CourseId+'/'+inpt+'/'+gradeSelect,false);
+         xhttp.setRequestHeader("Content-type", "text/html");
+         xhttp.onload = function (e) {
+          if (xhttp.readyState === 4) {
+              if (xhttp.status === 200) {
+    
+                 setRerender(!rerender);
+               
+                 
+              }
+           }
+        }
+        xhttp.send();
+       
+    
+     } catch (error) {
+       alert("Wrong pass or id");
+     }
+    }
      
+      
+      const handleChangeinpt = event => {
+        setMessage(event.target.value);
+    
+        
+      };
+      const onExtensionChange2 = event => {
+        setGradeseletct(event.target.value);
+       
+     } 
+      return(
+        <div>
+          <ButtonContainer  className="deleteID"> Enter Student ID : 
+      <StyledInput type="text"
+      id="inpt" name="inpt" placeholder="ID" onChange={handleChangeinpt}
+      value={inpt}  ></StyledInput>
+       <Dropdown value={gradeSelect} options={grades} onChange={onExtensionChange2}  placeholder={"Select a Lesson"}style={mystyle2}/>
+       <Button  content={"Give Grade"} onClick={handleClick}> Give Grade</Button>
+      </ButtonContainer>
+    
+        </div>
+        
+      
+      );
+      
+    }
+  
+    
 
       return(
           <body className="noBg">
-              
+          <Inputt setRerender={setRerender} rerender={rerender}/>
         <Dropdown value={selectedExtension} options={lessons} onChange={onExtensionChange} optionLabel="CourseName" placeholder={"Select a Lesson"}style={mystyle}/>
       
              
@@ -155,18 +200,22 @@ const mystyle = {
         <tr>
           <th >Student ID</th>
           <th >Student Name</th>
-          <th>Dropdown</th>
+          <th >Student Surname</th>
+         
         </tr>
       </thead>
          {selectedStudent.map(student => (
           
           <tr>
+            {console.log("length is " +selectedStudent.length)}
+            <td  className="tdstyle">{student.Id}</td>
             <td  className="tdstyle">{student.Name}</td>
             <td  className="tdstyle">{student.Surname}  </td>
             
           </tr>
-        ))} 
           
+        ))} 
+            
       </tbody>
     </table>
                 
