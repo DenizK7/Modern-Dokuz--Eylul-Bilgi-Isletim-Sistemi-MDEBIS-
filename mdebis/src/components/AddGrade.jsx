@@ -58,7 +58,8 @@ const mystyle = {
 
   const onExtensionChange = event => {
      as= event.target.value;     
-     var response;
+     var response
+     
      try {
       var xhttp = new XMLHttpRequest();
        xhttp.open("GET", "http://localhost:8080/get_student_of_course/"+sessionStorage.getItem("token")+"/"+as.CourseId,false);
@@ -69,7 +70,7 @@ const mystyle = {
           if (xhttp.status === 200) {
             response = JSON.parse(xhttp.response);  
              setSelectedStudent(response);
-             setSelectedExtension(as);  
+             setSelectedExtension(as); 
              
           }
        }
@@ -78,7 +79,7 @@ const mystyle = {
       alert("Wrong pass or id");
     }
 
-       
+      xhttp.send();
       console.log("Course id is " +as.CourseId)
       console.log(selectedStudent)
       
@@ -121,7 +122,6 @@ const mystyle = {
       return(
           <body className="noBg">
               
-        
         <Dropdown value={selectedExtension} options={lessons} onChange={onExtensionChange} optionLabel="CourseName" placeholder={"Select a Lesson"}style={mystyle}/>
       
              
