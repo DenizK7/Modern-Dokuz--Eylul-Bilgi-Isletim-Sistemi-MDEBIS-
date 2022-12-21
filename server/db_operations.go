@@ -619,9 +619,9 @@ func addGrade(lecturerId int, courseId int, studentId int, grade string) bool {
 		return false
 	}
 
-	queryMakeUpdate := "UPDATE course_has_student SET Grade=? Situtation='Passed' where Course_Id=? and Student_Id=? and Situtation='Current';"
+	queryMakeUpdate := "UPDATE course_has_student SET Grade=?,Situtation='Passed' where Course_Id=? and Student_Id=? and Situtation='Current';"
 	if grade == "FF" {
-		queryMakeUpdate = "UPDATE course_has_student SET Grade=? Situtation='Failed' where Course_Id=? and Student_Id=? and Situtation='Current';"
+		queryMakeUpdate = "UPDATE course_has_student SET Grade=?, Situtation='Failed' where Course_Id=? and Student_Id=? and Situtation='Current';"
 
 	}
 	_, err := DB.Exec(queryMakeUpdate, grade, courseId, studentId)

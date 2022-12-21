@@ -149,7 +149,7 @@ func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 	grade := params["grade"]
 	courseId, _ := strconv.Atoi(params["courseId"])
 	studentId, _ := strconv.Atoi(params["studentId"])
-
+	fmt.Println(courseId)
 	user := getUser(sessionHash)
 	isUserRight := isUserRight(user, 2)
 	if isUserRight == false {
