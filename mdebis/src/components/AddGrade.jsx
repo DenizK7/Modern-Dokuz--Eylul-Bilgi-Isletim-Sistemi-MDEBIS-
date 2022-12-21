@@ -97,7 +97,28 @@ const mystyle = {
       
     } 
   
-  
+    function reload(){
+      try {
+        var xhttp = new XMLHttpRequest();
+         xhttp.open("GET", "http://localhost:8080/get_student_of_course/"+sessionStorage.getItem("token")+"/"+selectedExtension.CourseId,false);
+         xhttp.setRequestHeader("Content-type", "text/html");
+         
+         xhttp.onload = function (e) {
+        if (xhttp.readyState === 4) {
+            if (xhttp.status === 200) {
+             var response = JSON.parse(xhttp.response);  
+               setSelectedStudent(response);
+              
+               
+            }
+         }
+        }
+      } catch (error) {
+        alert("Wrong pass or id");
+      }
+        
+        xhttp.send();
+    }
 
   
   
@@ -150,7 +171,7 @@ const mystyle = {
            }
         }
         xhttp.send();
-       
+       reload();
     
      } catch (error) {
        alert("Wrong pass or id");
