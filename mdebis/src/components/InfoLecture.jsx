@@ -54,7 +54,7 @@ function InfoLecture() {
 		
 			<div className='grid-container-info'>
                   {
-            contents?.map(contents =>  <InfoCards Name={contents.Name} Announcements={contents.Announcements} AttandenceLimit={contents.AttandenceLimit} Credit={contents.Credit} Dep_Id = {contents.Dep_Id}  />)
+            contents?.map(contents =>  <InfoCards Name={contents.Course.Name} Announcements={contents.Course.Announcements} AttandenceLimit={contents.Course.AttandenceLimit} Credit={contents.Credit} Dep_Id = {contents.Dep_Id}  />)
           } 
 
 
