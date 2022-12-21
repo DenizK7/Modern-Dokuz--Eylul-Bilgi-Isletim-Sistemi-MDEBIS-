@@ -49,7 +49,25 @@ const mystyle = {
     top: "15vh",
     right: "45vh"
   };
-  
+  const mystyle2 = {
+    fontSize: "10px",
+    fontFamily: "Arial",
+    fontWeight: "200",
+    width: "3vw",
+    position: "absolute",
+    right: "0"
+  };
+  const grades =[
+    {grade: "AA"},
+    {grade: "BA"},
+    {grade: "BB"},
+    {grade: "CB"},
+    {grade: "CC"},
+    {grade: "DC"},
+    {grade: "DD"}
+  ];
+  const uniquegrades = Array.from(new Set(grades))
+  console.log(uniquegrades);
   function ChangeCourse(){
     var as;
     const[selectedStudent, setSelectedStudent] = useState([]);
@@ -84,7 +102,12 @@ const mystyle = {
       console.log(selectedStudent)
       
     } 
- 
+  const [gradeSelect,setGradeseletct] = useState('')
+  const onExtensionChange2 = event => {
+      setGradeseletct(event.target.value);
+     
+   } 
+
   
   
     const[rerender, setRerender] = useState(false);
@@ -116,8 +139,7 @@ const mystyle = {
 
        
      }, [rerender]);
-
-      
+     
 
       return(
           <body className="noBg">
@@ -133,18 +155,21 @@ const mystyle = {
         <tr>
           <th >Student ID</th>
           <th >Student Name</th>
-         
+          <th>Dropdown</th>
         </tr>
       </thead>
          {selectedStudent.map(student => (
+          
           <tr>
             <td  className="tdstyle">{student.Name}</td>
-            <td  className="tdstyle">{student.Surname}</td>
+            <td  className="tdstyle">{student.Surname}  </td>
+            
           </tr>
         ))} 
+          
       </tbody>
     </table>
-
+                
        
     
       
