@@ -239,7 +239,7 @@ const mystyle = {
           <tr>
             {console.log("length is " +selectedStudent.length)}
             <td  className="tdstyle">{student.Student.Id}</td>
-            <td  className="tdstyle">{student.student.Name}</td>
+            <td  className="tdstyle">{student.Student.Name}</td>
             <td  className="tdstyle">{student.Student.Surname}  </td>
             <td  className="tdstyle">{student.NonAttendance}  </td>
             
