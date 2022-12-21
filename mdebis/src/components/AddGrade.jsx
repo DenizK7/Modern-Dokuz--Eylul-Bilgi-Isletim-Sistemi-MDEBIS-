@@ -228,7 +228,6 @@ const mystyle = {
          {selectedStudent.map(student => (
           
           <tr>
-            {console.log("length is " +selectedStudent.length)}
             <td  className="tdstyle">{student.Id}</td>
             <td  className="tdstyle">{student.Name}</td>
             <td  className="tdstyle">{student.Surname}  </td>

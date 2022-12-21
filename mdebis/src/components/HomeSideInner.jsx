@@ -40,7 +40,7 @@ function Navbar({visible, show}) {
       } catch (error) {
         alert("Wrong pass or id");
       }
-        console.log(response)
+        
          
        }, []);
 	return (
