@@ -78,7 +78,7 @@ const mystyle = {
       alert("Wrong pass or id");
     }
 
-       
+    xhttp.send();
       console.log("Course id is " +as.CourseId)
       console.log(selectedStudent)
       
