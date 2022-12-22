@@ -203,7 +203,7 @@ nav{
     height: -webkit-fill-available;
 	justify-content: space-evenly;
     width: 90vw;
-    align-content: flex-start;
+    
     grid-template-columns: auto auto;
     row-gap: 1vh;
     /* background-color: #2196F3; */
@@ -221,7 +221,7 @@ nav{
   
   .grid-container-info > div {
 	background-color: rgba(255, 255, 255, 0.8);
-    text-align: center;
+    text-align: left;
     padding: 20px 10px;
     display: table-cell;
     border: groove;
@@ -229,6 +229,9 @@ nav{
     width: 25vw;
     
     overflow-wrap: anywhere;
+}
+.wei{
+  font-weight: 500;
 }
 .sidebarAdmin {
     width: 200px;
@@ -342,4 +345,7 @@ nav{
     
     display: inline-block; /* inline-block görünümü ile span'ı blok olarak gösterir */
     border-bottom: 1px solid black; /* altına 1px kalınlığında siyah renkte bir çizgi çek */
+  }
+  .new-line {
+    white-space: pre-line;
   }

@@ -5,23 +5,12 @@ import "../homeSide.css";
 import Syllabus from "./Syllabus";
 import {Outlet} from "react-router-dom";
 import{MainContext, useContext} from '../context'
-const InfoCards = ({Announcements, AttandenceLimit, Credit, Dep_Id, Id, Name, })=>{
-    return(
-        <div >
-            <div>Course Name : {Name}</div>
-            <br></br><hr></hr>
-              <span>{Announcements}</span>
-              <span>Credit : {Credit}</span>
-            
 
-				
-		</div>
-    )
-}
 
 
 function InfoLecture() {
     const[contents, setContent] = useState([])
+    
     useEffect(() => {
         try {
           var xhttp = new XMLHttpRequest();
@@ -53,9 +42,35 @@ function InfoLecture() {
 	return (
 		
 			<div className='grid-container-info'>
-                  {
-            contents?.map(contents =>  <InfoCards Name={contents.CourseName} Announcements={contents.Announcements}   />)
-          } 
+                 {contents?.map(content => (
+        <div >
+          <div style={{"fontWeight":"600", "textAlign":"center"}}>Department Name </div><div  style={{"fontWeight":"600", "textAlign":"center"}}> {content.DepName}</div>
+          <br></br>
+          <div className='wei'>Course Name </div> <div>{content.CourseName}</div>
+          <br></br>
+          <div className='wei'>Lecturer Name </div> <div className='new-line'>{content.LecName.replace(/;/g, ' \n')}</div>
+            <br></br><hr></hr>
+          
+            
+           {content.Announcements&&  content.Announcements?.map(Announcement => (
+            
+            <div>
+               <div className='wei'>Announcment</div>
+              
+               <span className='wei'>Title </span><div>{Announcement.Title}</div>
+              
+               <span className='wei'>Content </span><div>{Announcement.Content}</div>
+              
+            </div>
+          ))} 
+           <br></br><hr></hr>
+              <div>Credit : {content.Credit}</div>
+              
+              <div>Current Attendance: {content.CurrentNonAttendance}</div>
+              <div>Attendance Limit {content.AttendanceLimit}</div>
+          <hr />
+        </div>
+      ))}
 
 
 				
