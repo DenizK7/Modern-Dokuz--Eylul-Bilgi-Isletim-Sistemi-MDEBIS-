@@ -39,11 +39,11 @@ func getDepartmentName(depId int) string {
 	}
 	return depName
 }
-func getLecturerNamesOfCourse(courseId int) string {
+func getLecturerNamesOfCourse(courseId int) []string {
 	query := "select Title,Name,Surname from lecturer where Lecturer_Id IN " +
 		"(select Lecturer_Lecturer_Id from course_has_lecturer where Course_Course_Id=?)"
 	rows, err := DB.Query(query, courseId)
-	var names string
+	var names []string
 	if err != nil {
 		fmt.Println(err.Error())
 		return names
@@ -53,7 +53,7 @@ func getLecturerNamesOfCourse(courseId int) string {
 		var name string
 		var surname string
 		rows.Scan(&title, &name, &surname)
-		names += title + ";" + name + ";" + surname + ";"
+		names = append(names, title+";"+name+";"+surname+";")
 	}
 	return names
 }

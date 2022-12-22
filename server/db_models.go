@@ -24,7 +24,7 @@ type homePageEntryStudent struct {
 	CourseName           string
 	Announcements        []announcement
 	Credit               int
-	LecName              string
+	LecName              []string
 	DepName              string
 	TimeInfo             []course_time
 	CurrentNonAttendance int
@@ -35,7 +35,7 @@ type homePageEntryLecturer struct {
 	CourseName      string
 	Announcements   []announcement
 	Credit          int
-	LecName         string
+	LecName         []string
 	DepName         string
 	TimeInfo        []course_time
 	AttendanceLimit int
