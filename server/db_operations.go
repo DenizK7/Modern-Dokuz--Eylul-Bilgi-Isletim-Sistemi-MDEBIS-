@@ -53,7 +53,7 @@ func getLecturerNamesOfCourse(courseId int) []string {
 		var name string
 		var surname string
 		rows.Scan(&title, &name, &surname)
-		names = append(names, title+";"+name+";"+surname+";")
+		names = append(names, title+" "+name+" "+surname)
 	}
 	return names
 }
