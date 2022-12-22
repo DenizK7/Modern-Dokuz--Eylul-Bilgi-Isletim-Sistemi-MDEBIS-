@@ -495,7 +495,7 @@ func responseChangeNonAttendance(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	err := encoder.Encode(changeNonAttendance(user.Student.Id, courseId, studentId, nonAttendance))
+	err := encoder.Encode(changeNonAttendance(user.Lecturer.Id, courseId, studentId, nonAttendance))
 	if err != nil {
 		fmt.Println(err.Error())
 		return

@@ -491,7 +491,7 @@ func getAnnouncementOfCourse(courseId int) []announcement {
 	}
 	return announcements
 }
-func getStudentsOfCourse(lecturerID, courseId int) []student {
+func getStudentsOfCourse(lecturerID, courseId int) []studentOfCourse {
 	//CHECK IF lecturer owns the course
 	if isLecturerOwnTheCourse(courseId, lecturerID) == false {
 		return nil
@@ -504,21 +504,38 @@ func getStudentsOfCourse(lecturerID, courseId int) []student {
 		return nil
 	}
 
-	var students []student
+	var studentOfCourses []studentOfCourse
 	queryGetStudent := "SELECT Student_Id,Name,Surname,Year,Department_Id,Mail,GPA,Photo_Path  FROM student WHERE Student_Id IN" +
 		"(SELECT Student_Id FROM course_has_student where Course_Id=? and Situtation='Current');"
 	rowStudents, _ := DB.Query(queryGetStudent, courseId)
 	for rowStudents.Next() {
+		var studentOfCourse studentOfCourse
 		var student student
 		err := rowStudents.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
 		if err != nil {
-			return students
+			return studentOfCourses
 		}
-		students = append(students, student)
+		var nonAttendance = getNonAttendanceOfStudent(student.Id, courseId)
+		if nonAttendance == -1 {
+			fmt.Println("error when finding non attendance of the student!")
+			return studentOfCourses
+		}
+		studentOfCourse.Student = student
+		studentOfCourse.NonAttendance = nonAttendance
+		studentOfCourses = append(studentOfCourses, studentOfCourse)
 	}
-	return students
+	return studentOfCourses
 }
 
+func getNonAttendanceOfStudentInCourse(studentId int, coursId int) int {
+	query := "select Non_Attendance from course_has_student where Course_Id=? and Student_Id=?;"
+	var nonAttedance int
+	if err := DB.QueryRow(query, coursId, studentId).Scan(&nonAttedance); err != nil {
+		fmt.Println(err.Error())
+		return -1
+	}
+	return nonAttedance
+}
 func changeNonAttendance(lecturerId int, courseId int, studentId int, nonAttendance int) bool {
 	//check the lecturer owns the course
 	if isLecturerOwnTheCourse(courseId, lecturerId) == false {

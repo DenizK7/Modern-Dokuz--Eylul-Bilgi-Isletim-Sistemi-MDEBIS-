@@ -15,15 +15,9 @@ type PastCourse struct {
 	Grade  string
 }
 
-type homePageEntryLecturer struct {
-	CourseId        int
-	CourseName      string
-	Announcements   []announcement
-	Credit          int
-	LecName         string
-	DepName         string
-	TimeInfo        []course_time
-	AttendanceLimit int
+type studentOfCourse struct {
+	Student       student
+	NonAttendance int
 }
 type homePageEntryStudent struct {
 	CourseId             int
@@ -35,6 +29,16 @@ type homePageEntryStudent struct {
 	TimeInfo             []course_time
 	CurrentNonAttendance int
 	AttendanceLimit      int
+}
+type homePageEntryLecturer struct {
+	CourseId        int
+	CourseName      string
+	Announcements   []announcement
+	Credit          int
+	LecName         string
+	DepName         string
+	TimeInfo        []course_time
+	AttendanceLimit int
 }
 
 type user struct {
