@@ -228,9 +228,9 @@ const mystyle = {
          {selectedStudent.map(student => (
           
           <tr>
-            <td  className="tdstyle">{student.Id}</td>
-            <td  className="tdstyle">{student.Name}</td>
-            <td  className="tdstyle">{student.Surname}  </td>
+            <td  className="tdstyle">{student.Student.Id}</td>
+            <td  className="tdstyle">{student.Student.Name}</td>
+            <td  className="tdstyle">{student.Student.Surname}  </td>
             
           </tr>
           
