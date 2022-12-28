@@ -339,6 +339,16 @@ func responseLogOut(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+	if isUserRight(user, 1) {
+		//student
+		//lec
+		//manager
+		addLog("student", user.Student.Id, "Logout", "student", "STUDENT WITH ID "+strconv.Itoa(user.Student.Id)+" AND WITH NAME "+user.Student.Name+" "+user.Student.Surname)
+	} else if isUserRight(user, 2) {
+		addLog("lecturer", user.Lecturer.Id, "Logout", "lecturer", "LECTURER WITH ID "+strconv.Itoa(user.Lecturer.Id)+" AND WITH NAME "+user.Lecturer.Title+" "+user.Student.Name+" "+user.Student.Surname)
+	} else {
+		addLog("admin", user.Manager.Id, "Logout", "manager", "ADMIN WITH ID "+strconv.Itoa(user.Manager.Id)+" AND WITH NAME "+user.Manager.Name+" "+user.Manager.Surname)
+	}
 	return
 }
 func responseGetStudents(w http.ResponseWriter, r *http.Request) {
