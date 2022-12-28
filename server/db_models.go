@@ -15,6 +15,15 @@ type PastCourse struct {
 	Grade  string
 }
 
+type log struct {
+	RecordId   int
+	WhoDid     string
+	WhoDidId   int
+	Operation  string
+	WhichTable string
+	Values     string
+}
+
 type studentOfCourse struct {
 	Student       student
 	NonAttendance int

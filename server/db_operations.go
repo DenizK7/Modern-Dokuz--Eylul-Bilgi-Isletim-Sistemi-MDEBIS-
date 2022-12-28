@@ -33,6 +33,23 @@ func getRealPasswordAdmin(id int) (bool, string) {
 	return true, realPassword
 }
 
+func getLog() []log {
+	var logRecords []log
+	query := "select * from log"
+	rows, err := DB.Query(query)
+	if err != nil {
+		fmt.Println(err.Error())
+		return logRecords
+	}
+	for rows.Next() {
+		var logRecord log
+		rows.Scan(&logRecord.RecordId, &logRecord.WhoDid, &logRecord.WhoDidId, &logRecord.Operation, &logRecord.WhichTable, &logRecord.Values)
+		logRecords = append(logRecords, logRecord)
+	}
+	return logRecords
+
+}
+
 func addLog(whoTypeDid string, whoDidId int, operation string, whichTable string, values string) bool {
 	SQL := "INSERT LOG VALUES(0,?,?,?,?,?)"
 	_, err := DB.Exec(SQL, whoTypeDid, whoDidId, operation, whichTable, values)

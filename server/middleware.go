@@ -71,6 +71,27 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func responseGetLog(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
+	encoder := json.NewEncoder(w)
+	params := mux.Vars(r)
+	sessionHash := params["sessionHash"]
+	user := getUser(sessionHash)
+	if isUserRight(user, 3) == false {
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
+	err := encoder.Encode(getLog())
+	if err != nil {
+		return
+	}
+	return
+}
+
 /*
 this function encodes the courses as a response
 */
