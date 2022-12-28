@@ -34,7 +34,7 @@ func getRealPasswordAdmin(id int) (bool, string) {
 }
 
 func addLog(whoTypeDid string, whoDidId int, operation string, whichTable string, values string) bool {
-	SQL := "INSERT LOG VALUES(0,?,?,?,?)"
+	SQL := "INSERT LOG VALUES(0,?,?,?,?,?)"
 	_, err := DB.Exec(SQL, whoTypeDid, whoDidId, operation, whichTable, values)
 	if err != nil {
 		fmt.Println(err.Error())
