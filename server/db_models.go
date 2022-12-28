@@ -15,7 +15,7 @@ type PastCourse struct {
 	Grade  string
 }
 
-type log struct {
+type logDB struct {
 	RecordId   int
 	WhoDid     string
 	WhoDidId   int
