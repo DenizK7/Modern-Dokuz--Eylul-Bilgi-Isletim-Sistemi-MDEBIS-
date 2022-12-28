@@ -93,6 +93,8 @@ func responseDeleteStudent(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err.Error())
 		return
+	} else {
+		addLog("Admin", user.Manager.Id, "Delete", "student", "DELETE STUDENT WITH ID "+strconv.Itoa(studentId))
 	}
 }
 
@@ -115,6 +117,8 @@ func responseDeleteLecturer(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err.Error())
 		return
+	} else {
+		addLog("Admin", user.Manager.Id, "Delete", "lecturer", "DELETE LECTURER WITH ID "+strconv.Itoa(lecturerId))
 	}
 }
 
@@ -173,6 +177,8 @@ func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err.Error())
 		return
+	} else {
+		addLog("Lecturer", user.Lecturer.Id, "Update", "course_has_student", "SET GRADE TO "+grade+" OF STUDENT WITH ID "+strconv.Itoa(studentId)+" FOR COURSE ID WITH "+strconv.Itoa(courseId))
 	}
 }
 
@@ -208,6 +214,8 @@ func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println(err.Error())
 			return
+		} else {
+			addLog("Lecturer", user.Lecturer.Id, "Insert", "course_has_announcement", "INSERT NEW ANNOUNCEMENT FOR THE COURSE ID "+strconv.Itoa(courseId)+" WITH THE TITLE "+title)
 		}
 		return
 	}
@@ -266,7 +274,13 @@ func responseAddCourse(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	lecturer := user.Lecturer
-	encoder.Encode(addCourse(lecturer, courseName, attendanceLimit, credit))
+	err := encoder.Encode(addCourse(lecturer, courseName, attendanceLimit, credit))
+	if err != nil {
+		return
+	} else {
+		addLog("Lecturer", user.Lecturer.Id, "Insert", "course", "ADD NEW COURSE WITH THE NAME "+courseName)
+	}
+
 	return
 }
 
@@ -408,7 +422,12 @@ func responseCreateLecturer(w http.ResponseWriter, r *http.Request) {
 	name := params["name"]
 	surname := params["surname"]
 	departmentName := params["departmentName"]
-	encoder.Encode(createLecturer(id, password, title, name, surname, departmentName))
+	err = encoder.Encode(createLecturer(id, password, title, name, surname, departmentName))
+	if err != nil {
+		return
+	} else {
+		addLog("Admin", user.Manager.Id, "Insert", "lecturer", "CREATE LECTURER WITH NAME "+title+" "+name+" "+surname+" IN THE DEPARTMENT WITH NAME "+departmentName)
+	}
 }
 func responseCreateStudent(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -436,7 +455,12 @@ func responseCreateStudent(w http.ResponseWriter, r *http.Request) {
 	name := params["name"]
 	surname := params["surname"]
 	departmentName := params["departmentName"]
-	encoder.Encode(createStudent(id, password, name, surname, departmentName))
+	err = encoder.Encode(createStudent(id, password, name, surname, departmentName))
+	if err != nil {
+		return
+	} else {
+		addLog("Admin", user.Manager.Id, "Insert", "Student", "INSERT NEW STUDENT WITH ID "+strconv.Itoa(id)+" AND THE NAME "+name+" "+surname)
+	}
 }
 func responseGetAllDepartmentNames(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
@@ -499,6 +523,8 @@ func responseChangeNonAttendance(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err.Error())
 		return
+	} else {
+		addLog("Lecturer", user.Lecturer.Id, "Update", "course_has_student", "SET NON_ATTENDANCE TO "+strconv.Itoa(nonAttendance)+" OF STUDENT WITH ID "+strconv.Itoa(studentId)+" FOR COURSE ID WITH "+strconv.Itoa(courseId))
 	}
 	return
 }

@@ -17,6 +17,31 @@ func getRealPasswordStudent(id int) (bool, string) {
 	}
 	return true, realPassword
 }
+func getRealPasswordAdmin(id int) (bool, string) {
+	var realPassword string
+	query := "CALL manager_get_password(?)"
+	if err := DB.QueryRow(query, id).Scan(&realPassword); err != nil {
+		if err != nil {
+			fmt.Println(err.Error())
+			if err != nil {
+				return false, ""
+			}
+			return false, ""
+		}
+		return false, ""
+	}
+	return true, realPassword
+}
+
+func addLog(whoTypeDid string, whoDidId int, operation string, whichTable string, values string) bool {
+	SQL := "INSERT LOG VALUES(0,?,?,?,?)"
+	_, err := DB.Exec(SQL, whoTypeDid, whoDidId, operation, whichTable, values)
+	if err != nil {
+		fmt.Println(err.Error())
+		return false
+	}
+	return true
+}
 
 /*
 Returns the password taken from DB if there is match for the given id of a lecturer in the DB
@@ -204,22 +229,6 @@ func getDepartmentOfStudent(id int) *department {
 		return nil
 	}
 	return &department
-}
-
-func getRealPasswordAdmin(id int) (bool, string) {
-	var realPassword string
-	query := "CALL manager_get_password(?)"
-	if err := DB.QueryRow(query, id).Scan(&realPassword); err != nil {
-		if err != nil {
-			fmt.Println(err.Error())
-			if err != nil {
-				return false, ""
-			}
-			return false, ""
-		}
-		return false, ""
-	}
-	return true, realPassword
 }
 
 func makeFailAllCoursesOfStudent(id int) bool {
@@ -527,15 +536,6 @@ func getStudentsOfCourse(lecturerID, courseId int) []studentOfCourse {
 	return studentOfCourses
 }
 
-func getNonAttendanceOfStudentInCourse(studentId int, coursId int) int {
-	query := "select Non_Attendance from course_has_student where Course_Id=? and Student_Id=?;"
-	var nonAttedance int
-	if err := DB.QueryRow(query, coursId, studentId).Scan(&nonAttedance); err != nil {
-		fmt.Println(err.Error())
-		return -1
-	}
-	return nonAttedance
-}
 func changeNonAttendance(lecturerId int, courseId int, studentId int, nonAttendance int) bool {
 	//check the lecturer owns the course
 	if isLecturerOwnTheCourse(courseId, lecturerId) == false {
