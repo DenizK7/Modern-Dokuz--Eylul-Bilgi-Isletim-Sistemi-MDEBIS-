@@ -33,6 +33,7 @@ func Router() *mux.Router {
 	router.HandleFunc("/create_lecturer/{sessionHash}/{id}/{password}/{title}/{name}/{surname}/{departmentName}", responseCreateLecturer)
 	router.HandleFunc("/create_student/{sessionHash}/{id}/{password}/{name}/{surname}/{departmentName}", responseCreateStudent)
 	router.HandleFunc("/get_all_department_names/{sessionHash}", responseGetAllDepartmentNames)
+	router.HandleFunc("/get_lod/{sessionHash}", responseGetAllDepartmentNames)
 
 	return router
 }
