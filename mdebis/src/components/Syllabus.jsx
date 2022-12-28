@@ -7,7 +7,7 @@ function Syllabus() {
    const{navVisible, infoStudent, setInfoStudent, token,setToken}= useContext(MainContext);
    
    
-   const[contents, setContent] = useState([])
+   const[contents, setContent] = useState([]);
    useEffect(() => {
     try {
       var xhttp = new XMLHttpRequest();
@@ -64,51 +64,8 @@ function Syllabus() {
       <div className="days">Cuma</div>
        {
             contents?.map(contents =>  <div className="heig"><Lessons Department={contents.Department} Course_name={contents.Course_name} Lecturer_name={contents.Lecturer_name} AttandenceLimit = {contents.AttandenceLimit>0?"Devamsızlık Sınırı :"+contents.AttandenceLimit:null }></Lessons></div>)
-          } 
-      {/* <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-     
-      <div ><Lessons></Lessons></div>
-      <div><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
+       } 
       
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      
-      <div ><Lessons></Lessons></div>
-      <div><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      
-      <div ><Lessons></Lessons></div>
-      <div><Lessons></Lessons></div>
-      
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      
-      <div ><Lessons></Lessons></div>
-      <div><Lessons></Lessons></div>
-     
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div><Lessons></Lessons></div>
-      
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div>
-      <div ><Lessons></Lessons></div> */}
 
       
       

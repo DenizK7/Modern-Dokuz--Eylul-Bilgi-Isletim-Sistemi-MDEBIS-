@@ -48,7 +48,7 @@ function InfoLecture() {
           <br></br>
           <div className='wei'>Course Name </div> <div>{content.CourseName}</div>
           <br></br>
-          <div className='wei'>Lecturer Name </div> <div className='new-line'>{content.LecName.replace(/;/g, ' \n')}</div>
+          <div className='wei'>Lecturer Name </div> <div className='new-line'>{content.LecName}</div>
             <br></br><hr></hr>
           
             
