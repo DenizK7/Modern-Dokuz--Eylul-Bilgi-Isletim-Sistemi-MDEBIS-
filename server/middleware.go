@@ -67,6 +67,7 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+	addLog("Student", newUser.Student.Id, "Login", "student", "STUDENT LOGGED IN WITH ID "+strconv.Itoa(id)+"AND NAME "+newUser.Student.Name+" "+newUser.Student.Surname)
 	return
 }
 
@@ -657,6 +658,7 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+	addLog("Lecturer", newUser.Lecturer.Id, "Login", "lecturer", "LECTURER LOGGED IN WITH ID "+strconv.Itoa(id)+"AND NAME "+newUser.Lecturer.Title+" "+newUser.Lecturer.Name+" "+newUser.Lecturer.Surname)
 	return
 }
 
@@ -698,6 +700,8 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
+	addLog("Admin", newUser.Manager.Id, "Login", "manager", "ADMIN LOGGED IN WITH ID "+strconv.Itoa(id)+"AND NAME "+newUser.Manager.Name+" "+newUser.Lecturer.Surname)
+
 }
 
 /*
