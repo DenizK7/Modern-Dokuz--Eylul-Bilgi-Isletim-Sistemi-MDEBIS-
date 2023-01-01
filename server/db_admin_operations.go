@@ -42,13 +42,17 @@ func getLog() []logDB {
 		fmt.Println(err.Error())
 		return logRecords
 	}
+	limit := 100
 	for rows.Next() {
 		var logRecord logDB
 		rows.Scan(&logRecord.RecordId, &logRecord.WhoDid, &logRecord.WhoDidId, &logRecord.Operation, &logRecord.WhichTable, &logRecord.Values)
 		logRecords = append(logRecords, logRecord)
+		limit = limit + 1
+		if limit == 100 {
+			return logRecords
+		}
 	}
 	return logRecords
-
 }
 func createLecturer(id int, password string, title string, name string, surname string, departmentName string) bool {
 	query := "INSERT INTO lecturer (Lecturer_Id, Password, Name, Surname, Department_Id, Title) VALUES (?,?,?,?,?,?)"
