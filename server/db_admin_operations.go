@@ -36,7 +36,7 @@ func getAllStudents() []student {
 }
 func getLog() []logDB {
 	var logRecords []logDB
-	query := "select * from log"
+	query := "select * from log ORDER BY recordId DESC"
 	rows, err := DB.Query(query)
 	if err != nil {
 		fmt.Println(err.Error())
