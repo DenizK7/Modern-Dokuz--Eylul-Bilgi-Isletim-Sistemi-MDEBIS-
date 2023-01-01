@@ -23,8 +23,14 @@ func responseGetGeneralAnnouncements(w http.ResponseWriter, _ *http.Request) {
 }
 
 func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
+	(*r).Header.Set("Access-Control-Allow-Origin", "*")
+	(*r).Header.Set("Access-Control-Allow-Headers", "Content-Type")
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
+	if r.Method == "OPTIONS" {
+		encoder.Encode(true)
+		return
+	}
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["username"])
 	if err != nil {
@@ -697,6 +703,7 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 This function encodes the logging manager if there is a match in the DB with the given id-password pair
 */
 func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
+
 	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
@@ -731,8 +738,7 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 		return
 	}
-	addLog("Admin", newUser.Manager.Id, "Login", "manager", "ADMIN LOGGED IN WITH ID "+strconv.Itoa(id)+"AND NAME "+newUser.Manager.Name+" "+newUser.Lecturer.Surname)
-
+	addLog("Admin", newUser.Manager.Id, "Login", "manager", "ADMIN LOGGED IN WITH ID "+strconv.Itoa(id)+"AND NAME "+newUser.Manager.Name+" "+newUser.Manager.Surname)
 }
 
 /*

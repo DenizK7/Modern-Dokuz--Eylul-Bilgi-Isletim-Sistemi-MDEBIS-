@@ -50,7 +50,7 @@ func main() {
 
 	fileScanner := bufio.NewScanner(readFile)
 	fileScanner.Split(bufio.ScanLines)
-	limit := 100
+	limit := 1000
 	counter := 0
 	for fileScanner.Scan() {
 		id := fileScanner.Text()
