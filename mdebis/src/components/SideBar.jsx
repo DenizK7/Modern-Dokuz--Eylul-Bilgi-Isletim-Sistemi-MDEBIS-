@@ -39,7 +39,7 @@ export default function Sidebar(props) {
         <div className="modal-body">
         
           {
-            content?.map(content => <AnnouncmentMainPage header={content.Title} content={content.Content} Link={content.Link}></AnnouncmentMainPage>)
+            content?.map(content => <AnnouncmentMainPage key={content.Title}  header={content.Title} content={content.Content} Link={content.Link}></AnnouncmentMainPage>)
           }
         
         </div>

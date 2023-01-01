@@ -39,10 +39,6 @@ align-items: center;
 justify-content: center;
 `;
 
-const Makediv =({info})=>{
-  return(<div className="perpendicular-line">{info} </div>)
-}
-
 const Inputt = ({setRerender, rerender})=>{
   
   const [inpt, setMessage] = useState('');
@@ -121,7 +117,7 @@ function handleClick() {
       console.log(lessons)
 
       return(
-          <body className="noBg">
+          <div className="noBg">
               
         <Inputt setRerender={setRerender} rerender={rerender}/>
        
@@ -151,7 +147,7 @@ function handleClick() {
        
     
       
-          </body>
+          </div>
           
       );
   }

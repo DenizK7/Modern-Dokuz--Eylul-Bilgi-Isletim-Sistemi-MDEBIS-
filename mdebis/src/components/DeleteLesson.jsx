@@ -121,7 +121,7 @@ function handleClick() {
       console.log(lessons)
 
       return(
-          <body className="noBg">
+          <div className="noBg">
               
         <Inputt setRerender={setRerender} rerender={rerender}/>
        
@@ -151,7 +151,7 @@ function handleClick() {
        
     
       
-          </body>
+          </div>
           
       );
   }

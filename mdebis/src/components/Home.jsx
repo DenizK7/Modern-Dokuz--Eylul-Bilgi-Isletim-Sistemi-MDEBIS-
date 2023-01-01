@@ -13,13 +13,13 @@ function Home(){
     const{navVisible, showNavbar}= useContext(MainContext);
     return(
        
-        <body className='noBg'>
+        <div className='noBg'>
           
            <Navbar  visible={ navVisible } show={ showNavbar } />		
            <Outlet></Outlet>
            
                       
-        </body>
+        </div>
        
         
     );

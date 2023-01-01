@@ -11,7 +11,12 @@ nav{
 	transition: transform 1s;
 	z-index: 2;
 }
-
+.noBg{
+  height: 100vh;
+  width: 100vw;
+  background-image: none;
+  background-color: aliceblue;
+}
 .navbar{
 	transform: translateX(-100%);
 }
@@ -169,7 +174,7 @@ nav{
   .grid-container-sm > div {
 	background-color: rgba(255, 255, 255, 0.8);
 	text-align: center;
-	padding: 20px 10px;
+	padding: 10px 10px;
 	font-size: 10px;
 	display: table-cell;
     border: groove;

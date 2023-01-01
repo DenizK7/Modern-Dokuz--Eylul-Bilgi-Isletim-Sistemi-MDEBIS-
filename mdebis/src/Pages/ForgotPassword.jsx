@@ -4,14 +4,14 @@ import SidebarButton from "../components/SidebarButton";
 
 function ForgetPass(){
     return(
-        <body>
+        <div>
            
            <ForgotPassword />
            
                 
                 
             
-        </body>
+        </div>
         
     );
 }

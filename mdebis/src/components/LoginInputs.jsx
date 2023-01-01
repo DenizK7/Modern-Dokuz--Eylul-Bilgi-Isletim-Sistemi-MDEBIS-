@@ -5,7 +5,7 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import { Dropdown } from 'primereact/dropdown';
-
+import axios from "axios";
 import Button from "./Button";
 import { Navigate, useNavigate } from "react-router-dom";
 import{MainContext, useContext} from '../context'
@@ -33,16 +33,19 @@ const FormatMail = styled.span`
 `;
 
 function LoginInputs(){
+  
   const navigate = useNavigate();
   const {t} = useTranslation();
   const [inpt, setMessage] = useState('');
   const [pssw, setpssw] = useState('');
+  
   const extensions = [
     { name: '@ogr.deu.edu.tr', code: 'student' },
     { name: '@deu.edu.tr', code: 'teacher' },
     { name: '@admin.deu.edu.tr', code: 'admin' }
 ];   
 const [selectedExtension, setSelectedExtension] = useState('');
+
 
   const handleChangeinpt = event => {
    
@@ -58,7 +61,8 @@ const [selectedExtension, setSelectedExtension] = useState('');
   const onExtensionChange = event => {
     setSelectedExtension(event.target.value);     
   }
-  function handleClick() {
+  async function handleClick() {
+    const abortController = new AbortController();
     var ex;
     if(selectedExtension.name==='@ogr.deu.edu.tr'){
        ex = "http://localhost:8080/log_student/";
@@ -72,54 +76,65 @@ const [selectedExtension, setSelectedExtension] = useState('');
       ex = "http://localhost:8080/log_admin/";
       
      }
-    try {
-       var xhttp = new XMLHttpRequest();
+   
+      try{
+        var xhttp = new XMLHttpRequest();
        
-       xhttp.open("GET",ex +inpt+"/"+pssw,false);//buraya if lerle neye giriceğini seçtir log admin student vs vs.
-       xhttp.setRequestHeader("Content-type", "text/html");
-       xhttp.onload = function (e) {
-        if (xhttp.readyState === 4) {
-            if (xhttp.status === 200) {
-
-               var response = JSON.parse(xhttp.responseText);
-               
-               sessionStorage.setItem("token", response);
-               if(selectedExtension.name==='@ogr.deu.edu.tr'){
-                navigate("/HomePage/infoLecture");
+          xhttp.open("GET",ex +inpt+"/"+pssw);//buraya if lerle neye giriceğini seçtir log admin student vs vs.
+         xhttp.setRequestHeader("Content-type", "text/html");
+         
+         xhttp.onload = function (e) {
+          if (xhttp.readyState === 4) {
+              if (xhttp.status === 200) {
+ 
+                var response = JSON.parse(xhttp.responseText);
+ 
+                if(!response){
+                  alert("Wrong Password or id");
+                 }
+                 else{
+                  sessionStorage.setItem("token", response);
+                  if(selectedExtension.name==='@ogr.deu.edu.tr'){
+                   navigate("/HomePage/infoLecture");
+                  
+                  }
+                 
+                  else if(selectedExtension.name==='@deu.edu.tr'){
+                   navigate("/LecturerPage/AddAnnouncment")
+                  
+                  }
+                  else if(selectedExtension.name==='@admin.deu.edu.tr'){
+                   navigate("/AdminPage/DeleteStudent")
+                  
+                  }
+                 }
+              
                 
-               }
-               
-               else if(selectedExtension.name==='@deu.edu.tr'){
-                navigate("/LecturerPage/AddAnnouncment")
                 
-               }
-               else if(selectedExtension.name==='@admin.deu.edu.tr'){
-                navigate("/AdminPage/DeleteStudent")
-                
-               }
+              }
              
-               
-               
-            }
             
-           
-         }
-         else{
-          alert("Wrong pass or id");
-        }
-       
+           }
+           else{
+            alert("Wrong pass or id");
+          }
+        
+       }
+       console.log("request sended");
+       xhttp.send();
       }
-     
-      xhttp.send();
+     catch (error) {
+      alert("Wrong pass or id");
+    }
+    
+  
       
      
   
-   } catch (error) {
-     alert("Wrong pass or id");
-   }
+      
 }
 
-    
+   
     
     
     const mystyle = {

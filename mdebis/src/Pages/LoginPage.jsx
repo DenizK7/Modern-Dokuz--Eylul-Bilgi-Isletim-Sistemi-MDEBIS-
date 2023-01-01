@@ -3,11 +3,11 @@ import SidebarButton from "../components/SidebarButton";
 
 function Login(){
     return(
-        <body>
+        <div>
             <MainContainer  style = {{alignItems: "center",  justifyContent: 'center'}}>
                 </MainContainer>
             <SidebarButton></SidebarButton>
-        </body>
+        </div>
         
     );
 }

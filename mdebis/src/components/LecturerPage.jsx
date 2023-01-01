@@ -48,15 +48,15 @@ function LecturerPage(){
 
 
     return(
-        <body className="noBg">
+        <div className="noBg">
             
-      <aside class="sidebarAdmin">
+      <aside className="sidebarAdmin">
       { items.map((item, index) => <SidebarItem key={index} item={item} />) }
       </aside>
       
   
       <Outlet></Outlet>
-        </body>
+        </div>
         
     );
 }

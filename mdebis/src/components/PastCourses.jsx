@@ -47,14 +47,13 @@ function PastCourses() {
          
          
        }, []);
-    const{navVisible, infoStudent, setInfoStudent}= useContext(MainContext);
-    console.log("session storage is " +sessionStorage.getItem("token"));
-    console.log(contents);
+    
+    
 	return (
 		
 			<div className='grid-container-info'>
                   {
-            contents?.map(contents =>  <InfoCards Name={contents.Course.Name} Announcements={contents.Announcements} AttandenceLimit={contents.AttandenceLimit} Credit={contents.Grade} Dep_Id = {contents.Dep_Id}  />)
+            contents?.map((contents,index) =>  <InfoCards key={index} Name={contents.Course.Name} Announcements={contents.Announcements} AttandenceLimit={contents.AttandenceLimit} Credit={contents.Grade} Dep_Id = {contents.Dep_Id}  />)
           } 
 
 

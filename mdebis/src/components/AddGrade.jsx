@@ -60,8 +60,8 @@ const mystyle = {
   const grades =['AA','BA','BB','CB','CC','DC','DD','FD','FF'
     
   ];
-  const uniquegrades = Array.from(new Set(grades))
-  console.log(uniquegrades);
+  
+  
   function ChangeCourse(){
     var as;
     const[selectedStudent, setSelectedStudent] = useState([]);
@@ -92,8 +92,7 @@ const mystyle = {
     }
 
       xhttp.send();
-      console.log("Course id is " +as.CourseId)
-      console.log(selectedStudent)
+  
       
     } 
   
@@ -208,7 +207,7 @@ const mystyle = {
     
 
       return(
-          <body className="noBg">
+          <div className="noBg">
           <Inputt setRerender={setRerender} rerender={rerender}/>
         <Dropdown value={selectedExtension} options={lessons} onChange={onExtensionChange} optionLabel="CourseName" placeholder={"Select a Lesson"}style={mystyle}/>
       
@@ -217,17 +216,17 @@ const mystyle = {
         <table className={"grid-container-sm-admin"} >
      
       <tbody>
-      <thead >
+      
         <tr>
           <th >Student ID</th>
           <th >Student Name</th>
           <th >Student Surname</th>
          
         </tr>
-      </thead>
-         {selectedStudent.map(student => (
+      
+         {selectedStudent.map((student, index) => (
           
-          <tr>
+          <tr key={index}>
             <td  className="tdstyle">{student.Student.Id}</td>
             <td  className="tdstyle">{student.Student.Name}</td>
             <td  className="tdstyle">{student.Student.Surname}  </td>
@@ -242,7 +241,7 @@ const mystyle = {
        
     
       
-          </body>
+          </div>
           
       );
   }

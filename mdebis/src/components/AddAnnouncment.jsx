@@ -183,11 +183,11 @@ function handleClick() {
 
 
       return(
-          <body className="noBg">
+          <div className="noBg">
         
         <Inputt setRerender={setRerender} lessons={lessons} rerender={rerender}/>
       
-          </body>
+          </div>
           
       );
   }

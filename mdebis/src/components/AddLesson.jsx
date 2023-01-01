@@ -91,7 +91,7 @@ const Inputt = ()=>{
   
   
       return(
-          <body className="noBg">
+          <div className="noBg">
               
         <Inputt />
        
@@ -109,7 +109,7 @@ const Inputt = ()=>{
         </div>
     
       
-          </body>
+          </div>
           
       );
   }

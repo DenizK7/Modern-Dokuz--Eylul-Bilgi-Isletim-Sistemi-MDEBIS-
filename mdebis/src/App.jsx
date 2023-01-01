@@ -42,6 +42,7 @@ const [selectedExtension, setSelectedExtension] = useState(null);
         setInfoStudent,
     }
   return (
+    <body>
     <MainContext.Provider value ={data}>
     
       <Router>
@@ -77,6 +78,7 @@ const [selectedExtension, setSelectedExtension] = useState(null);
       </Router>
     
     </MainContext.Provider>
+    </body>
     
   );
 }

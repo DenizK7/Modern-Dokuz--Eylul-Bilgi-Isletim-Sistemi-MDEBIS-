@@ -36,14 +36,12 @@ function InfoLecture() {
          
          
        }, []);
-    const{navVisible, infoStudent, setInfoStudent}= useContext(MainContext);
-    console.log("session storage is " +sessionStorage.getItem("token"));
-    console.log(contents);
+    
 	return (
 		
 			<div className='grid-container-info'>
-                 {contents?.map(content => (
-        <div >
+                 {contents?.map((content,index) => (
+        <div key={index} >
           <div style={{"fontWeight":"600", "textAlign":"center"}}>Department Name </div><div  style={{"fontWeight":"600", "textAlign":"center"}}> {content.DepName}</div>
           <br></br>
           <div className='wei'>Course Name </div> <div>{content.CourseName}</div>
@@ -52,9 +50,9 @@ function InfoLecture() {
             <br></br><hr></hr>
           
             
-           {content.Announcements&&  content.Announcements?.map(Announcement => (
+           {content.Announcements&&  content.Announcements?.map((Announcement,index) => (
             
-            <div>
+            <div key={index}>
                <div className='wei'>Announcment</div>
               
                <span className='wei'>Title </span><div>{Announcement.Title}</div>

@@ -52,7 +52,7 @@ function handleClick() {
      var xhttp = new XMLHttpRequest();
      xhttp.open("GET", "http://localhost:8080/change_course_status/"+sessionStorage.getItem("token")+"/"+inpt,false);
      xhttp.setRequestHeader("Content-type", "text/html");
-     console.log("hi")
+    
      xhttp.onload = function (e) {
       if (xhttp.readyState === 4) {
           if (xhttp.status === 200) {
@@ -64,7 +64,7 @@ function handleClick() {
        }
        
     }
-    console.log(inpt + " has been succesfully deleted");
+   
     
     xhttp.send();
    
@@ -124,10 +124,10 @@ function handleClick() {
        
      }, [rerender]);
 
-      console.log(lessons)
+      
 
       return(
-          <body className="noBg">
+          <div className="noBg">
               
         <Inputt setRerender={setRerender} rerender={rerender}/>
        
@@ -137,18 +137,18 @@ function handleClick() {
         <table className={"grid-container-sm-admin"} >
      
       <tbody>
-      <thead >
+     
         <tr>
-          <th >Student ID</th>
+          <th >Course ID</th>
           <th>NAME</th>
-          <th>E-mail</th>
+          <th>Department Name</th>
         </tr>
-      </thead>
-        {lessons.map(student => (
-          <tr>
-            <td className="tdstyle">{student.CourseId}</td>
-            <td className="tdstyle">{student.CourseName}</td>
-            <td  className="tdstyle">{student.DepName}</td>
+     
+        {lessons.map((Course, index) => (
+          <tr key={index}>
+            <td className="tdstyle">{Course.CourseId}</td>
+            <td className="tdstyle">{Course.CourseName}</td>
+            <td  className="tdstyle">{Course.DepName}</td>
           </tr>
         ))}
       </tbody>
@@ -157,7 +157,7 @@ function handleClick() {
        
     
       
-          </body>
+          </div>
           
       );
   }

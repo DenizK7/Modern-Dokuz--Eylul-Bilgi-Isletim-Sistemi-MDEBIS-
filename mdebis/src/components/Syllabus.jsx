@@ -43,8 +43,7 @@ function Syllabus() {
      else{
       setCss('grid-container');
      }    
-    console.log( "departman adı budur" +sessionStorage.getItem( "lastname"));
-    console.log(contents);  
+    
     },[navVisible])
    
    
@@ -63,7 +62,7 @@ function Syllabus() {
       <div className="days">Perşembe</div>
       <div className="days">Cuma</div>
        {
-            contents?.map(contents =>  <div className="heig"><Lessons Department={contents.Department} Course_name={contents.Course_name} Lecturer_name={contents.Lecturer_name} AttandenceLimit = {contents.AttandenceLimit>0?"Devamsızlık Sınırı :"+contents.AttandenceLimit:null }></Lessons></div>)
+            contents?.map((contents, index) =>  <div key={index} className="heig"><Lessons Department={contents.Department} Course_name={contents.Course_name} Lecturer_name={contents.Lecturer_name} AttandenceLimit = {contents.AttandenceLimit>0?"Devamsızlık Sınırı :"+contents.AttandenceLimit:null }></Lessons></div>)
        } 
       
 
