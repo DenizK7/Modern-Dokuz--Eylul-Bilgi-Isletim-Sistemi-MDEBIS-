@@ -76,7 +76,7 @@ const [selectedExtension, setSelectedExtension] = useState('');
       ex = "http://localhost:8080/log_admin/";
       
      }
-   if(inpt.length >1){
+   if(inpt.length >0){
 
    
       try{
