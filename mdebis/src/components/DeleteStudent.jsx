@@ -58,7 +58,6 @@ function handleClick() {
           }
        }
     }
-    console.log(inpt + " has been succesfully deleted");
     xhttp.send();
    
 
@@ -114,7 +113,7 @@ function handleClick() {
        
      }, [rerender]);
 
-      console.log(lessons)
+      
 
       return(
           <div className="noBg">
@@ -127,15 +126,15 @@ function handleClick() {
         <table className={"grid-container-sm-admin"} >
      
       <tbody>
-      <thead >
+     
         <tr>
           <th >Student ID</th>
           <th>NAME</th>
           <th>E-mail</th>
         </tr>
-      </thead>
-        {lessons.map(student => (
-          <tr>
+      
+        {lessons.map((student,index) => (
+          <tr key={index}>
             <td className="tdstyle">{student.Id}</td>
             <td className="tdstyle">{student.Name}</td>
             <td className="tdstyle">{student.EMail}</td>

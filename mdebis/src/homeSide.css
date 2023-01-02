@@ -139,7 +139,39 @@ nav{
     overflow: scroll;
     padding-bottom: 1vh;
   }
+  .an{
+   
+    height: 100vh;
+    width: 100vw;
+    background-image: none;
+    background-color: aliceblue;
+    padding-left: 20%;
+    padding-right: 34vw;
+    padding-top: 10vh;
+
+  }
+  .log{
+    
+    display: grid;
+    height: -webkit-fill-available;
+    width: 78vw;
+    align-content: flex-start;
+    grid-template-columns: auto auto auto;
+    row-gap: 1vh;
+    /* background-color: #2196F3; */
+    position: fixed;
+    top: 18vh;
+    /* bottom: 0px; */
+    /* right: 6vw; */
+    margin-left: 18vw;
+    padding-right: 0vw;
+    overflow-y: visible;
+    /* padding-left: 1vw; */
+    padding-top: 1vh;
+    overflow: scroll;
+    padding-bottom: 1vh;
   
+  }
   .grid-container > div {
 	background-color: rgba(255, 255, 255, 0.8);
     text-align: center;
@@ -238,6 +270,41 @@ nav{
 .wei{
   font-weight: 500;
 }
+@media screen and (max-height: 600px) {
+  .sidebarAdmin li {
+    margin-bottom: 1px;
+  }
+  .sidebarAdmin h3 {
+    font-size: 5px;
+    margin-bottom: 2px;
+  }  
+  .sidebarAdmin a {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }  
+  .sidebarAdmin span {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }  
+}
+@media screen and (max-height: 450px) {
+  .sidebarAdmin li {
+    margin-bottom: 0px;
+  }
+  .sidebarAdmin h3 {
+    font-size: 5px;
+    margin-bottom: 2px;
+  }  
+  .sidebarAdmin a {
+    font-size: 8px;
+    margin-bottom: 0px;
+  }  
+  .sidebarAdmin span {
+    font-size: 8px;
+    margin-bottom: 0px;
+  }  
+}
+
 .sidebarAdmin {
     width: 200px;
     height: 100vh; /* Set the sidebar to take up the full height of the viewport */
@@ -247,6 +314,27 @@ nav{
     top: 0;
     left: 0;
     background-color: #0b2733d5;
+  }
+  @media screen and (max-width: 1050px) {
+    .sidebarAdmin{
+      width: 150px;
+    }
+    .sidebarAdmin li {
+      margin-bottom: 1px;
+    }
+    .sidebarAdmin h3 {
+      font-size: 5px;
+      margin-bottom: 2px;
+    }  
+    .sidebarAdmin a {
+      font-size: 12px;
+      margin-bottom: 2px;
+    }  
+    .sidebarAdmin span {
+      font-size: 12px;
+      margin-bottom: 2px;
+    }  
+   
   }
   .sidebarAdmin h3 {
     font-size: 18px;

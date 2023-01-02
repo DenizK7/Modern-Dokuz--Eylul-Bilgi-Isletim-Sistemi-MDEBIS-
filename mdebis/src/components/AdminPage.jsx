@@ -48,12 +48,12 @@ function AdminPage(){
 
 
     return(
-        <body className="noBg">
+        <div className="noBg">
             {/* <!-- Create a container for the main content and the sidebar --> */}
  
      
       {/* <!-- The sidebar --> */}
-      <aside class="sidebarAdmin">
+      <aside className="sidebarAdmin">
       { items.map((item, index) => <SidebarItem key={index} item={item} />) }
       </aside>
       {/* <!-- The main content --> */}
@@ -71,7 +71,7 @@ function AdminPage(){
       </div> */}
   
       <Outlet></Outlet>
-        </body>
+        </div>
         
     );
 }

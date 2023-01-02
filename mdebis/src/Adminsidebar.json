@@ -4,7 +4,7 @@
     {
         "title": "Home",
         "icon": "bi-house-fill",
-        "path": "/HomePage/infoLecture"
+        "path": "/AdminPage/AddAnnouncment"
     },
    
     
@@ -104,6 +104,11 @@
 "icon": "bi-question-circle-fill",
 "path": "/support"
 },
+{
+    "title": "Log Screen",
+    "icon": "bi-bank",
+    "path": "/AdminPage/LogScreen"
+    },
 {
 "title": "Logout",
 "path": "/",

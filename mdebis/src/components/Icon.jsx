@@ -18,4 +18,8 @@ const StyledIcon = styled.div`
     width: 1.5rem;
     height: 1.5rem;
   }
+  @media only screen and (max-height: 700px) {
+    display: none;
+    
+  }
 `;

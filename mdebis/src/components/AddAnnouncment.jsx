@@ -33,6 +33,7 @@ font-weight: bold;
 }
 `;
 const StyledInputt = styled.input`
+
 background: rgba(255, 255, 255, 0.15);
 box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 border-radius: 2rem;
@@ -77,8 +78,8 @@ const Inputt = ({setRerender, rerender, lessons})=>{
         fontWeight: "200",
         width: "10vw",
         position: "absolute",
-        top: "15vh",
-        right: "45vh"
+        top: "8vh",
+        right: "56vw"
       };
     const [selectedExtension, setSelectedExtension] = useState([]);
     const onExtensionChange = event => {
@@ -135,7 +136,7 @@ function handleClick() {
  
   return(
     <div  > Enter Your announcment: 
-
+      <br></br>
 <Dropdown value={selectedExtension} options={lessons} onChange={onExtensionChange} optionLabel="CourseName" placeholder={"Select a Lesson"}style={mystyle}/>
         <StyledInputt type="text"
   id="header" name="header" placeholder="Header" onChange={handleChangeinpt_header}
@@ -156,7 +157,7 @@ function handleClick() {
     const[lessons, setContent] = useState([])
     useEffect(() => {
       try {
-        var xhttp = new XMLHttpRequest();//change_course_status/{sessionHash}/{courseId}
+        var xhttp = new XMLHttpRequest();
         xhttp.open("GET", "http://localhost:8080/get_home_entry/"+sessionStorage.getItem("token"),false);
         xhttp.setRequestHeader("Content-type", "text/html");
         xhttp.onload = function (e) {
@@ -172,6 +173,7 @@ function handleClick() {
        }
       
        xhttp.send();
+     
       
     
     } catch (error) {
@@ -181,9 +183,9 @@ function handleClick() {
        
      }, [rerender]);
 
-
+    
       return(
-          <div className="noBg">
+          <div className="an">
         
         <Inputt setRerender={setRerender} lessons={lessons} rerender={rerender}/>
       

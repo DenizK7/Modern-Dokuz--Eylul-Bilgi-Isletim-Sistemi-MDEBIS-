@@ -62,7 +62,6 @@ function handleClick() {
           }
        }
     }
-    console.log(inpt + " has been succesfully deleted");
     xhttp.send();
    
 
@@ -118,7 +117,6 @@ function handleClick() {
        
      }, [rerender]);
 
-      console.log(lessons)
 
       return(
           <div className="noBg">

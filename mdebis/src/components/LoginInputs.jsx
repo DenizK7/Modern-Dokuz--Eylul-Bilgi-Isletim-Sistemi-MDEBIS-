@@ -76,6 +76,8 @@ const [selectedExtension, setSelectedExtension] = useState('');
       ex = "http://localhost:8080/log_admin/";
       
      }
+   if(inpt.length >1){
+
    
       try{
         var xhttp = new XMLHttpRequest();
@@ -120,12 +122,12 @@ const [selectedExtension, setSelectedExtension] = useState('');
           }
         
        }
-       console.log("request sended");
        xhttp.send();
       }
      catch (error) {
       alert("Wrong pass or id");
     }
+  }
     
   
       

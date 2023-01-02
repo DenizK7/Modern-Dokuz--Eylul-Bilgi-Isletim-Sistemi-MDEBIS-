@@ -92,12 +92,12 @@ const ForgotPassword = ()=>{
   const handleChangeinpt = event => {
     setMessage(event.target.value);
 
-    console.log('value is:', event.target.value);
+    
   };
   const handleChangepsw = event => {
     setpssw(event.target.value);
 
-    console.log('value is:', event.target.value);
+    
   };
   function handleClick() {
   //   try {

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import LoginInput from "./LoginInputs";
 import ForgotPasswordd from "./ForgotPass";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginInputs from "./LoginInputs";
 import { Navigate, Link } from "react-router-dom";
 
@@ -18,6 +18,34 @@ const MainContainer =() =>{
     tr: {nativeName: "Türkçe 🇹🇷"}
   };
   const {t} = useTranslation();
+  useEffect(()=>{
+    
+    if(sessionStorage.getItem("token").length>1){
+      try {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "http://localhost:8080/log_out/"+sessionStorage.getItem("token"),false);
+        xhttp.setRequestHeader("Content-type", "text/html");
+        xhttp.onload = function (e) {
+         if (xhttp.readyState === 4) {
+             if (xhttp.status === 200) {
+                sessionStorage.setItem("token", "");
+                
+                
+             }
+          }
+          
+       }
+       xhttp.send();
+     
+   
+    } catch (error) {
+      alert("Wrong pass or id");
+    }
+    
+    }
+      
+     
+  },[])
   const FacebookBackground =
     "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
   const InstagramBackground =
@@ -126,7 +154,7 @@ const FormatMail = styled.span`
   if(goForgotPassword){
     return <Navigate to="/ForgotPassword" />;
   }
-  
+ 
   return (
     <MainContain>
     <WelcomeText>{t("WELCOME")}</WelcomeText>

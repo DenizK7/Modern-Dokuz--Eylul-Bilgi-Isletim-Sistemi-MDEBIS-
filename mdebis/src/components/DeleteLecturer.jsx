@@ -102,9 +102,6 @@ function handleClick() {
              if (xhttp.status === 200) {
     
               var response = JSON.parse(xhttp.response);   
-              if(response===null)
-              console.log("empty")
-              else
               setContent(response);    
                  
              }
@@ -121,7 +118,6 @@ function handleClick() {
        
      }, [rerender]);
 
-      console.log(lessons)
 
       return(
           <div className="noBg">
@@ -134,15 +130,15 @@ function handleClick() {
         <table className={"grid-container-sm-admin"} >
      
       <tbody>
-      <thead >
+    
         <tr>
           <th >ID</th>
           <th>Name</th>
           <th>Surname</th>
         </tr>
-      </thead>
-        {lessons.map(student => (
-          <tr>
+     
+        {lessons.map((student,index) => (
+          <tr key={index}>
             <td className="tdstyle">{student.Id}</td>
             <td className="tdstyle">{student.Name}</td>
             <td className="tdstyle">{student.Surname}</td>

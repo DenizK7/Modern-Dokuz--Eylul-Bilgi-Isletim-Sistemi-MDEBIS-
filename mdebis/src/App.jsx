@@ -20,6 +20,7 @@ import AddGrade from './components/AddGrade';
 import AddAnnouncment from './components/AddAnnouncment';
 import ChangeNumberOf from './components/ChangeNumberOf';
 import AddLecturer from './components/AddLecturer';
+import LogScreen from './components/Log';
 function  App ()  {
   
   const [infoStudent, setInfoStudent] = useState([]);
@@ -65,6 +66,8 @@ const [selectedExtension, setSelectedExtension] = useState(null);
           <Route path ="/AdminPage/DeleteStudent" element ={<DeleteStudent/>} />
           <Route path ="/AdminPage/DeleteLecturer" element ={<DeleteLecturer/>} />
           <Route path ="/AdminPage/AddLecturer" element ={<AddLecturer/>} />
+          <Route path ="/AdminPage/LogScreen" element ={<LogScreen/>} />
+          <Route path ="/AdminPage/AddAnnouncment" element ={<AddAnnouncment/>} />
           </Route>  
 
           <Route path ="/HomePage"   element ={<Home/>} >
