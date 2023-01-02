@@ -20,7 +20,7 @@ const MainContainer =() =>{
   const {t} = useTranslation();
   useEffect(()=>{
     
-    if(sessionStorage.getItem("token").length>1){
+    if(sessionStorage.length!=0 && sessionStorage.getItem("token").length !=0){
       try {
         var xhttp = new XMLHttpRequest();
         xhttp.open("GET", "http://localhost:8080/log_out/"+sessionStorage.getItem("token"),false);
