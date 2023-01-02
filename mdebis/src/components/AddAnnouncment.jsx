@@ -96,17 +96,17 @@ const Inputt = ({setRerender, rerender, lessons})=>{
   const [content, setContent] = useState('');
 
 function handleClick() {
-  try {
+  
      var xhttp = new XMLHttpRequest();
      xhttp.open("GET", "http://localhost:8080/add_announcement/"+sessionStorage.getItem("token")+"/"+selectedExtension.CourseId+"/"+header+"/"+content,false);
      xhttp.setRequestHeader("Content-type", "text/html");
-     
+     var response;
      xhttp.onload = function (e) {
       if (xhttp.readyState === 4) {
           if (xhttp.status === 200) {
           
              setRerender(!rerender);
-           
+              response = JSON.parse(xhttp.response);  
              
           }
        }
@@ -115,11 +115,14 @@ function handleClick() {
     
     
     xhttp.send();
-   
+    if(response!=false){
+      alert('Announcment successffuly added to \n' + selectedExtension.CourseName)
+      setHeader('');
+      setContent('');
+    }
+  
 
- } catch (error) {
-   alert("Wrong pass or id");
- }
+ 
 }
  
   
@@ -179,7 +182,7 @@ function handleClick() {
     } catch (error) {
       alert("Wrong pass or id");
     }
-
+    
        
      }, [rerender]);
 
