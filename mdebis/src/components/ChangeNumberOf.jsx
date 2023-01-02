@@ -18,6 +18,7 @@ height: 3rem;
 padding: 1rem;
 border: none;
 outline: none;
+margin-left:1vw;
 color: #3c354e;
 font-size: 1rem;
 font-weight: bold;
@@ -46,8 +47,8 @@ const mystyle = {
     fontWeight: "200",
     width: "25vw",
     position: "absolute",
-    top: "15vh",
-    right: "10vw"
+    top: "8vh",
+    right: "56vw"
   };
   const mystyle2 = {
     fontSize: "10px",
@@ -199,7 +200,7 @@ const mystyle = {
        <StyledInput type="text"
       id="inpt2" name="inpt2" placeholder="Write Attandance" onChange={handleChangeinpt2}
       value={inpt2}  ></StyledInput>
-       <Button  content={"Give Grade"} onClick={handleClick}> Apply</Button>
+       <Button  content={"Change Attendance"} onClick={handleClick}> Apply</Button>
       </ButtonContainer>
     
         </div>

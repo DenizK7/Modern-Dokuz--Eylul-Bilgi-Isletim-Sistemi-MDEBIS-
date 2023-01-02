@@ -91,7 +91,7 @@ const [selectedExtension, setSelectedExtension] = useState('');
  
                 var response = JSON.parse(xhttp.responseText);
  
-                if(!response){
+                if(response==false || response=="false"|| response==""){
                   alert("Wrong Password or id");
                  }
                  else{
