@@ -13,14 +13,9 @@ import (
 This function encodes all the GENERAL ANNOUNCEMENTS as a response
 */
 func responseGetGeneralAnnouncements(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	announcements := getGeneralAnnouncements()
 	err := json.NewEncoder(w).Encode(announcements)
 	if err != nil {
@@ -30,14 +25,9 @@ func responseGetGeneralAnnouncements(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	if r.Method == "OPTIONS" {
 		encoder.Encode(true)
@@ -90,14 +80,9 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseGetLog(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -122,14 +107,9 @@ this function encodes the courses as a response
 */
 
 func responseDeleteStudent(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -153,14 +133,9 @@ func responseDeleteStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseDeleteLecturer(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -184,14 +159,9 @@ func responseDeleteLecturer(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -214,14 +184,9 @@ func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseAddGrade(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -258,14 +223,9 @@ func responseAddGrade(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseAddAnnouncement(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -338,15 +298,10 @@ func convertHomePageEntryStudent(courses []course, studentId int) []homePageEntr
 }
 
 func responseAddCourse(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
 	//lecturer *lecturer, courseName string, attendanceLimit int, credit int
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -374,14 +329,9 @@ func responseAddCourse(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseGetHomeEntry(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -414,14 +364,9 @@ func responseGetHomeEntry(w http.ResponseWriter, r *http.Request) {
 
 }
 func responseLogOut(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -454,14 +399,9 @@ func responseLogOut(w http.ResponseWriter, r *http.Request) {
 	return
 }
 func responseGetStudents(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -477,14 +417,9 @@ func responseGetStudents(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(getAllStudents())
 }
 func responseGetLecturers(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -500,14 +435,9 @@ func responseGetLecturers(w http.ResponseWriter, r *http.Request) {
 	encoder.Encode(getAllLecturers())
 }
 func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionToken"]
@@ -530,14 +460,9 @@ func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseCreateLecturer(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -571,14 +496,9 @@ func responseCreateLecturer(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func responseCreateStudent(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -611,14 +531,9 @@ func responseCreateStudent(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func responseGetAllDepartmentNames(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -659,14 +574,9 @@ func isUserRight(user *user, whichUser int) bool {
 }
 
 func responseChangeNonAttendance(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -698,14 +608,9 @@ This function responses the request by encoding the timetable in json format
 */
 
 func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
@@ -746,14 +651,9 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionHash"]
 	user := getUser(sessionHash)
@@ -775,14 +675,9 @@ func responseGetTimeTable(w http.ResponseWriter, r *http.Request) {
 }
 
 func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	sessionHash := params["sessionToken"]
@@ -808,14 +703,9 @@ func responseGetDepartmentOfStudent(w http.ResponseWriter, r *http.Request) {
 This function encodes the logging lecturer if there is a match in the DB with the given id-password pair
 */
 func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["username"])
@@ -856,14 +746,9 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 This function encodes the logging manager if there is a match in the DB with the given id-password pair
 */
 func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
-	if checkOptions(r) {
-		err := json.NewEncoder(w).Encode(true)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	if checkOptions(r, &w) {
 		return
 	}
-	enableCors(&w)
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["username"])
@@ -900,9 +785,13 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	addLog("Admin", newUser.Manager.Id, "Login", "manager", "ADMIN LOGGED IN WITH ID "+strconv.Itoa(id)+"AND NAME "+newUser.Manager.Name+" "+newUser.Manager.Surname)
 }
 
-func checkOptions(r *http.Request) bool {
-
+func checkOptions(r *http.Request, w *http.ResponseWriter) bool {
+	enableCors(w)
 	if r.Method == "OPTIONS" {
+		err := json.NewEncoder(*w).Encode(true)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 		return true
 	}
 	return false
