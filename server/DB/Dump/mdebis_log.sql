@@ -32,7 +32,7 @@ CREATE TABLE `log` (
   `whichTable` enum('course','course_has_announcement','course_has_lecturer','course_has_student','course_time','department','general_announcement','lecturer','manager','student') NOT NULL,
   `values` varchar(500) NOT NULL,
   PRIMARY KEY (`recordId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4278 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4891 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-28 14:27:59
+-- Dump completed on 2023-01-03 20:49:12

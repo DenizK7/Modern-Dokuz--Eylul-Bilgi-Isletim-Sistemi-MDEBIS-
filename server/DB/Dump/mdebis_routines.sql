@@ -18,21 +18,6 @@ USE `mdebis`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Temporary view structure for view `student_department`
---
-
-DROP TABLE IF EXISTS `student_department`;
-/*!50001 DROP VIEW IF EXISTS `student_department`*/;
-SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `student_department` AS SELECT 
- 1 AS `Student_Id`,
- 1 AS `Department_Id`,
- 1 AS `Name`,
- 1 AS `Head_Lecturer_Id`*/;
-SET character_set_client = @saved_cs_client;
-
---
 -- Temporary view structure for view `department_head`
 --
 
@@ -51,22 +36,19 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
--- Final view structure for view `student_department`
+-- Temporary view structure for view `student_department`
 --
 
+DROP TABLE IF EXISTS `student_department`;
 /*!50001 DROP VIEW IF EXISTS `student_department`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `student_department` AS select `student`.`Student_Id` AS `Student_Id`,`department`.`Department_Id` AS `Department_Id`,`department`.`Name` AS `Name`,`department`.`Head_Lecturer_Id` AS `Head_Lecturer_Id` from (`student` join `department` on((`student`.`Department_Id` = `department`.`Department_Id`))) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `student_department` AS SELECT 
+ 1 AS `Student_Id`,
+ 1 AS `Department_Id`,
+ 1 AS `Name`,
+ 1 AS `Head_Lecturer_Id`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Final view structure for view `department_head`
@@ -82,6 +64,24 @@ SET character_set_client = @saved_cs_client;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `department_head` AS select `department`.`Department_Id` AS `Department_Id`,`department`.`Name` AS `Department_name`,`department`.`Head_Lecturer_Id` AS `Head_Lecturer_Id`,`lecturer`.`Title` AS `Title`,`lecturer`.`Name` AS `Name`,`lecturer`.`Surname` AS `Surname`,`lecturer`.`Mail` AS `Mail` from (`department` join `lecturer` on((`lecturer`.`Lecturer_Id` = `department`.`Head_Lecturer_Id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `student_department`
+--
+
+/*!50001 DROP VIEW IF EXISTS `student_department`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `student_department` AS select `student`.`Student_Id` AS `Student_Id`,`department`.`Department_Id` AS `Department_Id`,`department`.`Name` AS `Name`,`department`.`Head_Lecturer_Id` AS `Head_Lecturer_Id` from (`student` join `department` on((`student`.`Department_Id` = `department`.`Department_Id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -163,4 +163,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-28 14:28:04
+-- Dump completed on 2023-01-03 20:49:13
