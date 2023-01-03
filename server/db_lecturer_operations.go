@@ -119,6 +119,7 @@ func getStudentsOfCourse(lecturerID, courseId int) []studentOfCourse {
 		studentOfCourse.NonAttendance = nonAttendance
 		studentOfCourses = append(studentOfCourses, studentOfCourse)
 	}
+
 	return studentOfCourses
 }
 func changeNonAttendance(lecturerId int, courseId int, studentId int, nonAttendance int) bool {

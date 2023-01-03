@@ -186,10 +186,11 @@ func responseGetStudentsOfCourse(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	err := encoder.Encode(getStudentsOfCourse(user.Lecturer.Id, courseId))
-	if err != nil {
-		fmt.Println(err.Error())
-		return
+	students := getStudentsOfCourse(user.Lecturer.Id, courseId)
+	if students == nil {
+		encoder.Encode(false)
+	} else {
+		encoder.Encode(students)
 	}
 	return
 }
