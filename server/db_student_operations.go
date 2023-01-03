@@ -3,7 +3,9 @@ package main
 import "fmt"
 
 /*
-Returns the password taken from DB if there is match for the given id of a student in the DB
+THIS FILE CONSISTS OF ALL FUNCTIONS WHICH ARE  CALLED FROM THE MIDDLEWARE
+
+ALL THE BELOW FUNCTIONS ARE RELATED WITH STUDENT OPERATIONS
 */
 func getRealPasswordStudent(id int) string {
 	var realPassword string

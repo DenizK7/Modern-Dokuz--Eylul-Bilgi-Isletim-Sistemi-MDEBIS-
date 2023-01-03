@@ -2,6 +2,11 @@ package main
 
 import "fmt"
 
+/*
+THIS FILE CONSISTS OF ALL FUNCTIONS WHICH ARE  CALLED FROM THE MIDDLEWARE
+
+ALL THE BELOW FUNCTIONS ARE RELATED WITH ADMIN OPERATIONS
+*/
 func getRealPasswordAdmin(id int) string {
 	var realPassword string
 	query := "CALL manager_get_password(?)"
