@@ -30,7 +30,10 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 	}
 	encoder := json.NewEncoder(w)
 	if r.Method == "OPTIONS" {
-		encoder.Encode(true)
+		err := encoder.Encode(true)
+		if err != nil {
+			return
+		}
 		return
 	}
 	params := mux.Vars(r)
@@ -414,7 +417,10 @@ func responseGetStudents(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	encoder.Encode(getAllStudents())
+	err := encoder.Encode(getAllStudents())
+	if err != nil {
+		return
+	}
 }
 func responseGetLecturers(w http.ResponseWriter, r *http.Request) {
 	if checkOptions(r, &w) {
@@ -432,7 +438,11 @@ func responseGetLecturers(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	encoder.Encode(getAllLecturers())
+	err := encoder.Encode(getAllLecturers())
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }
 func responseGetPastCoursesOfStudent(w http.ResponseWriter, r *http.Request) {
 	if checkOptions(r, &w) {
@@ -478,8 +488,12 @@ func responseCreateLecturer(w http.ResponseWriter, r *http.Request) {
 	//id int, password string, title string, name string, surname string, departmentName string
 	id, err := strconv.Atoi(params["id"])
 	if err != nil {
-		fmt.Println("error occured when casting string to int")
-		encoder.Encode(false)
+		fmt.Println("error occurred when casting string to int")
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	password := params["password"]
@@ -514,8 +528,12 @@ func responseCreateStudent(w http.ResponseWriter, r *http.Request) {
 	//id int, password string, title string, name string, surname string, departmentName string
 	id, err := strconv.Atoi(params["id"])
 	if err != nil {
-		fmt.Println("error occured when casting string to int")
-		encoder.Encode(false)
+		fmt.Println("error occurred when casting string to int")
+		err := encoder.Encode(false)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 		return
 	}
 	password := params["password"]
@@ -546,7 +564,11 @@ func responseGetAllDepartmentNames(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	encoder.Encode(getAllDepartmentNames())
+	err := encoder.Encode(getAllDepartmentNames())
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	return
 }
 func isUserRight(user *user, whichUser int) bool {
@@ -646,7 +668,11 @@ func responseChangeActiveOfCourse(w http.ResponseWriter, r *http.Request) {
 
 	//Find what user wants the course to be
 	//Make the course what user wants the course to be
-	encoder.Encode(changeStatusOfCourse(courseId))
+	err = encoder.Encode(changeStatusOfCourse(courseId))
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 
 }
 
@@ -708,7 +734,15 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 	}
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
-	id, _ := strconv.Atoi(params["username"])
+	id, err := strconv.Atoi(params["username"])
+	if err != nil {
+		err := encoder.Encode("false")
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
 	typedPassword := params["password"]
 	realPassword := getRealPasswordLecturer(id)
 	if realPassword == "" {
@@ -734,7 +768,7 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 	newUser := new(user)
 	newUser.Lecturer = getLecturer(id)
 	ACTIVE_USERS[sessionHash] = newUser
-	err := encoder.Encode(sessionHash)
+	err = encoder.Encode(sessionHash)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -752,7 +786,15 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	}
 	encoder := json.NewEncoder(w)
 	params := mux.Vars(r)
-	id, _ := strconv.Atoi(params["username"])
+	id, err := strconv.Atoi(params["username"])
+	if err != nil {
+		err := encoder.Encode("false")
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		return
+	}
 	typedPassword := params["password"]
 	realPassword := getRealPasswordAdmin(id)
 	if realPassword == "" {
@@ -779,7 +821,7 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	newUser := new(user)
 	newUser.Manager = getAdmin(id)
 	ACTIVE_USERS[sessionHash] = newUser
-	err := encoder.Encode(sessionHash)
+	err = encoder.Encode(sessionHash)
 	if err != nil {
 		fmt.Println(err.Error())
 		return

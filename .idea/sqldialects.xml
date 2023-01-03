@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/2acdba27-c485-47c2-a9f6-930a575194be/console.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/server/db_admin_operations.go" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/server/db_student_operations.go" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/server/middleware.go" dialect="GenericSQL" />
   </component>

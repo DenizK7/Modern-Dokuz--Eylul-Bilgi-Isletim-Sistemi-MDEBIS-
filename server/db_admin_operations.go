@@ -29,7 +29,10 @@ func getAllStudents() []student {
 	for i := 0; i < 100; i++ {
 		rows.Next()
 		var student student
-		rows.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
+		err := rows.Scan(&student.Id, &student.Name, &student.Surname, &student.Year, &student.DepId, &student.EMail, &student.GPA, &student.PhotoPath)
+		if err != nil {
+			return students
+		}
 		students = append(students, student)
 	}
 	return students
@@ -45,7 +48,10 @@ func getLog() []logDB {
 	limit := 100
 	for rows.Next() {
 		var logRecord logDB
-		rows.Scan(&logRecord.RecordId, &logRecord.WhoDid, &logRecord.WhoDidId, &logRecord.Operation, &logRecord.WhichTable, &logRecord.Values)
+		err := rows.Scan(&logRecord.RecordId, &logRecord.WhoDid, &logRecord.WhoDidId, &logRecord.Operation, &logRecord.WhichTable, &logRecord.Values)
+		if err != nil {
+			return logRecords
+		}
 		logRecords = append(logRecords, logRecord)
 		limit = limit + 1
 		if limit == 100 {
@@ -58,7 +64,7 @@ func createLecturer(id int, password string, title string, name string, surname 
 	query := "INSERT INTO lecturer (Lecturer_Id, Password, Name, Surname, Department_Id, Title) VALUES (?,?,?,?,?,?)"
 	success, depId := getDepIdByName(departmentName)
 	if success != true {
-		fmt.Println("error occured when finding the department in createLecturer function")
+		fmt.Println("error occurred when finding the department in createLecturer function")
 		return false
 	}
 	_, err := DB.Exec(query, id, password, name, surname, depId, title)
@@ -72,7 +78,7 @@ func createStudent(id int, password string, name string, surname string, departm
 	query := "INSERT INTO student (Student_Id, Password, Name, Surname, Year,GPA, Department_Id) VALUES (?,?,?,?,?,?,?)"
 	success, depId := getDepIdByName(departmentName)
 	if success != true {
-		fmt.Println("error occured when finding the department in createLecturer function")
+		fmt.Println("error occurred when finding the department in createLecturer function")
 		return false
 	}
 	_, err := DB.Exec(query, id, password, name, surname, 1, 0, depId)
@@ -123,7 +129,10 @@ func getAllDepartmentNames() []string {
 	}
 	for row.Next() {
 		var depName string
-		row.Scan(&depName)
+		err := row.Scan(&depName)
+		if err != nil {
+			return departmentNames
+		}
 		departmentNames = append(departmentNames, depName)
 	}
 	return departmentNames
@@ -142,7 +151,10 @@ func getAllLecturers() []lecturer {
 			break
 		}
 		var lecturer lecturer
-		rows.Scan(&lecturer.Id, &lecturer.Name, &lecturer.Surname, &lecturer.EMail, &lecturer.DepId, &lecturer.Title, &lecturer.PhotoPath)
+		err := rows.Scan(&lecturer.Id, &lecturer.Name, &lecturer.Surname, &lecturer.EMail, &lecturer.DepId, &lecturer.Title, &lecturer.PhotoPath)
+		if err != nil {
+			return lecturers
+		}
 		lecturers = append(lecturers, lecturer)
 		i = i + 1
 	}
