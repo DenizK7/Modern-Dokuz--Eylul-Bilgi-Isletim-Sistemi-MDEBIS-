@@ -3,6 +3,10 @@ package main
 import "github.com/gorilla/mux"
 
 func Router() *mux.Router {
+	/*
+		ALL REQUEST THAT CAN COME FROM THE FRONT-END SIDE ARE HANDLED HERE
+		THE HANDLING FUNCTION ARE REFERENCED FOLLOWING THE REQUEST
+	*/
 
 	router := mux.NewRouter()
 	router.HandleFunc("/get_gen_announcements", responseGetGeneralAnnouncements) //returns all general announcements

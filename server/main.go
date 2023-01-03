@@ -18,16 +18,28 @@ var DB *sql.DB
 var ACTIVE_USERS = make(map[string]*user)
 var GRADES = [9]string{"AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF"}
 
-func main() {
-	//Connect to the DB
-	var err error
-	DB, err = sql.Open("mysql", "root:354152@tcp(127.0.0.1:3306)/mdebis")
-	DB.SetMaxOpenConns(10000000)
-	if DB != nil {
+/*
+PLEASE CHANGE BELOW SETTINGS ACCORDING TO YOUR LOCAL CONFIGURATIONS
 
-	}
-	//try any back-end function here
-	if err != nil {
+# PLEASE USE DUMP FILE TO IMPORT THE DB TO YOUR LOCAL
+
+# OTHERWISE, YOU WILL FACE AN ERROR
+
+# IN CASE AN ERROR ALTHOUGH YOU ARE SURE YOU FOLLOWED THE STEPS RIGHT
+
+PLEASE CONTACT US.
+
+HAVE A GOOD DAY :)
+*/
+func main() {
+	var (
+		password = "354152"
+		err      error
+	)
+	//Connect to the DB
+	DB, err = sql.Open("mysql", "root:"+password+"@tcp(127.0.0.1:3306)/mdebis")
+	if DB == nil || err != nil {
+		fmt.Println("having a problem when trying to connect to db")
 		panic(err.Error())
 	}
 	//start to listen to port and response to the requests
