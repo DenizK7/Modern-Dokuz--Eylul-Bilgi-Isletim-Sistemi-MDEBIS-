@@ -2,20 +2,20 @@ package main
 
 import "fmt"
 
-func getRealPasswordAdmin(id int) (bool, string) {
+func getRealPasswordAdmin(id int) string {
 	var realPassword string
 	query := "CALL manager_get_password(?)"
 	if err := DB.QueryRow(query, id).Scan(&realPassword); err != nil {
 		if err != nil {
 			fmt.Println(err.Error())
 			if err != nil {
-				return false, ""
+				return ""
 			}
-			return false, ""
+			return ""
 		}
-		return false, ""
+		return ""
 	}
-	return true, realPassword
+	return realPassword
 }
 func getAllStudents() []student {
 	var students []student

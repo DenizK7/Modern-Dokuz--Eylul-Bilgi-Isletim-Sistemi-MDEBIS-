@@ -45,8 +45,8 @@ func responseStudentLogIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	typedPassword := params["password"]
-	isFound, realPassword := getRealPasswordStudent(id)
-	if isFound == false {
+	realPassword := getRealPasswordStudent(id)
+	if realPassword == "" {
 		err := encoder.Encode(false)
 		if err != nil {
 			fmt.Println(err.Error())
@@ -710,8 +710,8 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["username"])
 	typedPassword := params["password"]
-	isFound, realPassword := getRealPasswordLecturer(id)
-	if isFound == false {
+	realPassword := getRealPasswordLecturer(id)
+	if realPassword == "" {
 		err := encoder.Encode(false)
 		if err != nil {
 			fmt.Println(err.Error())
@@ -727,6 +727,7 @@ func responseLecturerLogIn(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err.Error())
 			return
 		}
+		return
 	}
 	//create a session for the new user, type of lecturer
 	sessionHash := generateRandomSession()
@@ -753,14 +754,15 @@ func responseAdminLogIn(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, _ := strconv.Atoi(params["username"])
 	typedPassword := params["password"]
-	isFound, realPassword := getRealPasswordAdmin(id)
-	if isFound == false {
+	realPassword := getRealPasswordAdmin(id)
+	if realPassword == "" {
 		fmt.Println("no such a student")
 		err := encoder.Encode(false)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
 		}
+		return
 	}
 	if bcrypt.CompareHashAndPassword([]byte(realPassword), []byte(typedPassword)) != nil {
 		// If the two passwords don't match, return a 401 status

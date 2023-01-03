@@ -5,14 +5,13 @@ import "fmt"
 /*
 Returns the password taken from DB if there is match for the given id of a student in the DB
 */
-func getRealPasswordStudent(id int) (bool, string) {
+func getRealPasswordStudent(id int) string {
 	var realPassword string
 	query := "CALL student_get_password(?)"
 	if err := DB.QueryRow(query, id).Scan(&realPassword); err != nil {
 		fmt.Println(err.Error())
-		return false, ""
 	}
-	return true, realPassword
+	return realPassword
 }
 func getNonAttendanceOfStudent(studentId int, courseId int) int {
 	query := "select Non_Attendance from course_has_student WHERE Course_Id=? and Student_Id=?"

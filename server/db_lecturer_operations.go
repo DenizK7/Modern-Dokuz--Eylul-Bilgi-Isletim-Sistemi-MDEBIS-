@@ -8,14 +8,14 @@ import (
 /*
 Returns the password taken from DB if there is match for the given id of a lecturer in the DB
 */
-func getRealPasswordLecturer(id int) (bool, string) {
+func getRealPasswordLecturer(id int) string {
 	var realPassword string
 	query := "CALL lecturer_get_password(?)"
 
 	if err := DB.QueryRow(query, id).Scan(&realPassword); err != nil {
 		fmt.Println(err.Error())
 	}
-	return true, realPassword
+	return realPassword
 }
 func addCourseHasLecturer(lecId int, courseId int) bool {
 	query := "INSERT INTO course_has_lecturer (Course_Course_Id, Lecturer_Lecturer_Id) VALUES (?, ?)"
