@@ -1,4 +1,4 @@
-# ODERN DOKUZ EYLUL INFORMATION MANAGEMENT SYSTEM (MDEBIS)
+# MODERN DOKUZ EYLUL INFORMATION MANAGEMENT SYSTEM (MDEBIS)
 
 In case of a need to reach the creators, please use the following e-mails
 
@@ -7,7 +7,7 @@ Emircan Tepe: emircan.tepe@ceng.deu.edu.tr
 Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr
 
 # Contents
-- [ODERN DOKUZ EYLUL INFORMATION MANAGEMENT SYSTEM (MDEBIS)](#odern-dokuz-eylul-information-management-system-mdebis)
+- [MODERN DOKUZ EYLUL INFORMATION MANAGEMENT SYSTEM (MDEBIS)](#modern-dokuz-eylul-information-management-system-mdebis)
 - [Contents](#contents)
 - [SYSTEM ARCHTIRECTURE ](#system-archtirecture-)
 - [USED TECHNOLOGIES, TOOLS AND PROGRAMMING LANGUAGES ](#used-technologies-tools-and-programming-languages-)
@@ -31,9 +31,9 @@ The well-known and widely used Model-View-Controller (MVC) architecture is appli
 <img height="400" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/MVC-Process.svg/1000px-MVC-Process.svg.png">
 </center>
 
-<center>
-Representation of MVC, taken from [Wiki] (https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
-</center>
+<p align="center">
+Representation of MVC, taken from <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">WikiPedia</a>
+</p>
 
 
 # USED TECHNOLOGIES, TOOLS AND PROGRAMMING LANGUAGES <a name="UsedTechnology"></a>
@@ -94,11 +94,11 @@ The DB has two main triggers which are given below in detail. These are used to 
 1.	E-mails of users:
 Because every type of user in the system has an e-mail, the e-mails of them are created using triggers by also taking care of domain names, meaning if,
 
-	Student   à (name).(surname)@ogr.deu.edu.tr
+	Student   --> (name).(surname)@ogr.deu.edu.tr
 
-	Lecturer  à (name).(surname)@deu.edu.tr
+	Lecturer  --> (name).(surname)@deu.edu.tr
 
-	Manager à (name).(surname)@admin.deu.edu.tr
+	Manager   --> (name).(surname)@admin.deu.edu.tr
 
 
 2.	Non-attendance limit:
