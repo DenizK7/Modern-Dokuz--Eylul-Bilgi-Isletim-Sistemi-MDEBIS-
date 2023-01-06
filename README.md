@@ -144,10 +144,9 @@ zzz   --> Which student in the department in the same year
 ## Password Protection
 Although this is not a requiremet given in the course assignment, we decided to find a way to store the user passwords in a secure way. After a short research, it is found that it is possible to store the passwords by hashing, providing end-to-end protection, meaning that the password is only known by the user. 
  
-![Password protection steps, created by us on PowerPaint.]("diagrams/hash.png")
-
-
-</center>
+<img align="center" src="diagrams/hash.png">
+	<center>
+	Password protection steps, created by us on PowerPaint.</center>
 
 So, in the current snap-shot of our system, all passwords are stored as hashed and when a user attempts to log in, the system first hashes what it enters, then gets the hashed password (the password used when signing up) from DB and check whether they are equal or not. If equal, then the user succesfully logs in, but otherwise the log in fails.
 	
