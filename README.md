@@ -27,9 +27,7 @@ Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr
 # SYSTEM ARCHTIRECTURE <a name="SystemArc"></a>
 The well-known and widely used Model-View-Controller (MVC) architecture is applied with its all design patterns. It is based on the separating information from its representation. Below figure is the general representation of MVC.
 
-<center>
 ![asd](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/MVC-Process.svg/1000px-MVC-Process.svg.png)
-</center>
 
 <p align="center">
 Representation of MVC, taken from <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">WikiPedia</a>
