@@ -5,6 +5,7 @@ In case of a need to reach the creators, please use the following e-mails
 <ul>
   <li>Emircan Tepe: emircan.tepe@ceng.deu.edu.tr<\li>
   <li>Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr<\li>
+<\ul>
 To be able to run this project succesfully with its all components, one needs following tools:
 <ul>
 	<li>NodeJs (https://nodejs.org/en/download/)<\li>
