@@ -144,7 +144,7 @@ zzz   --> Which student in the department in the same year
 ## Password Protection
 Although this is not a requiremet given in the course assignment, we decided to find a way to store the user passwords in a secure way. After a short research, it is found that it is possible to store the passwords by hashing, providing end-to-end protection, meaning that the password is only known by the user. 
  
-![Password protection steps, created by us on PowerPaint.]("diagrams/hash.png")
+![Password protection steps, created by us on PowerPaint.]("diagrams/hash.PNG")
 
 
 </center>
