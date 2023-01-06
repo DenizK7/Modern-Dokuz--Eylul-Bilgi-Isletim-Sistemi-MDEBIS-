@@ -6,6 +6,7 @@ In case of a need to reach the creators, please use the following e-mails
   <li>Emircan Tepe: emircan.tepe@ceng.deu.edu.tr<\li>
   <li>Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr<\li>
 <\ul>
+<p>
 To be able to run this project succesfully with its all components, one needs following tools:
 <ul>
 	<li>NodeJs (https://nodejs.org/en/download/)<\li>
@@ -13,7 +14,7 @@ To be able to run this project succesfully with its all components, one needs fo
 	<\li>GOLANG (https://go.dev/dl/)<\li>
 	<\li>MYSQL (https://www.mysql.com/downloads/)<\li>
 <\ul>
-  
+<\p>
  <p> 
 Lastly, it is also a need to import the database that will be used by the program to your local mysql server
 
