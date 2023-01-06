@@ -7,7 +7,7 @@ In case of a need to reach the creators, please use the following e-mails
   <li>Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr</li>
 </ul>
 
-# HOW TO RUN
+## HOW TO RUN
 
 <p>
 To be able to run this project succesfully with its all components, one needs following tools:
