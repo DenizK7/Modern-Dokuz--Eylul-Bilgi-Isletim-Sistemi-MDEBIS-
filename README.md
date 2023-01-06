@@ -54,7 +54,7 @@ Below are given the programming languages, technology and tools throughout the p
 </p>
 
 <center> 
-<img src="diagrams/ER_Diagram.png">
+<img align="center" src="diagrams/ER_Diagram.png">
 
 ER diagram, created on [VisualParadigm](https://online.visual-paradigm.com/)
 </center>
