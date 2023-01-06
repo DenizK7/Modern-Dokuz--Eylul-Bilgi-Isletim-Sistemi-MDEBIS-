@@ -2,14 +2,6 @@ package main
 
 import "database/sql"
 
-type course_status int
-
-const (
-	Failed course_status = iota
-	Current
-	Passed
-)
-
 type PastCourse struct {
 	Course course
 	Grade  string

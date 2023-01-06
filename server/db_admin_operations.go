@@ -70,6 +70,7 @@ func createLecturer(id int, password string, title string, name string, surname 
 	success, depId := getDepIdByName(departmentName)
 	if success != true {
 		fmt.Println("error occurred when finding the department in createLecturer function")
+
 		return false
 	}
 	_, err := DB.Exec(query, id, password, name, surname, depId, title)
