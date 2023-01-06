@@ -28,7 +28,7 @@ Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr
 The well-known and widely used Model-View-Controller (MVC) architecture is applied with its all design patterns. It is based on the separating information from its representation. Below figure is the general representation of MVC.
 
 <center>
-<img height="400" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/MVC-Process.svg/1000px-MVC-Process.svg.png">
+<img align="center" height="400" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/MVC-Process.svg/1000px-MVC-Process.svg.png">
 </center>
 
 <p align="center">
