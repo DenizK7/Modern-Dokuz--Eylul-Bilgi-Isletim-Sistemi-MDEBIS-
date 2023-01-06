@@ -7,6 +7,18 @@ In case of a need to reach the creators, please use the following e-mails
   <li>Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr</li>
 </ul>
 
+
+## System Architecture
+
+## Database
+
+<p> The database is created using MySql. It is currently in the third normal form. Below is the ER diagram of the DB.
+	
+</p>
+
+## GO Architecture
+
+
 ## HOW TO RUN
 
 <p>
@@ -42,10 +54,3 @@ Student id: 2015537117 | 2019537310 | 2016537990
 Lecturer id: 2020537421
 Admin id: 1
 All passwords are 354152.
-
-35-->izmir
-41-->kocaeli
-52-->ordu
-:) 
-
-Have a good day:)
