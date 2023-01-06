@@ -21,7 +21,7 @@ The well-known and widely used Model-View-Controller (MVC) architecture is appli
 </center>
 
 <center>
-Representation of MVC, taken from [Wikipedia](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
+Representation of MVC, taken from [Wiki] (https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
 </center>
 
 
