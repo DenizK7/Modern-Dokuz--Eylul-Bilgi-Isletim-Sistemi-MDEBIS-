@@ -164,7 +164,7 @@ In the context of user authentication, session storage can be used to store a us
 To be able to run this project succesfully with its all components, one needs following tools:
 <ul>
 	<li>NodeJs (https://nodejs.org/en/download/)</li>
-	<li>REACT library (run the command "npm install", then "npm start" under the mdebis folder)</li>
+	<li>REACT library (run the command "npm install", then `npm start` under the mdebis folder)</li>
 	<li>GOLANG (https://go.dev/dl/)</li>
 	<li>MYSQL (https://www.mysql.com/downloads/)</li>
 </ul>
@@ -175,17 +175,17 @@ Lastly, it is also a need to import the database that will be used by the progra
 You can use the dump file provided under this folder to import the mdebis database 
 
 After all these steps, to run the mdebis, please follow the below steps in order:
-</p>
-<ol>
-	<li>Go to server folder</li>
-	<li>Run "go run ./"</li>
-	<li>If the above command produces an error, please run "go mod init mdebis", then "go install .", then "go run ./"</li>
-	<li>GO TO MDEBIS FOLDER</li>
-	<li>Run "npm install" command. this command may take some time, please wait.</li>
-	<li>Run "npm start" command. after compilation, home page of mdebis will start on your main web browser.</li>
-	<li>DONE :)</li>
-</ol>
-<p>
+
+Before starting, please do not forget your local MySql server should be active, and go is able to connect it succesfully. You need to set id, password and the port number from the main go file. You can find it under the server folder. Then, you can start following
+	
+1.	Go to server folder and open a terminal.
+2.	Type `go run ./` and enter.
+3.	If the above command produces an error, please run `go mod init mdebis`, then `go install .`, then `go run ./`.
+4.	Go to mdebis folder.
+5.	Run `npm install` command. this command may take some time, please wait.
+6.	Run `npm start` command. after compilation, home page of mdebis will start on your main web browser.
+7.	Completed :).
+
 Our database is created with data taken from the internet using web scraping methods.
 
 So instead of using a randomly chosen user, you can use the below ones to see the all the features of mdebis.
