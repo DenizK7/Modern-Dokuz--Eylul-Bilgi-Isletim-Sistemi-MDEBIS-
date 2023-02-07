@@ -30,7 +30,8 @@ Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr
 
 ![gif](https://user-images.githubusercontent.com/74663177/217369201-a0ebaca8-e80f-4e14-8fe7-3b5a647c1cea.gif)<p> Admin Page</p>
 
-![gif2](https://user-images.githubusercontent.com/74663177/217370094-ec2a9010-0c66-46a8-b12f-452be6a0b82a.gif)<p> Lecturer Page</p>
+
+![gif2](https://user-images.githubusercontent.com/74663177/217370272-9fadca0c-c0ea-4cd5-bbd3-df438c623cbe.gif)<p> Lecturer Page</p>
 
 # SYSTEM ARCHTIRECTURE <a name="SystemArc"></a>
 The well-known and widely used Model-View-Controller (MVC) architecture is applied with its all design patterns. It is based on the separating information from its representation. Below figure is the general representation of MVC.
