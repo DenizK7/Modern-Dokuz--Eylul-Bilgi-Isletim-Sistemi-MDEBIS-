@@ -9,6 +9,7 @@ Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr
 # Contents
 - [MODERN DOKUZ EYLUL INFORMATION MANAGEMENT SYSTEM (MDEBIS)](#modern-dokuz-eylul-information-management-system-mdebis)
 - [Contents](#contents)
+- [Website Images](#images)
 - [SYSTEM ARCHTIRECTURE ](#system-archtirecture-)
 - [USED TECHNOLOGIES, TOOLS AND PROGRAMMING LANGUAGES ](#used-technologies-tools-and-programming-languages-)
 - [DATABASE ](#database-)
@@ -23,6 +24,13 @@ Deniz Küçükkara: deniz.kucukkara@ceng.deu.edu.tr
 	- [Holding Token in the Cache](#holding-token-in-the-cache)
 - [HOW TO RUN ](#how-to-run-)
 
+# Website Images <a name="images"></a>
+![Screen Shot 2022-12-05 at 12 22 18](https://user-images.githubusercontent.com/74663177/205603114-b04b306f-8c9e-4f92-a52f-539e5cee881d.png)<p> Login Page</p>
+![site_gif](https://user-images.githubusercontent.com/74663177/205603067-c50ff32d-906a-4d04-b64b-c7d5f2bf0fa4.gif)<p>Student Page</p>
+
+![gif](https://user-images.githubusercontent.com/74663177/217369201-a0ebaca8-e80f-4e14-8fe7-3b5a647c1cea.gif)<p> Admin Page</p>
+
+![gif2](https://user-images.githubusercontent.com/74663177/217370094-ec2a9010-0c66-46a8-b12f-452be6a0b82a.gif)<p> Lecturer Page</p>
 
 # SYSTEM ARCHTIRECTURE <a name="SystemArc"></a>
 The well-known and widely used Model-View-Controller (MVC) architecture is applied with its all design patterns. It is based on the separating information from its representation. Below figure is the general representation of MVC.
